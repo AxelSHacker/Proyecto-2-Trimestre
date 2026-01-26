@@ -92,8 +92,7 @@ Transform:
   m_LocalPosition: {x: -0.5, y: 8.39, z: 3.33}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 6164228644825494971}
+  m_Children: []
   m_Father: {fileID: 713268985807196423}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &266831964485744502
@@ -2222,7 +2221,12 @@ Animator:
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_AnimatePhysics: 0
-  m_WarningMessage: 
+  m_WarningMessage: "\nBinding warning: Some generic clip(s) animate transforms that
+    are already bound by a Humanoid avatar. These transforms can only be changed
+    by Humanoid clips.\n\tTransform 'B-neck'\n\tTransform 'B-spine'\n\tTransform
+    'B-head'\n\tTransform 'B-hips'\n\tTransform 'B-chest'\n\tTransform 'B-neck'\n\tTransform
+    'B-spine'\n\tTransform 'B-head'\n\tTransform 'B-hips'\n\tTransform 'B-chest'\n\tand
+    more ..."
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
@@ -5184,7 +5188,8 @@ Transform:
   m_LocalPosition: {x: 0.0036494015, y: 0.11645624, z: 0.025236873}
   m_LocalScale: {x: 1.0000007, y: 1.0000006, z: 0.99999946}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 6164228644825494971}
   m_Father: {fileID: 8294048639057379393}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6030547395701903976
@@ -7409,64 +7414,48 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 5683378449667859665}
+    m_TransformParent: {fileID: 4254163509050793412}
     m_Modifications:
-    - target: {fileID: 1875679028218243593, guid: be5051b8f6af3604e8d31b313d0a5a04, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1875679028218243593, guid: be5051b8f6af3604e8d31b313d0a5a04, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1875679028218243593, guid: be5051b8f6af3604e8d31b313d0a5a04, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 3203679188509671674, guid: be5051b8f6af3604e8d31b313d0a5a04, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -0.0006
       objectReference: {fileID: 0}
     - target: {fileID: 3203679188509671674, guid: be5051b8f6af3604e8d31b313d0a5a04, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -0.0219
       objectReference: {fileID: 0}
     - target: {fileID: 3203679188509671674, guid: be5051b8f6af3604e8d31b313d0a5a04, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 0.0276
       objectReference: {fileID: 0}
     - target: {fileID: 3203679188509671674, guid: be5051b8f6af3604e8d31b313d0a5a04, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.6004743
       objectReference: {fileID: 0}
     - target: {fileID: 3203679188509671674, guid: be5051b8f6af3604e8d31b313d0a5a04, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0.19887337
       objectReference: {fileID: 0}
     - target: {fileID: 3203679188509671674, guid: be5051b8f6af3604e8d31b313d0a5a04, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: 0.7717788
       objectReference: {fileID: 0}
     - target: {fileID: 3203679188509671674, guid: be5051b8f6af3604e8d31b313d0a5a04, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0.06509557
       objectReference: {fileID: 0}
     - target: {fileID: 3203679188509671674, guid: be5051b8f6af3604e8d31b313d0a5a04, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
+      value: 7.953
       objectReference: {fileID: 0}
     - target: {fileID: 3203679188509671674, guid: be5051b8f6af3604e8d31b313d0a5a04, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: 105.844
       objectReference: {fileID: 0}
     - target: {fileID: 3203679188509671674, guid: be5051b8f6af3604e8d31b313d0a5a04, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
+      value: 22.885
       objectReference: {fileID: 0}
-    - target: {fileID: 3541235433462415805, guid: be5051b8f6af3604e8d31b313d0a5a04, type: 3}
-      propertyPath: m_Controller
-      value: 
-      objectReference: {fileID: 9100000, guid: de62dede196a9e94b8d041db521ed416, type: 2}
     - target: {fileID: 4127424400694186549, guid: be5051b8f6af3604e8d31b313d0a5a04, type: 3}
       propertyPath: m_Name
       value: Pistola Molino
