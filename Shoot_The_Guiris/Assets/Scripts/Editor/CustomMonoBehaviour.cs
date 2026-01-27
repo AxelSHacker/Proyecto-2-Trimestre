@@ -1,12 +1,13 @@
 using UnityEditor;
 using UnityEngine;
 
-[CustomEditor(typeof(PlayerControler))]
+[CustomEditor(typeof(CustomMonoBehaviour), true)]
 public class CustomMonobehaviourEditor : Editor
 {
     public override void OnInspectorGUI()
     {
-        PlayerControler pc = target as PlayerControler;
+        CustomMonoBehaviour pc = target as CustomMonoBehaviour;
+        
         if (GUILayout.Button("Editor Init"))
         {
             pc.EditorInit();
