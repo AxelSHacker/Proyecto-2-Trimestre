@@ -74,7 +74,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5683378449667859665}
   m_Layer: 0
-  m_Name: Posicion y Contenerdor de armas
+  m_Name: Contenerdor de armas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1594,6 +1594,62 @@ Transform:
   - {fileID: 2414820242574632997}
   m_Father: {fileID: 6855917076291583411}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1619229858947085449
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4031684440312198209}
+  - component: {fileID: 7830480106714926667}
+  m_Layer: 0
+  m_Name: Left_Hand_Constraint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &4031684440312198209
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1619229858947085449}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5579250246356470081}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7830480106714926667
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1619229858947085449}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aeda7bfbf984f2a4da5ab4b8967b115d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Animation.Rigging::UnityEngine.Animations.Rigging.TwoBoneIKConstraint
+  m_Weight: 1
+  m_Data:
+    m_Root: {fileID: 1783633656929691560}
+    m_Mid: {fileID: 8712199904229625844}
+    m_Tip: {fileID: 9217536311453013846}
+    m_Target: {fileID: 0}
+    m_Hint: {fileID: 0}
+    m_TargetPositionWeight: 1
+    m_TargetRotationWeight: 1
+    m_HintWeight: 1
+    m_MaintainTargetPositionOffset: 0
+    m_MaintainTargetRotationOffset: 0
 --- !u!1 &1787805517892048121
 GameObject:
   m_ObjectHideFlags: 0
@@ -2221,12 +2277,7 @@ Animator:
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_AnimatePhysics: 0
-  m_WarningMessage: "\nBinding warning: Some generic clip(s) animate transforms that
-    are already bound by a Humanoid avatar. These transforms can only be changed
-    by Humanoid clips.\n\tTransform 'B-neck'\n\tTransform 'B-spine'\n\tTransform
-    'B-head'\n\tTransform 'B-hips'\n\tTransform 'B-chest'\n\tTransform 'B-neck'\n\tTransform
-    'B-spine'\n\tTransform 'B-head'\n\tTransform 'B-hips'\n\tTransform 'B-chest'\n\tand
-    more ..."
+  m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
@@ -3066,6 +3117,7 @@ Transform:
   - {fileID: 3479470537633192427}
   - {fileID: 1823754499912586656}
   - {fileID: 616521556971757546}
+  - {fileID: 4031684440312198209}
   m_Father: {fileID: 713268985807196423}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7186676315814603930
@@ -3322,7 +3374,7 @@ AudioSource:
   m_GameObject: {fileID: 3755851056698008851}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -2256398440406382273, guid: c55136e614119df41a0c1f2fe9791ff1, type: 2}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 1
