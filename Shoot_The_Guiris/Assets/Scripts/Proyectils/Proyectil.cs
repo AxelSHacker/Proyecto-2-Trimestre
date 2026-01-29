@@ -7,8 +7,8 @@ public class Proyectil : PoolEntity
    public Action<Vector3> OnImpact;
 
    [Header("Componentes")]
-   [SerializeField] Rigidbody _rB;
-   [SerializeField] Collider _collider;
+   public Rigidbody _rB;
+   public Collider _collider;
    [SerializeField] ParticleSystem _trailParticles;
 
    [Header("Proyectil")]
@@ -16,7 +16,7 @@ public class Proyectil : PoolEntity
    [SerializeField] float _speed;
    [SerializeField] float _lifetime;
    float _lifeTimerTmp;
-   [SerializeField] LayerMask _shootableLayers;
+   public LayerMask _shootableLayers;
    public override void EditorInit()
    {
       base.EditorInit();
@@ -24,15 +24,7 @@ public class Proyectil : PoolEntity
       _rB = GetComponent<Rigidbody>();
    }
    #region Unity Methods
-   void Start()
-   {
 
-   }
-
-   void Update()
-   {
-
-   }
 
    void OnTriggerEnter(Collider other)
    {

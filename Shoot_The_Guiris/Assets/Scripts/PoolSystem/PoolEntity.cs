@@ -6,7 +6,7 @@ public class PoolEntity : CustomMonoBehaviour
    public static Action<PoolEntity> OnReturnToPool;
    [SerializeField] string _poolID;
    [SerializeField] Renderer[] _renderers;
-   [SerializeField] bool _isActive;
+   public bool _isActive;
 
    public bool IsActive => _isActive;
 
@@ -40,6 +40,8 @@ public class PoolEntity : CustomMonoBehaviour
 
    private void EnableRenderers(bool enable)
    {
+      if (_renderers == null) return;
+      
       foreach (Renderer ren in _renderers)
       {
          ren.enabled = enable;
