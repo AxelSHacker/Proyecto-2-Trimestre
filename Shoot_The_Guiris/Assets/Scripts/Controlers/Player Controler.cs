@@ -24,6 +24,12 @@ public class PlayerControler : CustomMonoBehaviour
     //Referncia a la camara principal
     [SerializeField] Camera _mainCamera;
 
+    [Header("Shooting")]
+    [SerializeField] float _shootDeay;
+    [SerializeField] float _shootTime;
+    [SerializeField] Transform _shootPoint;
+    [SerializeField] string _bulletType = "Wind";
+
     [Header("Physics")]
     [SerializeField] CharacterController _cC;
     [SerializeField] LayerMask _groundLayer;
@@ -88,6 +94,10 @@ public class PlayerControler : CustomMonoBehaviour
     {
         _horizontal = Input.GetAxisRaw("Horizontal");
         _vertical = Input.GetAxisRaw("Vertical");
+        if (Input.GetButtonDown("Fire1"))
+        {
+            Shooting();
+        }
     }
     //Comprueba el contacto con el suelo
     private void GroundCheck()
@@ -207,7 +217,21 @@ public class PlayerControler : CustomMonoBehaviour
         }
     }
 
+    private void Shooting()
+    {
+        if(Time.time < _shootTime) return;
 
+        Vector3 position = Vector3.zero;
+        Quaternion rotation = Quaternion.Euler(Vector3.zero);
+
+        if(_shootPoint != null)
+        {
+            position = _shootPoint.position;
+            rotation = Quaternion.LookRotation(_shootPoint.forward);
+            _animator.SetTrigger("ShootWind");
+        }
+       PoolManager.Instance.Pull(_bulletType, position, rotation);
+    }
 
 
     private void ParticleFX()

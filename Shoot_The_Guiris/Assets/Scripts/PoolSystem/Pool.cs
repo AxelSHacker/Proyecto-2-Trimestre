@@ -6,7 +6,7 @@ using UnityEngine;
 public class Pool
 {
     public string id;
-    public PoolEntity poolEntity;
+    public PoolEntity prefab;
     public int prewarm;
     public Queue<PoolEntity> pool = new Queue<PoolEntity>();
 }

@@ -1,8 +1,11 @@
-using Unity.VisualScripting;
+using System;
 using UnityEngine;
 
 public class Proyectil : PoolEntity
 {
+   public Action OnInitialize;
+   public Action<Vector3> OnImpact;
+
    [Header("Componentes")]
    [SerializeField] Rigidbody _rB;
    [SerializeField] Collider _collider;
@@ -35,6 +38,7 @@ public class Proyectil : PoolEntity
    {
       if ((_shootableLayers & (1 << other.gameObject.layer)) != 0)
       {
+         OnImpact?.Invoke(transform.position);
          ReturnToPool();
       }
 
@@ -49,6 +53,7 @@ public class Proyectil : PoolEntity
       _trailParticles.Play();
       _rB.linearVelocity = transform.forward * _speed;
       _lifeTimerTmp = Time.time + _lifetime;
+      OnInitialize?.Invoke();
    }
 
    public override void Deactivate()
