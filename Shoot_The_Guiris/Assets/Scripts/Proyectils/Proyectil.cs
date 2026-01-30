@@ -14,7 +14,7 @@ public class Proyectil : PoolEntity
    [Header("Proyectil")]
    [SerializeField] float _damage;
    [SerializeField] float _speed;
-   [SerializeField] float _lifetime;
+   public float _lifetime;
    float _lifeTimerTmp;
    public LayerMask _shootableLayers;
    public override void EditorInit()

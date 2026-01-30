@@ -839,6 +839,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 713268985807196423}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1035840998824372222
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 725006888655213413}
+  m_Layer: 0
+  m_Name: ShootingPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &725006888655213413
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1035840998824372222}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.046, y: 1.489, z: 0.354}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6164228644825494971}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1039635951151156487
 GameObject:
   m_ObjectHideFlags: 0
@@ -3348,6 +3379,10 @@ MonoBehaviour:
   _aimingPivot: {fileID: 5098716946561097124}
   _aimReference: {fileID: 8022158271162866638}
   _mainCamera: {fileID: 0}
+  _shootDeay: 1
+  _shootTime: 1
+  _shootPoint: {fileID: 725006888655213413}
+  _bulletType: Wind
   _cC: {fileID: 7327496240561697946}
   _groundLayer:
     serializedVersion: 2
@@ -7514,7 +7549,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 3203679188509671674, guid: be5051b8f6af3604e8d31b313d0a5a04, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 725006888655213413}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: be5051b8f6af3604e8d31b313d0a5a04, type: 3}
 --- !u!4 &6164228644825494971 stripped
