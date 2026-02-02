@@ -25,9 +25,20 @@ public class Proyectil : PoolEntity
    }
    #region Unity Methods
 
+   void Update()
+   {
+      if (!IsActive) return;
+      
+      if (_lifeTimerTmp < Time.time)
+      {
+         ReturnToPool();
+      }
+   }
 
    void OnTriggerEnter(Collider other)
    {
+      if (!IsActive) return;
+
       if ((_shootableLayers & (1 << other.gameObject.layer)) != 0)
       {
          OnImpact?.Invoke(transform.position);

@@ -6,7 +6,7 @@ public class PoolManager : CustomMonoBehaviour
 {
    private static PoolManager _instance;
    public static PoolManager Instance => _instance;
-   [SerializeField] Pool[] pools;
+   public Pool[] pools;
    public override void EditorInit()
    {
 

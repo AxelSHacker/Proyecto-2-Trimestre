@@ -1,4 +1,5 @@
 using Unity.Mathematics;
+using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
 
 public class PlayerControler : CustomMonoBehaviour
@@ -25,10 +26,14 @@ public class PlayerControler : CustomMonoBehaviour
     [SerializeField] Camera _mainCamera;
 
     [Header("Shooting")]
+    [SerializeField] GameObject[] _weaponsObjects;
     [SerializeField] float _shootDeay;
     [SerializeField] float _shootTime;
-    [SerializeField] Transform _shootPoint;
-    [SerializeField] string _bulletType = "Wind";
+    [SerializeField] Transform _shootPointWind;
+    [SerializeField] Transform _shootingPointPoop;
+    [SerializeField] string _bulletType;
+    [SerializeField] int _weaponIndex = 0;
+    [SerializeField] float _fireRate = 5; 
 
     [Header("Physics")]
     [SerializeField] CharacterController _cC;
@@ -62,7 +67,18 @@ public class PlayerControler : CustomMonoBehaviour
     #endregion
     void Start()
     {
+        
+        _weaponsObjects[0].SetActive(true);
+        _weaponsObjects[1].SetActive(false);
         _mainCamera = Camera.main;
+
+        _animator.SetInteger("NumemrWeapon", 0);
+        _weaponIndex = 0;
+        _weaponsObjects[0].SetActive(true);
+        _weaponsObjects[1].SetActive(false);
+        _bulletType = "Wind";
+        _animator.SetFloat("Velocidad de disparo", _fireRate);
+
     }
 
 
@@ -92,6 +108,8 @@ public class PlayerControler : CustomMonoBehaviour
     #region Method
     private void Controls()
     {
+        ChangeWeapon();
+
         _horizontal = Input.GetAxisRaw("Horizontal");
         _vertical = Input.GetAxisRaw("Vertical");
         if (Input.GetButtonDown("Fire1"))
@@ -167,6 +185,26 @@ public class PlayerControler : CustomMonoBehaviour
         }
     }
 
+    private void ChangeWeapon()
+    {
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            _animator.SetInteger("NumemrWeapon", 0);
+            _weaponIndex = 0;
+            _weaponsObjects[0].SetActive(true);
+            _weaponsObjects[1].SetActive(false);
+            _bulletType = "Wind";
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            _animator.SetInteger("NumemrWeapon", 1);
+            _bulletType = "ProyectilCaca";
+            _weaponIndex = 1;
+            _weaponsObjects[0].SetActive(false);
+            _weaponsObjects[1].SetActive(true);
+        }
+    }
+
     private void Aiming()
     {
         //Plano virtual a la altura del pecho para que el Raycast sea 100% estable
@@ -219,18 +257,29 @@ public class PlayerControler : CustomMonoBehaviour
 
     private void Shooting()
     {
-        if(Time.time < _shootTime) return;
+        if (Time.time < _shootTime) return;
 
         Vector3 position = Vector3.zero;
         Quaternion rotation = Quaternion.Euler(Vector3.zero);
 
-        if(_shootPoint != null)
+
+
+        if (_shootPointWind != null && _bulletType == "Wind")
         {
-            position = _shootPoint.position;
-            rotation = Quaternion.LookRotation(_shootPoint.forward);
+            position = _shootPointWind.position;
+            rotation = Quaternion.LookRotation(_shootPointWind.forward);
             _animator.SetTrigger("ShootWind");
+            PoolManager.Instance.Pull(_bulletType, position, rotation);
         }
-       PoolManager.Instance.Pull(_bulletType, position, rotation);
+        else if (_shootingPointPoop != null && _bulletType == "ProyectilCaca")
+        {
+            _weaponIndex = 1;
+            position = _shootingPointPoop.position;
+            rotation = Quaternion.LookRotation(_shootingPointPoop.forward);
+            _animator.SetTrigger("ShootPoop");
+            PoolManager.Instance.Pull(_bulletType, position, rotation);
+        }
+
     }
 
 
