@@ -22,14 +22,15 @@ public class PoolEntity : CustomMonoBehaviour
 
    public virtual void Initialize()
    {
-      EnableRenderers(true);
       _isActive = true;
+      gameObject.SetActive(true);
+      EnableRenderers(true);
    }
 
    public virtual void Deactivate()
    {
-      EnableRenderers(false);
       _isActive = false;
+      EnableRenderers(false);
    }
 
    public void ReturnToPool()

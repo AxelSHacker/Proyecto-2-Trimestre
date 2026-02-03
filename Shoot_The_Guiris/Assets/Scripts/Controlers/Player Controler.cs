@@ -1,8 +1,9 @@
 using Unity.Mathematics;
+using Unity.VisualScripting;
 using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
 
-public class PlayerControler : CustomMonoBehaviour
+public class PlayerControler : CustomMonoBehaviour, IDamageabe<float>
 {
     #region Variables
     [SerializeField] bool showGizmos = true;
@@ -27,13 +28,15 @@ public class PlayerControler : CustomMonoBehaviour
 
     [Header("Shooting")]
     [SerializeField] GameObject[] _weaponsObjects;
-    [SerializeField] float _shootDeay;
-    [SerializeField] float _shootTime;
+    [SerializeField] float _shootDelayWind;
+    [SerializeField] float _shootDelayPoop;
+    
     [SerializeField] Transform _shootPointWind;
     [SerializeField] Transform _shootingPointPoop;
     [SerializeField] string _bulletType;
     [SerializeField] int _weaponIndex = 0;
-    [SerializeField] float _fireRate = 5; 
+    [SerializeField] float _fireRateWind;
+    [SerializeField] float _fireRatePoop;
 
     [Header("Physics")]
     [SerializeField] CharacterController _cC;
@@ -57,6 +60,12 @@ public class PlayerControler : CustomMonoBehaviour
 
     [Header("Animator")]
     [SerializeField] Animator _animator;
+    #region IDamagables
+    [SerializeField] float _maxhealt;
+    float _currentealt;
+    public bool IsDead => _currentealt <= 0;
+    #endregion
+
 
     public override void EditorInit()
     {
@@ -67,17 +76,18 @@ public class PlayerControler : CustomMonoBehaviour
     #endregion
     void Start()
     {
-        
+        _shootDelayWind = 0;
+        _currentealt = _maxhealt;
         _weaponsObjects[0].SetActive(true);
         _weaponsObjects[1].SetActive(false);
         _mainCamera = Camera.main;
 
-        _animator.SetInteger("NumemrWeapon", 0);
+        _animator.SetInteger("WeapoNummer", 0);
         _weaponIndex = 0;
         _weaponsObjects[0].SetActive(true);
         _weaponsObjects[1].SetActive(false);
         _bulletType = "Wind";
-        _animator.SetFloat("Velocidad de disparo", _fireRate);
+        _animator.SetFloat("Velocidad de disparo", _fireRateWind);
 
     }
 
@@ -90,6 +100,14 @@ public class PlayerControler : CustomMonoBehaviour
 
         Movement();
         UpdateAnimator();
+        if ( _shootDelayWind > 0)
+        {
+            _shootDelayWind -= Time.deltaTime;
+        }
+        if ( _shootDelayPoop > 0)
+        {
+            _shootDelayPoop -= Time.deltaTime;
+        }
     }
 
     void FixedUpdate()
@@ -109,13 +127,17 @@ public class PlayerControler : CustomMonoBehaviour
     private void Controls()
     {
         ChangeWeapon();
-
         _horizontal = Input.GetAxisRaw("Horizontal");
         _vertical = Input.GetAxisRaw("Vertical");
-        if (Input.GetButtonDown("Fire1"))
+        
+
+        if (Input.GetButton("Fire1"))
         {
+            
             Shooting();
+            
         }
+
     }
     //Comprueba el contacto con el suelo
     private void GroundCheck()
@@ -178,18 +200,19 @@ public class PlayerControler : CustomMonoBehaviour
         _cC.Move((_currentVelocity + vectorGravity) * Time.deltaTime);
 
         //Rotamos si estamos en movimiento
-        if (_currentVelocity.sqrMagnitude > 0.1f)
-        {
-            Quaternion targetRot = Quaternion.LookRotation(_currentVelocity);
-            _childTransform.rotation = Quaternion.Slerp(_childTransform.rotation, targetRot, Time.deltaTime * _rotationSpeed);
-        }
+        // if (_currentVelocity.sqrMagnitude > 0.1f)
+        // {
+        //     Quaternion targetRot = Quaternion.LookRotation(_currentVelocity);
+        //     _childTransform.rotation = Quaternion.Slerp(_childTransform.rotation, targetRot, Time.deltaTime * _rotationSpeed);
+        // }
     }
 
     private void ChangeWeapon()
     {
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            _animator.SetInteger("NumemrWeapon", 0);
+
+            _animator.SetInteger("WeapoNummer", 0);
             _weaponIndex = 0;
             _weaponsObjects[0].SetActive(true);
             _weaponsObjects[1].SetActive(false);
@@ -197,7 +220,7 @@ public class PlayerControler : CustomMonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.Alpha2))
         {
-            _animator.SetInteger("NumemrWeapon", 1);
+            _animator.SetInteger("WeapoNummer", 1);
             _bulletType = "ProyectilCaca";
             _weaponIndex = 1;
             _weaponsObjects[0].SetActive(false);
@@ -215,22 +238,30 @@ public class PlayerControler : CustomMonoBehaviour
         if (playerPlane.Raycast(ray, out float hitDist))
         {
             Vector3 targetPoint = ray.GetPoint(hitDist);
-
-
             // Si estamos quietos, rotamos al Padre. Si nos movemos, rotamos solo al Modelo.
             Vector3 dirToMouse = targetPoint - transform.position;
             dirToMouse.y = 0;
-
             if (dirToMouse.sqrMagnitude > 0.1f)
             {
                 Quaternion targetRot = Quaternion.LookRotation(dirToMouse);
 
-                if (_currentVelocity.magnitude < 0.1f)
+                if (Input.GetButton("Fire1") || _currentVelocity.magnitude < 0.1f)
                 {
                     // Rotación de cuerpo completo en reposo
                     transform.rotation = Quaternion.Slerp(transform.rotation, targetRot, Time.deltaTime * _rotationSpeed);
+                    _childTransform.localRotation = Quaternion.Slerp(_childTransform.localRotation, 
+                                                                     Quaternion.identity, 
+                                                                     Time.deltaTime * _rotationSpeed);
+                }
+                else if (_currentVelocity.magnitude > 0.1f)
+                {
+                    Quaternion moveRoot = Quaternion.LookRotation(_currentVelocity);
+                    _childTransform.rotation = Quaternion.Slerp(_childTransform.rotation, moveRoot, Time.deltaTime * _rotationSpeed);
                 }
             }
+
+
+
 
 
             // Usamos la posición del Padre pero CON ROTACIÓN CERO (Mundo) para que sea SIMÉTRICO
@@ -257,22 +288,25 @@ public class PlayerControler : CustomMonoBehaviour
 
     private void Shooting()
     {
-        if (Time.time < _shootTime) return;
 
         Vector3 position = Vector3.zero;
         Quaternion rotation = Quaternion.Euler(Vector3.zero);
 
-
-
         if (_shootPointWind != null && _bulletType == "Wind")
         {
+            if (_shootDelayWind > 0) return;
+            _shootDelayWind = _fireRateWind;
             position = _shootPointWind.position;
             rotation = Quaternion.LookRotation(_shootPointWind.forward);
             _animator.SetTrigger("ShootWind");
             PoolManager.Instance.Pull(_bulletType, position, rotation);
+
+
         }
         else if (_shootingPointPoop != null && _bulletType == "ProyectilCaca")
         {
+            if (_shootDelayPoop > 0) return; 
+            _shootDelayPoop = _fireRatePoop;
             _weaponIndex = 1;
             position = _shootingPointPoop.position;
             rotation = Quaternion.LookRotation(_shootingPointPoop.forward);
@@ -281,6 +315,12 @@ public class PlayerControler : CustomMonoBehaviour
         }
 
     }
+
+
+
+
+
+
 
 
     private void ParticleFX()
@@ -308,8 +348,22 @@ public class PlayerControler : CustomMonoBehaviour
     {
         _animator.SetFloat("Velocity", _currentVelocity.magnitude, 0.001f, Time.deltaTime);
     }
+    #endregion
+    #region IDamagable
+    public void TakeDamag(float damage, Vector3 impactPoint = default(Vector3))
+    {
+        _currentealt -= damage;
+        _currentealt = Mathf.Clamp(_currentealt, 0, _maxhealt);
+        if (IsDead)
+        {
+            Death();
+        }
+    }
 
-
+    private void Death()
+    {
+        this.enabled = false;
+    }
 
 
     #endregion

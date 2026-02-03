@@ -41,6 +41,10 @@ public class Proyectil : PoolEntity
 
       if ((_shootableLayers & (1 << other.gameObject.layer)) != 0)
       {
+         if (other.TryGetComponent(out IDamageabe<float> damageable))
+         {
+            damageable.TakeDamag(_damage, transform.position);
+         }
          OnImpact?.Invoke(transform.position);
          ReturnToPool();
       }

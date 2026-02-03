@@ -9,32 +9,22 @@ public class ProyectilViendo : Proyectil
     public override void Initialize()
     {
         //Forzamos el estado activo de la base
-        _isActive = true;
-        CancelInvoke("ReturnToPool");
-
-        //El Invoke de retorno SIEMPRE fuera de los IFs
-        float tiempoVida = (_lifetime > 0) ? _lifetime : 2f;
-        Invoke("ReturnToPool", tiempoVida);
-
-        // 3. Ajuste de componentes físicos
-        if (_rB != null) _rB.isKinematic = true;
-        if (_collider != null) _collider.enabled = false;
-
+        base.Initialize();
         // 4. Lógica de partículas REFORZADA
         if (_particulasViento != null)
         {
-            _particulasViento.gameObject.SetActive(true);
+            var _particleRenderer = _particulasViento.GetComponent<ParticleSystemRenderer>();
+            if (_particleRenderer != null) _particleRenderer.enabled = true;
             
-            // Parada total y reset de simulación
-            _particulasViento.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
-            _particulasViento.Simulate(0, true, true);
-            
-            var main = _particulasViento.main;
-            main.duration = tiempoVida; // Sincronizamos duración con vida del objeto
-
+            _particulasViento.Clear();
             _particulasViento.Play(true);
         }
     }
+            
+      
+
+        
+
 
     public override void Deactivate()
     {
