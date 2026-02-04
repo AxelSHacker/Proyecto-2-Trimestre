@@ -1177,7 +1177,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 25.4806, y: 4.67, z: 1.2146606}
-  m_LocalScale: {x: 58.77, y: 45.48, z: 50}
+  m_LocalScale: {x: 58.77, y: 55, z: 50}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8204365797108372590}
@@ -1907,7 +1907,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 3861161585278311940}
   - {fileID: 3208673962388809387}
   - {fileID: 8051292830037118912}
   - {fileID: 5893141961529407436}
@@ -2689,65 +2688,3 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!1001 &6768928371688164479
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 8204365797108372590}
-    m_Modifications:
-    - target: {fileID: 7522571020028121723, guid: 00b28c7c3db8a434080afa2b422fd595, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 72.078
-      objectReference: {fileID: 0}
-    - target: {fileID: 7522571020028121723, guid: 00b28c7c3db8a434080afa2b422fd595, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7522571020028121723, guid: 00b28c7c3db8a434080afa2b422fd595, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 7.6393
-      objectReference: {fileID: 0}
-    - target: {fileID: 7522571020028121723, guid: 00b28c7c3db8a434080afa2b422fd595, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: 7522571020028121723, guid: 00b28c7c3db8a434080afa2b422fd595, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7522571020028121723, guid: 00b28c7c3db8a434080afa2b422fd595, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: 7522571020028121723, guid: 00b28c7c3db8a434080afa2b422fd595, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7522571020028121723, guid: 00b28c7c3db8a434080afa2b422fd595, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7522571020028121723, guid: 00b28c7c3db8a434080afa2b422fd595, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 90
-      objectReference: {fileID: 0}
-    - target: {fileID: 7522571020028121723, guid: 00b28c7c3db8a434080afa2b422fd595, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8087052183407375888, guid: 00b28c7c3db8a434080afa2b422fd595, type: 3}
-      propertyPath: m_Name
-      value: Tienda Hippie
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 00b28c7c3db8a434080afa2b422fd595, type: 3}
---- !u!4 &3861161585278311940 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 7522571020028121723, guid: 00b28c7c3db8a434080afa2b422fd595, type: 3}
-  m_PrefabInstance: {fileID: 6768928371688164479}
-  m_PrefabAsset: {fileID: 0}
