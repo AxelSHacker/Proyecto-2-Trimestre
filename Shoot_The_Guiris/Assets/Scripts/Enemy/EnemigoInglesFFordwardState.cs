@@ -2,12 +2,14 @@ using UnityEngine;
 
 public class EnemigoInglesFFordwardState : StateMachineBehaviour
 {
+    
     private EnemigoIngles enemigoIngles;
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         //Recuperamos la refrencia al enemy propiietario de animator
         enemigoIngles = animator.GetComponentInParent<EnemigoIngles>();
+        
 
     }
 
@@ -24,7 +26,7 @@ public class EnemigoInglesFFordwardState : StateMachineBehaviour
         }
         if (!enemigoIngles.PathPending && enemigoIngles.RemainingDistanceToTarget < enemigoIngles.AttacDistance)
         {
-            animator.SetTrigger("M1attack");
+            animator.SetTrigger("attack");
             
         }
 

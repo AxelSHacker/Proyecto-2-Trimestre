@@ -16,7 +16,7 @@ public class MeleeWeapons : CustomMonoBehaviour
    }
    void OnTriggerEnter(Collider other)
    {
-      Debug.Log("Soy concha, Entro");
+      
       if ((_shootableLayers & (1 << other.gameObject.layer)) != 0)
       {
          if (other.TryGetComponent(out IDamageabe<float> damageable))
