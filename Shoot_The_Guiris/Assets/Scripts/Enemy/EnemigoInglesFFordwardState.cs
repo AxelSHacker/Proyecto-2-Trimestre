@@ -19,13 +19,13 @@ public class EnemigoInglesFFordwardState : StateMachineBehaviour
         //Si el navmesh agent esta activo y existe en objeto
         if (enemigoIngles.AgentIsActive && enemigoIngles.HasTarget)
         {
-            animator.SetBool("IsMoving", true);
+            
             enemigoIngles.SetDestinationToTarget();
         }
         if (!enemigoIngles.PathPending && enemigoIngles.RemainingDistanceToTarget < enemigoIngles.AttacDistance)
         {
             animator.SetTrigger("M1attack");
-            animator.SetBool("IsMoving", false);
+            
         }
 
     }

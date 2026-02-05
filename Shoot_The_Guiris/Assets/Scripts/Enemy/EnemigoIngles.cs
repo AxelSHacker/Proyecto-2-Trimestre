@@ -7,19 +7,21 @@ public class EnemigoIngles : PoolEntity
 {
    [Header("Referencias")]
    [SerializeField] NavMeshAgent _agent;
+   [SerializeField] GameObject _weapon;
    [SerializeField] Animator _animator;
    [Header("Configuracion")]
    Transform _target;
    [SerializeField] string _targetTag = "Player";
    [Header("Attack")]
    [SerializeField] float _attackDistance;
-   [SerializeField] GameObject _weapon;
 
    public bool AgentIsActive => _agent.enabled;
    public bool HasTarget => _target != null;
    public float RemainingDistanceToTarget => _agent.remainingDistance;
    public bool PathPending => _agent.pathPending;
-public float AttacDistance => _attackDistance;
+   public float AttacDistance => _attackDistance;
+
+   public Transform Target => _target;
    public override void EditorInit()
    {
       base.EditorInit();
@@ -34,13 +36,13 @@ public float AttacDistance => _attackDistance;
 
    void Update()
    {
-
+      AnimationController();
    }
    //Buscamos el objeto mas cercano con el ltag indicado
    public void CheckForTarget(string name)
    {
       GameObject[] possibleTarget = GameObject.FindGameObjectsWithTag(_targetTag);
-      
+
 
       if (possibleTarget == null || possibleTarget.Length == 0) return;
       _target = possibleTarget[0].transform;
@@ -64,6 +66,17 @@ public float AttacDistance => _attackDistance;
    public void SetDestinationToTarget()
    {
       SetDestination(_target.position);
+   }
+   private void AnimationController()
+   {
+      if (_agent.velocity.sqrMagnitude > 0.1f)
+      {
+         _animator.SetFloat("Velocidad", _agent.velocity.magnitude);
+      }
+      else
+      {
+         _animator.SetFloat("Velocidad", 0);
+      }
    }
 }
 

@@ -62,7 +62,7 @@ public class PlayerControler : CustomMonoBehaviour, IDamageabe<float>
     [SerializeField] Animator _animator;
     #region IDamagables
     [SerializeField] float _maxhealt;
-    float _currentealt;
+    [SerializeField] float _currentealt;
     public bool IsDead => _currentealt <= 0;
     #endregion
 
