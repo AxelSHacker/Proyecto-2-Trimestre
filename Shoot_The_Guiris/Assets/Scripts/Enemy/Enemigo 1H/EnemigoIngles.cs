@@ -15,11 +15,13 @@ public class EnemigoIngles : PoolEntity
    [Header("Attack")]
    [SerializeField] float _attackDistance;
 
+   [SerializeField] float _inRange;
    public bool AgentIsActive => _agent.enabled;
    public bool HasTarget => _target != null;
    public float RemainingDistanceToTarget => _agent.remainingDistance;
    public bool PathPending => _agent.pathPending;
    public float AttacDistance => _attackDistance;
+   public float InRange => _inRange;
 
    public Transform Target => _target;
    public override void EditorInit()

@@ -3303,7 +3303,7 @@ GameObject:
   - component: {fileID: 7327496240561697946}
   - component: {fileID: 3525940300785129810}
   - component: {fileID: 5883434829964919300}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: Samuel_Controler
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -3346,7 +3346,7 @@ CharacterController:
   m_Enabled: 1
   serializedVersion: 3
   m_Height: 10.5
-  m_Radius: 1
+  m_Radius: 1.59
   m_SlopeLimit: 45
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
@@ -3407,7 +3407,8 @@ MonoBehaviour:
   _desireVelocity: {x: 0, y: 0, z: 0}
   _currentVelocity: {x: 0, y: 0, z: 0}
   _animator: {fileID: 1530776081248515307}
-  _maxhealt: 100
+  _maxhealth: 100
+  _currentealth: 0
 --- !u!82 &5883434829964919300
 AudioSource:
   m_ObjectHideFlags: 0

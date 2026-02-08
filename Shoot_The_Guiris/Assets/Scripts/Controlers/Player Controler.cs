@@ -1,9 +1,11 @@
+using NUnit.Framework;
+using System.Collections.Generic;
 using Unity.Mathematics;
 using Unity.VisualScripting;
 using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
 
-public class PlayerControler : CustomMonoBehaviour, IDamageabe<float>
+public class PlayerControler : CustomMonoBehaviour, IDamageabe<float>, IObservable<IDamageableObserver>
 {
     #region Variables
     [SerializeField] bool showGizmos = true;
@@ -30,7 +32,7 @@ public class PlayerControler : CustomMonoBehaviour, IDamageabe<float>
     [SerializeField] GameObject[] _weaponsObjects;
     [SerializeField] float _shootDelayWind;
     [SerializeField] float _shootDelayPoop;
-    
+
     [SerializeField] Transform _shootPointWind;
     [SerializeField] Transform _shootingPointPoop;
     [SerializeField] string _bulletType;
@@ -61,9 +63,11 @@ public class PlayerControler : CustomMonoBehaviour, IDamageabe<float>
     [Header("Animator")]
     [SerializeField] Animator _animator;
     #region IDamagables
-    [SerializeField] float _maxhealt;
-    [SerializeField] float _currentealt;
-    public bool IsDead => _currentealt <= 0;
+    [SerializeField] float _maxhealth;
+    [SerializeField] float _currentealth;
+    public float Maxhealt { get => _maxhealth; }
+    public float Currentealt { get => _currentealth; }
+    public bool IsDead => _currentealth <= 0;
     #endregion
 
 
@@ -77,7 +81,7 @@ public class PlayerControler : CustomMonoBehaviour, IDamageabe<float>
     void Start()
     {
         _shootDelayWind = 0;
-        _currentealt = _maxhealt;
+        _currentealth = _maxhealth;
         _weaponsObjects[0].SetActive(true);
         _weaponsObjects[1].SetActive(false);
         _mainCamera = Camera.main;
@@ -88,6 +92,10 @@ public class PlayerControler : CustomMonoBehaviour, IDamageabe<float>
         _weaponsObjects[1].SetActive(false);
         _bulletType = "Wind";
         _animator.SetFloat("Velocidad de disparo", _fireRateWind);
+        for (int i = 0;i<_observable.Count; i++)
+        {
+            _observable[i].OnHealtUpdate(_currentealth, _maxhealth);
+        }
 
     }
 
@@ -100,11 +108,11 @@ public class PlayerControler : CustomMonoBehaviour, IDamageabe<float>
 
         Movement();
         UpdateAnimator();
-        if ( _shootDelayWind > 0)
+        if (_shootDelayWind > 0)
         {
             _shootDelayWind -= Time.deltaTime;
         }
-        if ( _shootDelayPoop > 0)
+        if (_shootDelayPoop > 0)
         {
             _shootDelayPoop -= Time.deltaTime;
         }
@@ -129,13 +137,13 @@ public class PlayerControler : CustomMonoBehaviour, IDamageabe<float>
         ChangeWeapon();
         _horizontal = Input.GetAxisRaw("Horizontal");
         _vertical = Input.GetAxisRaw("Vertical");
-        
+
 
         if (Input.GetButton("Fire1"))
         {
-            
+
             Shooting();
-            
+
         }
 
     }
@@ -171,7 +179,7 @@ public class PlayerControler : CustomMonoBehaviour, IDamageabe<float>
             camRight.y = 0;
             camRight.Normalize();
 
-            // 3. Creamos la dirección final combinando los ejes
+
             // 'W/S' mueve en el forward de la cámara, 'A/D' en el right de la cámara
             _direccion = (camForward * _vertical + camRight * _horizontal).normalized;
 
@@ -249,8 +257,8 @@ public class PlayerControler : CustomMonoBehaviour, IDamageabe<float>
                 {
                     // Rotación de cuerpo completo en reposo
                     transform.rotation = Quaternion.Slerp(transform.rotation, targetRot, Time.deltaTime * _rotationSpeed);
-                    _childTransform.localRotation = Quaternion.Slerp(_childTransform.localRotation, 
-                                                                     Quaternion.identity, 
+                    _childTransform.localRotation = Quaternion.Slerp(_childTransform.localRotation,
+                                                                     Quaternion.identity,
                                                                      Time.deltaTime * _rotationSpeed);
                 }
                 else if (_currentVelocity.magnitude > 0.1f)
@@ -305,7 +313,7 @@ public class PlayerControler : CustomMonoBehaviour, IDamageabe<float>
         }
         else if (_shootingPointPoop != null && _bulletType == "ProyectilCaca")
         {
-            if (_shootDelayPoop > 0) return; 
+            if (_shootDelayPoop > 0) return;
             _shootDelayPoop = _fireRatePoop;
             _weaponIndex = 1;
             position = _shootingPointPoop.position;
@@ -349,11 +357,17 @@ public class PlayerControler : CustomMonoBehaviour, IDamageabe<float>
         _animator.SetFloat("Velocity", _currentVelocity.magnitude, 0.001f, Time.deltaTime);
     }
     #endregion
-    #region IDamagable
+    #region IDamagable && Observable
     public void TakeDamag(float damage, Vector3 impactPoint = default(Vector3))
     {
-        _currentealt -= damage;
-        _currentealt = Mathf.Clamp(_currentealt, 0, _maxhealt);
+        _currentealth -= damage;
+        _currentealth = Mathf.Clamp(_currentealth, 0, _maxhealth);
+
+        for (int i = 0;i<_observable.Count; i++)
+        {
+            _observable[i].OnHealtUpdate(_currentealth, _maxhealth);
+            _observable[i].OnHit();
+        }
         if (IsDead)
         {
             Death();
@@ -362,7 +376,29 @@ public class PlayerControler : CustomMonoBehaviour, IDamageabe<float>
 
     private void Death()
     {
-        this.enabled = false;
+        for (int i = 0; i<_observable.Count; i++)
+        {
+            _observable[i].OnDead();
+        }
+    }
+    private List<IDamageableObserver> _observable;
+    public void AddObservable(IDamageableObserver observable)
+    {
+        if (_observable == null)
+        {
+            _observable = new List<IDamageableObserver>();
+        }
+        _observable.Add(observable);
+
+    }
+
+    public void RemoveObservable(IDamageableObserver observable)
+    {
+        if (_observable == null)
+        {
+            _observable = new List<IDamageableObserver>();
+        }
+        _observable.Remove(observable);
     }
 
 

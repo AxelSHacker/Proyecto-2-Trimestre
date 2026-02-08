@@ -8,9 +8,9 @@ public class ProyectilViendo : Proyectil
 
     public override void Initialize()
     {
-        //Forzamos el estado activo de la base
+        
         base.Initialize();
-        // 4. Lógica de partículas REFORZADA
+        //Lógica de partículas REFORZADA
         if (_particulasViento != null)
         {
             var _particleRenderer = _particulasViento.GetComponent<ParticleSystemRenderer>();

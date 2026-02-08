@@ -21,21 +21,21 @@ public class EnemigoInglesFFordwardState : StateMachineBehaviour
         //Si el navmesh agent esta activo y existe en objeto
         if (enemigoIngles.AgentIsActive && enemigoIngles.HasTarget)
         {
-            
             enemigoIngles.SetDestinationToTarget();
         }
-        if (!enemigoIngles.PathPending && enemigoIngles.RemainingDistanceToTarget < enemigoIngles.AttacDistance)
+        if (!enemigoIngles.PathPending && enemigoIngles.RemainingDistanceToTarget < enemigoIngles.InRange)
         {
-            animator.SetTrigger("attack");
-            
+            animator.SetBool("EnRango", true);
         }
-
+            
+            
     }
+
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        animator.ResetTrigger("M1attack");
+        
     }
 
     // OnStateMove is called right after Animator.OnAnimatorMove()
