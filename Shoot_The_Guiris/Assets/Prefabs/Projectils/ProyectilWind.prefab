@@ -178,7 +178,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   _particulasViento: {fileID: 4860119802092546794}
-  _fuerzadelViento: 40
+  _fuerzadelViento: 23
 --- !u!199 &8280088178255710551
 ParticleSystemRenderer:
   serializedVersion: 7
@@ -1097,7 +1097,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 3
+      scalar: 7
       minScalar: 10
       maxCurve:
         serializedVersion: 2
@@ -5047,6 +5047,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   _proyectil: {fileID: 2064989625852366759}
+  _meeeWeapons: {fileID: 0}
 --- !u!1 &3948371134722675002
 GameObject:
   m_ObjectHideFlags: 0

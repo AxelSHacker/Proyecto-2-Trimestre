@@ -3256,9 +3256,10 @@ GameObject:
   m_Component:
   - component: {fileID: 2354806056228154286}
   - component: {fileID: 2555619037356042526}
+  - component: {fileID: 7528703405175440473}
   - component: {fileID: 9105056018455768418}
   - component: {fileID: 8476996217755270541}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Enemigo Ingles 1H
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3319,6 +3320,33 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!54 &7528703405175440473
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6066830987552907864}
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!136 &9105056018455768418
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -3365,7 +3393,15 @@ MonoBehaviour:
   _agent: {fileID: 2555619037356042526}
   _weapon: {fileID: 2352148234479523794}
   _animator: {fileID: 8219042258543922672}
+  _rB: {fileID: 7528703405175440473}
+  _timertoStadUp: 0
   _targetTag: Player
+  _groundLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  _groundCheckPoint: {fileID: 9070519915368598728}
+  _groundCheckSize: 1.7
+  _grounded: 0
   _attackDistance: 8
   _inRange: 20
 --- !u!1 &6188695361225364894

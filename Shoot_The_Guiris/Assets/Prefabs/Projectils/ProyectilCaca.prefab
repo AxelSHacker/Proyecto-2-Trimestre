@@ -276,6 +276,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   _proyectil: {fileID: 1159673703817825477}
+  _meeeWeapons: {fileID: 0}
 --- !u!1 &3483607395892804854
 GameObject:
   m_ObjectHideFlags: 0
@@ -303,7 +304,7 @@ Transform:
   m_GameObject: {fileID: 3483607395892804854}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.027}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.7669424, y: 0.94118816, z: 1.3}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -391,7 +392,7 @@ Transform:
   m_GameObject: {fileID: 3872980978572851167}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -0.202}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -424,7 +425,7 @@ Transform:
   m_GameObject: {fileID: 4981767013420088497}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.020874}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -522,6 +523,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3988346972220966123}
     m_Modifications:
+    - target: {fileID: 1985009180047013211, guid: 23d1980a5299a2a41828313b8fdda9f0, type: 3}
+      propertyPath: InitialModule.startSize.minScalar
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 2811803653174349129, guid: 23d1980a5299a2a41828313b8fdda9f0, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
