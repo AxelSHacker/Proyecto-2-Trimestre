@@ -3366,10 +3366,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 1.51
-  m_Height: 11.472908
+  m_Radius: 1.8
+  m_Height: 13.369467
   m_Direction: 1
-  m_Center: {x: 0, y: 5.6, z: 0}
+  m_Center: {x: 0, y: 6.54828, z: 0}
 --- !u!114 &8476996217755270541
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3394,7 +3394,6 @@ MonoBehaviour:
   _weapon: {fileID: 2352148234479523794}
   _animator: {fileID: 8219042258543922672}
   _rB: {fileID: 7528703405175440473}
-  _timertoStadUp: 0
   _targetTag: Player
   _groundLayer:
     serializedVersion: 2
@@ -3404,6 +3403,8 @@ MonoBehaviour:
   _grounded: 0
   _attackDistance: 8
   _inRange: 20
+  _maxhealth: 100
+  _currentealth: 0
 --- !u!1 &6188695361225364894
 GameObject:
   m_ObjectHideFlags: 0

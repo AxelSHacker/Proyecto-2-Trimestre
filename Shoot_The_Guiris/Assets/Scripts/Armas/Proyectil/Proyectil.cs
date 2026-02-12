@@ -28,11 +28,12 @@ public class Proyectil : PoolEntity
    void Update()
    {
       if (!IsActive) return;
-      
+
       if (_lifeTimerTmp < Time.time)
       {
          ReturnToPool();
       }
+      
    }
 
    void OnTriggerEnter(Collider other)
@@ -43,14 +44,24 @@ public class Proyectil : PoolEntity
       {
          if (other.TryGetComponent(out IDamageabe<float> damageable))
          {
+            
+            if (other.TryGetComponent(out EnemigoIngles enemigo) && PoolID == "ProyectilCaca")
+            {
+               enemigo.RaletizacionCoroutina();
+            }
             damageable.TakeDamag(_damage, transform.position);
          }
          OnImpact?.Invoke(transform.position);
          ReturnToPool();
       }
-
    }
    #endregion
+               
+
+
+
+
+
    #region PoolEntity Methods
    public override void Initialize()
    {

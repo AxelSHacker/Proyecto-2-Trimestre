@@ -240,7 +240,7 @@ public class PlayerControler : CustomMonoBehaviour, IDamageabe<float>, IObservab
     {
         //Plano virtual a la altura del pecho para que el Raycast sea 100% estable
 
-        Plane playerPlane = new Plane(Vector3.up, transform.position + Vector3.up * 1.5f);
+        Plane playerPlane = new Plane(Vector3.up, transform.position + Vector3.up * 0.5f);
         Ray ray = _mainCamera.ScreenPointToRay(Input.mousePosition);
 
         if (playerPlane.Raycast(ray, out float hitDist))
@@ -288,7 +288,7 @@ public class PlayerControler : CustomMonoBehaviour, IDamageabe<float>, IObservab
 
             // Recomponemos la posición mundial
             Vector3 finalPos = transform.position + (transform.right * clampedX) + (transform.forward * clampedZ);
-            finalPos.y = transform.position.y + 1.5f;
+            finalPos.y = transform.position.y + 0.5f;
 
             _aimingPivot.position = Vector3.Lerp(_aimingPivot.position, finalPos, Time.deltaTime * 20f);
         }

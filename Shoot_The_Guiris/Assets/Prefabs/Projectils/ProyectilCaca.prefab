@@ -80,7 +80,7 @@ SphereCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -208,7 +208,7 @@ MonoBehaviour:
   _lifetime: 5
   _shootableLayers:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 128
 --- !u!114 &8481811923140244897
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -251,18 +251,6 @@ MonoBehaviour:
   OnImpact:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2245317788384264014}
-        m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
-        m_MethodName: PlayOneShot
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 4973081429175083570}
         m_TargetAssemblyTypeName: UnityEngine.ParticleSystem, UnityEngine
         m_MethodName: Play
@@ -392,7 +380,7 @@ Transform:
   m_GameObject: {fileID: 3872980978572851167}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0.202}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -524,8 +512,24 @@ PrefabInstance:
     m_TransformParent: {fileID: 3988346972220966123}
     m_Modifications:
     - target: {fileID: 1985009180047013211, guid: 23d1980a5299a2a41828313b8fdda9f0, type: 3}
-      propertyPath: InitialModule.startSize.minScalar
+      propertyPath: moveWithTransform
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1985009180047013211, guid: 23d1980a5299a2a41828313b8fdda9f0, type: 3}
+      propertyPath: InitialModule.startSize.scalar
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1985009180047013211, guid: 23d1980a5299a2a41828313b8fdda9f0, type: 3}
+      propertyPath: InitialModule.startSize.minScalar
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1985009180047013211, guid: 23d1980a5299a2a41828313b8fdda9f0, type: 3}
+      propertyPath: InitialModule.startLifetime.minScalar
+      value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1985009180047013211, guid: 23d1980a5299a2a41828313b8fdda9f0, type: 3}
+      propertyPath: EmissionModule.rateOverDistance.scalar
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 2811803653174349129, guid: 23d1980a5299a2a41828313b8fdda9f0, type: 3}
       propertyPath: m_LocalPosition.x
@@ -537,7 +541,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2811803653174349129, guid: 23d1980a5299a2a41828313b8fdda9f0, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.296
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2811803653174349129, guid: 23d1980a5299a2a41828313b8fdda9f0, type: 3}
       propertyPath: m_LocalRotation.w

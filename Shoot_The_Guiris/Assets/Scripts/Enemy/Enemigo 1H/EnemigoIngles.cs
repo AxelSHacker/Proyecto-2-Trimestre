@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Rendering;
 
-public class EnemigoIngles : PoolEntity
+public class EnemigoIngles : PoolEntity, IDamageabe<float>
 {
    [Header("Referencias")]
    [SerializeField] NavMeshAgent _agent;
@@ -14,8 +14,8 @@ public class EnemigoIngles : PoolEntity
    [SerializeField] Rigidbody _rB;
    [Header("Configuracion")]
    Transform _target;
-   
    [SerializeField] string _targetTag = "Player";
+   
    [Header("GroundCheck")]
    [SerializeField] LayerMask _groundLayer;
    [SerializeField] Transform _groundCheckPoint;
@@ -24,6 +24,9 @@ public class EnemigoIngles : PoolEntity
    bool _volando;
    [Header("Coroutine")]
    Coroutine _levantarse;
+   Coroutine _ralentizacion;
+   [Header("Movimiento")]
+   Vector3 _actualVelocity;
    [Header("Attack")]
    [SerializeField] float _attackDistance;
    [SerializeField] float _inRange;
@@ -35,8 +38,16 @@ public class EnemigoIngles : PoolEntity
    public float InRange => _inRange;
 
 
+
    public Transform Target => _target;
-   public override void EditorInit()
+
+    [SerializeField] float _maxhealth;
+    [SerializeField] float _currentealth;
+    public float Maxhealt { get => _maxhealth; }
+    public float Currentealt { get => _currentealth; }
+    public bool IsDead => _currentealth <= 0;
+
+    public override void EditorInit()
    {
       base.EditorInit();
       _agent = GetComponent<NavMeshAgent>();
@@ -48,6 +59,8 @@ public class EnemigoIngles : PoolEntity
    void Start()
    {
       CheckForTarget(_targetTag);
+      _actualVelocity = _agent.velocity;
+      _currentealth = _maxhealth;
    }
 
    void Update()
@@ -56,12 +69,14 @@ public class EnemigoIngles : PoolEntity
       if (_volando && _grounded && _rB.linearVelocity.y <= 0.1f)
       {
          _volando = false;
-         if ( _levantarse != null) StopCoroutine(_levantarse);
+         if (_levantarse != null) StopCoroutine(_levantarse);
          _levantarse = StartCoroutine(RutinaLevantarse());
       }
       AnimationController();
-
    }
+
+      
+
 
 
 
@@ -84,7 +99,7 @@ public class EnemigoIngles : PoolEntity
       Physics.OverlapSphereNonAlloc(_groundCheckPoint.position, _groundCheckSize, colliderBuffer, _groundLayer);
       //Actualitzamos el estado de _grounded
       _grounded = colliderBuffer[0] != null;
-      
+
    }
    public void ImpactoViento(Vector3 direccion)
    {
@@ -95,7 +110,19 @@ public class EnemigoIngles : PoolEntity
       _rB.isKinematic = false;
       _rB.constraints = RigidbodyConstraints.None;
       _rB.AddForce(direccion, ForceMode.Impulse);
+   }
+   private IEnumerator Ralentizacion()
+   {
+      _agent.velocity = _actualVelocity * 0.5f;
+      yield return new WaitForSeconds(1f);
+      _agent.velocity = _actualVelocity;
+      _ralentizacion = null;
+   }
 
+   public void RaletizacionCoroutina()
+   {
+      if (_ralentizacion != null) StopCoroutine(_ralentizacion);
+         _ralentizacion = StartCoroutine(Ralentizacion());
    }
 
    private IEnumerator RutinaLevantarse()
@@ -150,7 +177,10 @@ public class EnemigoIngles : PoolEntity
       }
    }
 
+    public void TakeDamag(float damage, Vector3 impactPoint = default)
+    {
+        _currentealth -= damage;
+        _currentealth = Mathf.Clamp(_currentealth, 0, _maxhealth);
+
+    }
 }
-
-
-
