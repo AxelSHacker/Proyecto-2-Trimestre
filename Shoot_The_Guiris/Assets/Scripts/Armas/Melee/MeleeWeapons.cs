@@ -16,10 +16,8 @@ public class MeleeWeapons : CustomMonoBehaviour
    }
    void OnTriggerEnter(Collider other)
    {
-
       if ((_shootableLayers & (1 << other.gameObject.layer)) != 0 && other.TryGetComponent(out IDamageabe<float> damageable))
       {
-
          damageable.TakeDamag(_damage, transform.position);
 
          if (other.TryGetComponent(out CharacterController component))
@@ -29,15 +27,17 @@ public class MeleeWeapons : CustomMonoBehaviour
             direccion.y = 0.1f;
             component.Move(direccion * _fuerzaEscudo);
          }
-
          OnImpact?.Invoke(transform.position);
-
-
       }
-
-      
    }
 }
+
+
+
+
+
+
+      
 
 
 

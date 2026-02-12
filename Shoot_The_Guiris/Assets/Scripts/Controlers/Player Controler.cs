@@ -17,7 +17,7 @@ public class PlayerControler : CustomMonoBehaviour, IDamageabe<float>, IObservab
     [SerializeField] float _deceleration = 40f;
     [SerializeField] Transform _camera;
     [SerializeField] Transform _childTransform;
-    Vector3 _lastMoveDirection;
+    
 
     [Header("Aiming")]
     [SerializeField] float _camRayLengt;

@@ -15,7 +15,7 @@ public class EnemigoIngles : PoolEntity, IDamageabe<float>
    [Header("Configuracion")]
    Transform _target;
    [SerializeField] string _targetTag = "Player";
-   
+
    [Header("GroundCheck")]
    [SerializeField] LayerMask _groundLayer;
    [SerializeField] Transform _groundCheckPoint;
@@ -36,33 +36,26 @@ public class EnemigoIngles : PoolEntity, IDamageabe<float>
    public bool PathPending => _agent.enabled && _agent.pathPending && _grounded;
    public float AttacDistance => _attackDistance;
    public float InRange => _inRange;
-
-
-
    public Transform Target => _target;
-
-    [SerializeField] float _maxhealth;
-    [SerializeField] float _currentealth;
-    public float Maxhealt { get => _maxhealth; }
-    public float Currentealt { get => _currentealth; }
-    public bool IsDead => _currentealth <= 0;
-
-    public override void EditorInit()
+   [SerializeField] float _maxhealth;
+   [SerializeField] float _currentealth;
+   public float Maxhealt { get => _maxhealth; }
+   public float Currentealt { get => _currentealth; }
+   public bool IsDead => _currentealth <= 0;
+   public override void EditorInit()
    {
       base.EditorInit();
       _agent = GetComponent<NavMeshAgent>();
       _animator = GetComponentInChildren<Animator>();
       _rB = GetComponent<Rigidbody>();
    }
-
-
    void Start()
    {
       CheckForTarget(_targetTag);
       _actualVelocity = _agent.velocity;
       _currentealth = _maxhealth;
+      _agent.speed = Random.Range(10f, 15f);
    }
-
    void Update()
    {
       GroundCheck();
@@ -74,22 +67,12 @@ public class EnemigoIngles : PoolEntity, IDamageabe<float>
       }
       AnimationController();
    }
-
-      
-
-
-
-
-
    void OnDrawGizmos()
    {
       //Cambiamos el color del Gizmos
       Gizmos.color = Color.red;
       Gizmos.DrawWireSphere(_groundCheckPoint.position, _groundCheckSize);
    }
-
-
-
    private void GroundCheck()
    {
       //Solo vamos a comprobar si es mayor que 0, asi que no necesitamos mas capacida de buffer
@@ -99,7 +82,6 @@ public class EnemigoIngles : PoolEntity, IDamageabe<float>
       Physics.OverlapSphereNonAlloc(_groundCheckPoint.position, _groundCheckSize, colliderBuffer, _groundLayer);
       //Actualitzamos el estado de _grounded
       _grounded = colliderBuffer[0] != null;
-
    }
    public void ImpactoViento(Vector3 direccion)
    {
@@ -118,13 +100,11 @@ public class EnemigoIngles : PoolEntity, IDamageabe<float>
       _agent.velocity = _actualVelocity;
       _ralentizacion = null;
    }
-
    public void RaletizacionCoroutina()
    {
       if (_ralentizacion != null) StopCoroutine(_ralentizacion);
-         _ralentizacion = StartCoroutine(Ralentizacion());
+      _ralentizacion = StartCoroutine(Ralentizacion());
    }
-
    private IEnumerator RutinaLevantarse()
    {
       yield return new WaitForSeconds(Random.Range(1f, 3f));
@@ -160,7 +140,6 @@ public class EnemigoIngles : PoolEntity, IDamageabe<float>
    {
       _agent.SetDestination(destinationPoint);
    }
-
    public void SetDestinationToTarget()
    {
       SetDestination(_target.position);
@@ -176,11 +155,33 @@ public class EnemigoIngles : PoolEntity, IDamageabe<float>
          _animator.SetFloat("Velocidad", 0);
       }
    }
+   public void TakeDamag(float damage, Vector3 impactPoint = default)
+   {
+      _currentealth -= damage;
+      _currentealth = Mathf.Clamp(_currentealth, 0, _maxhealth);
 
-    public void TakeDamag(float damage, Vector3 impactPoint = default)
-    {
-        _currentealth -= damage;
-        _currentealth = Mathf.Clamp(_currentealth, 0, _maxhealth);
-
-    }
+   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
