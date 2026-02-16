@@ -205,7 +205,7 @@ MonoBehaviour:
   _trailParticles: {fileID: 8861852547531784448}
   _damage: 10
   _speed: 100
-  _lifetime: 5
+  _lifetime: 10
   _shootableLayers:
     serializedVersion: 2
     m_Bits: 128
@@ -435,6 +435,10 @@ PrefabInstance:
     - target: {fileID: 669830497340048984, guid: ec55abd5b67e80f4da44816efdd25981, type: 3}
       propertyPath: playOnAwake
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 669830497340048984, guid: ec55abd5b67e80f4da44816efdd25981, type: 3}
+      propertyPath: autoRandomSeed
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5118275468754497476, guid: ec55abd5b67e80f4da44816efdd25981, type: 3}
       propertyPath: playOnAwake

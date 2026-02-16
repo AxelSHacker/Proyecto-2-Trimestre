@@ -1,15 +1,19 @@
 using System.Collections;
 
 using Unity.VisualScripting;
+using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Events;
 using UnityEngine.Rendering;
 
-public class EnemigoIngles : PoolEntity, IDamageabe<float>
+public class EnemigoIngles : PoolEntity, IDamageabe<float>, IDamageableObserver
 {
+   #region Variables
    [Header("Referencias")]
    [SerializeField] NavMeshAgent _agent;
-   [SerializeField] GameObject _weapon;
+   [SerializeField] Transform _weapon;
+   [SerializeField] Transform _weapon2;
    [SerializeField] Animator _animator;
    [SerializeField] Rigidbody _rB;
    [Header("Configuracion")]
@@ -22,14 +26,22 @@ public class EnemigoIngles : PoolEntity, IDamageabe<float>
    [SerializeField] float _groundCheckSize;
    [SerializeField] bool _grounded;
    bool _volando;
+
    [Header("Coroutine")]
    Coroutine _levantarse;
    Coroutine _ralentizacion;
+
    [Header("Movimiento")]
    Vector3 _actualVelocity;
+
    [Header("Attack")]
    [SerializeField] float _attackDistance;
    [SerializeField] float _inRange;
+   [SerializeField] float _maxhealth;
+   [SerializeField] float _currentealth;
+   #endregion
+   [Header("Getters")]
+   #region Getters
    public bool AgentIsActive => _agent.enabled;
    public bool HasTarget => _target != null && _grounded && _agent.enabled;
    public float RemainingDistanceToTarget => _agent.enabled ? _agent.remainingDistance : 0f;
@@ -37,11 +49,16 @@ public class EnemigoIngles : PoolEntity, IDamageabe<float>
    public float AttacDistance => _attackDistance;
    public float InRange => _inRange;
    public Transform Target => _target;
-   [SerializeField] float _maxhealth;
-   [SerializeField] float _currentealth;
    public float Maxhealt { get => _maxhealth; }
    public float Currentealt { get => _currentealth; }
    public bool IsDead => _currentealth <= 0;
+   public Transform Posicion => _weapon;
+   public Transform Posicion2 => _weapon2;
+
+   #endregion
+   public UnityEvent OnInizialize;
+   public UnityEvent OnDeactivate;
+   public UnityEvent OnDeadUE;
    public override void EditorInit()
    {
       base.EditorInit();
@@ -51,6 +68,7 @@ public class EnemigoIngles : PoolEntity, IDamageabe<float>
    }
    void Start()
    {
+      Revivir();
       CheckForTarget(_targetTag);
       _actualVelocity = _agent.velocity;
       _currentealth = _maxhealth;
@@ -155,11 +173,51 @@ public class EnemigoIngles : PoolEntity, IDamageabe<float>
          _animator.SetFloat("Velocidad", 0);
       }
    }
+   #region PooEntity
+   public override void Initialize()
+   {
+      base.Initialize();
+      _agent.Warp(transform.position);
+      OnInizialize?.Invoke();
+   }
+
+   public override void Deactivate()
+   {
+      base.Deactivate();
+      OnDeactivate?.Invoke();
+   }
+   #endregion
    public void TakeDamag(float damage, Vector3 impactPoint = default)
    {
       _currentealth -= damage;
       _currentealth = Mathf.Clamp(_currentealth, 0, _maxhealth);
+      if (_currentealth == 0)
+      {
+         Death();
+      }
+   }
+   private void Death()
+   {
+      _animator.SetTrigger("Dead");
+      OnDeadUE?.Invoke();
+   }
+   public void OnHealtUpdate(float currentealt, float maxealt)
+   {
+      
+   }
 
+   public void OnHit()
+   {
+      
+   }
+
+   public void OnDead()
+   {
+      _animator.Play("Idle");
+   }
+   private void Revivir()
+   {
+      _currentealth = _maxhealth;
    }
 }
 

@@ -435,6 +435,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9070519915368598728}
   - component: {fileID: 8219042258543922672}
+  - component: {fileID: 9204631716979702327}
   m_Layer: 0
   m_Name: Modelo Ingles
   m_TagString: Untagged
@@ -469,7 +470,7 @@ Animator:
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 4cb752ca97a0cc148a69df7e9a5f23a4, type: 3}
   m_Controller: {fileID: 9100000, guid: 52f07302c8b1cf846a9a1c7e213a0522, type: 2}
-  m_CullingMode: 0
+  m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
@@ -480,6 +481,19 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &9204631716979702327
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 518894781474360329}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04afb2f2c426964419659d0f48096e14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemigoAnimationEvents
+  _armaScript: {fileID: 8911941973843558164}
 --- !u!1 &609484874547658329
 GameObject:
   m_ObjectHideFlags: 0
@@ -3402,6 +3416,7 @@ MonoBehaviour:
   _isActive: 0
   _agent: {fileID: 2555619037356042526}
   _weapon: {fileID: 2352148234479523794}
+  _weapon2: {fileID: 0}
   _animator: {fileID: 8219042258543922672}
   _rB: {fileID: 7528703405175440473}
   _targetTag: Player
@@ -3411,10 +3426,127 @@ MonoBehaviour:
   _groundCheckPoint: {fileID: 9070519915368598728}
   _groundCheckSize: 1.7
   _grounded: 0
-  _attackDistance: 8
+  _attackDistance: 20
   _inRange: 20
-  _maxhealth: 100
+  _maxhealth: 50
   _currentealth: 0
+  OnInizialize:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 9105056018455768418}
+        m_TargetAssemblyTypeName: UnityEngine.CapsuleCollider, UnityEngine
+        m_MethodName: set_enabled
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 2555619037356042526}
+        m_TargetAssemblyTypeName: UnityEngine.AI.NavMeshAgent, UnityEngine
+        m_MethodName: set_isStopped
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnDeactivate:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 9105056018455768418}
+        m_TargetAssemblyTypeName: UnityEngine.CapsuleCollider, UnityEngine
+        m_MethodName: set_enabled
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 2555619037356042526}
+        m_TargetAssemblyTypeName: UnityEngine.AI.NavMeshAgent, UnityEngine
+        m_MethodName: set_isStopped
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 8219042258543922672}
+        m_TargetAssemblyTypeName: UnityEngine.Animator, UnityEngine
+        m_MethodName: Play
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Idle
+          m_BoolArgument: 1
+        m_CallState: 2
+  OnDeadUE:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 9105056018455768418}
+        m_TargetAssemblyTypeName: UnityEngine.CapsuleCollider, UnityEngine
+        m_MethodName: set_enabled
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 2555619037356042526}
+        m_TargetAssemblyTypeName: UnityEngine.AI.NavMeshAgent, UnityEngine
+        m_MethodName: set_isStopped
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 8548423562869733703}
+        m_TargetAssemblyTypeName: UnityEngine.ParticleSystem, UnityEngine
+        m_MethodName: Play
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 8042655927129060097}
+        m_TargetAssemblyTypeName: UnityEngine.ParticleSystem, UnityEngine
+        m_MethodName: Play
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!1 &6188695361225364894
 GameObject:
   m_ObjectHideFlags: 0
@@ -4447,7 +4579,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 196.104
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 7085205008569992110, guid: a8a831b8b80b0b743ae30fee954360d1, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -4583,6 +4716,11 @@ ParticleSystemRenderer:
   m_CorrespondingSourceObject: {fileID: 2583568443465192731, guid: 43fd78dd76198974dbfa64daf2e20334, type: 3}
   m_PrefabInstance: {fileID: 5388094341357173887}
   m_PrefabAsset: {fileID: 0}
+--- !u!198 &8548423562869733703 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 4351676471388865848, guid: 43fd78dd76198974dbfa64daf2e20334, type: 3}
+  m_PrefabInstance: {fileID: 5388094341357173887}
+  m_PrefabAsset: {fileID: 0}
 --- !u!199 &8929688733645740693 stripped
 ParticleSystemRenderer:
   m_CorrespondingSourceObject: {fileID: 3542920957366757098, guid: 43fd78dd76198974dbfa64daf2e20334, type: 3}
@@ -4596,6 +4734,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5750364695106585022}
     m_Modifications:
+    - target: {fileID: -2776974320702814065, guid: 5c52e2f043b43974b84450ba516f948c, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: -2776974320702814065, guid: 5c52e2f043b43974b84450ba516f948c, type: 3}
       propertyPath: OnImpact.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: 
@@ -4611,6 +4753,30 @@ PrefabInstance:
     - target: {fileID: 96760141110359316, guid: 5c52e2f043b43974b84450ba516f948c, type: 3}
       propertyPath: m_LocalPosition.z
       value: 0.33
+      objectReference: {fileID: 0}
+    - target: {fileID: 2829858001643300313, guid: 5c52e2f043b43974b84450ba516f948c, type: 3}
+      propertyPath: _offset.y
+      value: 1.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2829858001643300313, guid: 5c52e2f043b43974b84450ba516f948c, type: 3}
+      propertyPath: _offset.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2829858001643300313, guid: 5c52e2f043b43974b84450ba516f948c, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2829858001643300313, guid: 5c52e2f043b43974b84450ba516f948c, type: 3}
+      propertyPath: _tamanioCaja.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2829858001643300313, guid: 5c52e2f043b43974b84450ba516f948c, type: 3}
+      propertyPath: _tamanioCaja.y
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2829858001643300313, guid: 5c52e2f043b43974b84450ba516f948c, type: 3}
+      propertyPath: _tamanioCaja.z
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2829858001643300313, guid: 5c52e2f043b43974b84450ba516f948c, type: 3}
       propertyPath: _shootableLayers.m_Bits
@@ -4660,6 +4826,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 200.732
       objectReference: {fileID: 0}
+    - target: {fileID: 3453934522133973558, guid: 5c52e2f043b43974b84450ba516f948c, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3522593407664007020, guid: 5c52e2f043b43974b84450ba516f948c, type: 3}
       propertyPath: m_Size.x
       value: 0.28145728
@@ -4688,7 +4858,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: MeleeWeapon_1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3522593407664007020, guid: 5c52e2f043b43974b84450ba516f948c, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -4723,6 +4894,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3319905707424585122, guid: 5c52e2f043b43974b84450ba516f948c, type: 3}
   m_PrefabInstance: {fileID: 6694663355063884493}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &8911941973843558164 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2829858001643300313, guid: 5c52e2f043b43974b84450ba516f948c, type: 3}
+  m_PrefabInstance: {fileID: 6694663355063884493}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2352148234479523794}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b675f10db745184fbe4491c8b3ae017, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MeleeWeapons
 --- !u!1001 &7864004488923159539
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4803,6 +4985,11 @@ PrefabInstance:
 --- !u!4 &7868818229895624757 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4826957403153350, guid: 4430919f14c50f84085d287cbcb2c30e, type: 3}
+  m_PrefabInstance: {fileID: 7864004488923159539}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &8042655927129060097 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 198104090543139058, guid: 4430919f14c50f84085d287cbcb2c30e, type: 3}
   m_PrefabInstance: {fileID: 7864004488923159539}
   m_PrefabAsset: {fileID: 0}
 --- !u!199 &8063513883123684885 stripped

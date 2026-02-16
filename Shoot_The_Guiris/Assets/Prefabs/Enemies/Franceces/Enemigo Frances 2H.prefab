@@ -116,7 +116,7 @@ NavMeshAgent:
   m_Acceleration: 50
   avoidancePriority: 50
   m_AngularSpeed: 50
-  m_StoppingDistance: 8
+  m_StoppingDistance: 12
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
@@ -212,7 +212,7 @@ MonoBehaviour:
   _groundCheckPoint: {fileID: 5241117181858592769}
   _groundCheckSize: 1.7
   _grounded: 0
-  _attackDistance: 8
+  _attackDistance: 20
   _inRange: 20
   _maxhealth: 100
   _currentealth: 0
@@ -468,7 +468,10 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 4874312042710183988, guid: 55ecc23ce0a864f4aa75f4dbff8bbccf, type: 3}
       insertIndex: -1
       addedObject: {fileID: 4642628408965529629}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5457882312884035192, guid: 55ecc23ce0a864f4aa75f4dbff8bbccf, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8281853325957905262}
   m_SourcePrefab: {fileID: 100100000, guid: 55ecc23ce0a864f4aa75f4dbff8bbccf, type: 3}
 --- !u!137 &778687878535649019 stripped
 SkinnedMeshRenderer:
@@ -515,6 +518,24 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4874312042710183988, guid: 55ecc23ce0a864f4aa75f4dbff8bbccf, type: 3}
   m_PrefabInstance: {fileID: 2820980244192840030}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &7825120480298620710 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5457882312884035192, guid: 55ecc23ce0a864f4aa75f4dbff8bbccf, type: 3}
+  m_PrefabInstance: {fileID: 2820980244192840030}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &8281853325957905262
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7825120480298620710}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04afb2f2c426964419659d0f48096e14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemigoAnimationEvents
+  _armaScript: {fileID: 6700868391113862173}
 --- !u!1001 &5880646741901451304
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -610,6 +631,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7242679285119744362}
     m_Modifications:
+    - target: {fileID: 1131299852974239942, guid: 02c1154ac5db28142abe17f05f2383d4, type: 3}
+      propertyPath: _offset.z
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 1131299852974239942, guid: 02c1154ac5db28142abe17f05f2383d4, type: 3}
+      propertyPath: _tamanioCaja.z
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 1378249390967233734, guid: 02c1154ac5db28142abe17f05f2383d4, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.152
@@ -654,7 +683,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: Baguette
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 373652519209613891, guid: 02c1154ac5db28142abe17f05f2383d4, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -674,3 +704,14 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 2116034514252388449, guid: 02c1154ac5db28142abe17f05f2383d4, type: 3}
   m_PrefabInstance: {fileID: 6002572025993305307}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &6700868391113862173 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1131299852974239942, guid: 02c1154ac5db28142abe17f05f2383d4, type: 3}
+  m_PrefabInstance: {fileID: 6002572025993305307}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5625208525106824378}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b675f10db745184fbe4491c8b3ae017, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MeleeWeapons

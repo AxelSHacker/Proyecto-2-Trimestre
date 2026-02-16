@@ -430,6 +430,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2027450871414110173}
   - component: {fileID: 976609869314960787}
+  - component: {fileID: 3349935199623305665}
   m_Layer: 0
   m_Name: Model
   m_TagString: Untagged
@@ -475,6 +476,19 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &3349935199623305665
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1556929537592985401}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04afb2f2c426964419659d0f48096e14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemigoAnimationEvents
+  _armaScript: {fileID: 4179589220102652420}
 --- !u!1 &1607658321702794890
 GameObject:
   m_ObjectHideFlags: 0
@@ -4357,8 +4371,28 @@ PrefabInstance:
     m_TransformParent: {fileID: 6017077123424028467}
     m_Modifications:
     - target: {fileID: -610775913141153681, guid: bd48ee28347928d4f9cf7ffc2cfe7475, type: 3}
-      propertyPath: m_Enabled
+      propertyPath: _offset.y
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: -610775913141153681, guid: bd48ee28347928d4f9cf7ffc2cfe7475, type: 3}
+      propertyPath: _offset.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -610775913141153681, guid: bd48ee28347928d4f9cf7ffc2cfe7475, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -610775913141153681, guid: bd48ee28347928d4f9cf7ffc2cfe7475, type: 3}
+      propertyPath: _tamanioCaja.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -610775913141153681, guid: bd48ee28347928d4f9cf7ffc2cfe7475, type: 3}
+      propertyPath: _tamanioCaja.y
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: -610775913141153681, guid: bd48ee28347928d4f9cf7ffc2cfe7475, type: 3}
+      propertyPath: _tamanioCaja.z
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1128919916511784344, guid: bd48ee28347928d4f9cf7ffc2cfe7475, type: 3}
       propertyPath: m_Enabled
@@ -4408,12 +4442,13 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 67.944
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1128919916511784344, guid: bd48ee28347928d4f9cf7ffc2cfe7475, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 8371384969303505745, guid: bd48ee28347928d4f9cf7ffc2cfe7475, type: 3}
-      insertIndex: 4
+      insertIndex: -1
       addedObject: {fileID: 4271798959470396722}
   m_SourcePrefab: {fileID: 100100000, guid: bd48ee28347928d4f9cf7ffc2cfe7475, type: 3}
 --- !u!23 &4155650986517313530 stripped
@@ -4438,7 +4473,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4155650986519505210}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 147d184a4023d1247a76ca2690ec4991, type: 3}
   m_Name: 
@@ -4457,7 +4492,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 5586421541867754091}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4155650986519505210}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5b675f10db745184fbe4491c8b3ae017, type: 3}
   m_Name: 

@@ -64,6 +64,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2555619037356042526, guid: 3349151770bc5864aa3cae2d7ae2970b, type: 3}
+      propertyPath: m_StoppingDistance
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 3273458779477945412, guid: 3349151770bc5864aa3cae2d7ae2970b, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -88,6 +92,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemigo Ingles Polearm
       objectReference: {fileID: 0}
+    - target: {fileID: 6066830987552907864, guid: 3349151770bc5864aa3cae2d7ae2970b, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7511690286100527514, guid: 3349151770bc5864aa3cae2d7ae2970b, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -96,6 +104,10 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 25ec60c6d19a15a42b762388c4d5a242, type: 2}
+    - target: {fileID: 8219042258543922672, guid: 3349151770bc5864aa3cae2d7ae2970b, type: 3}
+      propertyPath: m_CullingMode
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8476996217755270541, guid: 3349151770bc5864aa3cae2d7ae2970b, type: 3}
       propertyPath: _poolID
       value: EnemigoIngles Polearm
@@ -106,7 +118,7 @@ PrefabInstance:
       objectReference: {fileID: 1163820190756511501}
     - target: {fileID: 8476996217755270541, guid: 3349151770bc5864aa3cae2d7ae2970b, type: 3}
       propertyPath: _attackDistance
-      value: 9
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 8476996217755270541, guid: 3349151770bc5864aa3cae2d7ae2970b, type: 3}
       propertyPath: _renderers.Array.size
@@ -144,6 +156,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 9204631716979702327, guid: 3349151770bc5864aa3cae2d7ae2970b, type: 3}
+      propertyPath: _armaScript
+      value: 
+      objectReference: {fileID: 6676962310050627223}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 6188695361225364894, guid: 3349151770bc5864aa3cae2d7ae2970b, type: 3}
@@ -198,6 +214,26 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 6563256610156076624}
     m_Modifications:
+    - target: {fileID: 4217577460963137501, guid: b7ca4a2c91116984681b23a881a745c9, type: 3}
+      propertyPath: _offset.y
+      value: 1.38
+      objectReference: {fileID: 0}
+    - target: {fileID: 4217577460963137501, guid: b7ca4a2c91116984681b23a881a745c9, type: 3}
+      propertyPath: _offset.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4217577460963137501, guid: b7ca4a2c91116984681b23a881a745c9, type: 3}
+      propertyPath: _tamanioCaja.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4217577460963137501, guid: b7ca4a2c91116984681b23a881a745c9, type: 3}
+      propertyPath: _tamanioCaja.y
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4217577460963137501, guid: b7ca4a2c91116984681b23a881a745c9, type: 3}
+      propertyPath: _tamanioCaja.z
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8505107058190972487, guid: b7ca4a2c91116984681b23a881a745c9, type: 3}
       propertyPath: m_Name
       value: TSP_Fence_Wood_02A_Pole
@@ -242,7 +278,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -99.185
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8505107058190872809, guid: b7ca4a2c91116984681b23a881a745c9, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -262,3 +299,14 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8505107058191002215, guid: b7ca4a2c91116984681b23a881a745c9, type: 3}
   m_PrefabInstance: {fileID: 7362978033107200330}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &6676962310050627223 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4217577460963137501, guid: b7ca4a2c91116984681b23a881a745c9, type: 3}
+  m_PrefabInstance: {fileID: 7362978033107200330}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1163820190756511501}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b675f10db745184fbe4491c8b3ae017, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MeleeWeapons

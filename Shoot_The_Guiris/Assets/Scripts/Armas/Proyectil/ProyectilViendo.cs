@@ -44,7 +44,7 @@ public class ProyectilViendo : Proyectil
             {
 
                 Vector3 direccion = transform.forward;
-                direccion.y = Random.Range(0.1f, 0.3f);
+                direccion.y = 0.1f;
                 enemigo.ImpactoViento(direccion * _fuerzadelViento);
                
 
