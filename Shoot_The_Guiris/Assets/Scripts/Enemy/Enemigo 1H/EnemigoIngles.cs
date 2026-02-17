@@ -16,6 +16,7 @@ public class EnemigoIngles : PoolEntity, IDamageabe<float>, IDamageableObserver
    [SerializeField] Transform _weapon2;
    [SerializeField] Animator _animator;
    [SerializeField] Rigidbody _rB;
+   [SerializeField] DissolveBehaviour _dissolve;
    [Header("Configuracion")]
    Transform _target;
    [SerializeField] string _targetTag = "Player";
@@ -65,13 +66,14 @@ public class EnemigoIngles : PoolEntity, IDamageabe<float>, IDamageableObserver
       _agent = GetComponent<NavMeshAgent>();
       _animator = GetComponentInChildren<Animator>();
       _rB = GetComponent<Rigidbody>();
+      _dissolve = GetComponent<DissolveBehaviour>();
    }
    void Start()
    {
       Revivir();
       CheckForTarget(_targetTag);
       _actualVelocity = _agent.velocity;
-      _currentealth = _maxhealth;
+      
       _agent.speed = Random.Range(10f, 15f);
    }
    void Update()
@@ -200,6 +202,8 @@ public class EnemigoIngles : PoolEntity, IDamageabe<float>, IDamageableObserver
    {
       _animator.SetTrigger("Dead");
       OnDeadUE?.Invoke();
+      // _dissolve.StartDissolve();
+      // _dissolve.ResetDissolve();
    }
    public void OnHealtUpdate(float currentealt, float maxealt)
    {
@@ -218,6 +222,9 @@ public class EnemigoIngles : PoolEntity, IDamageabe<float>, IDamageableObserver
    private void Revivir()
    {
       _currentealth = _maxhealth;
+
+      //_dissolve.StopDissolve();
+      _animator.ResetTrigger("Dead");
    }
 }
 

@@ -20,6 +20,7 @@ public class PlayerControler : CustomMonoBehaviour, IDamageabe<float>, IObservab
 
 
     [Header("Aiming")]
+    [SerializeField] Vector2 _posicionDelRaton;
     [SerializeField] float _camRayLengt;
     [SerializeField] float _maxDistanceSide = 3f;
     [SerializeField] LayerMask _pointerLayer;
@@ -106,8 +107,6 @@ public class PlayerControler : CustomMonoBehaviour, IDamageabe<float>, IObservab
     {
         GroundCheck();
 
-        Controls();
-
         Movement();
         UpdateAnimator();
         if (_shootDelayWind > 0)
@@ -144,6 +143,10 @@ public class PlayerControler : CustomMonoBehaviour, IDamageabe<float>, IObservab
             _vertical = 0f;
         }
     }
+    public void OnMouse(InputAction.CallbackContext context)
+    {
+        _posicionDelRaton = context.ReadValue<Vector2>();
+    }
     public void OnAttack(InputAction.CallbackContext context)
     {
         if (context.performed)
@@ -168,6 +171,29 @@ public class PlayerControler : CustomMonoBehaviour, IDamageabe<float>, IObservab
             DaschLeft();
         }
     }
+    public void Weapon1(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            _animator.SetInteger("WeapoNummer", 0);
+            _bulletType = "Wind";
+            _weaponIndex = 0;
+            _weaponsObjects[0].SetActive(true);
+            _weaponsObjects[1].SetActive(false);
+        }
+    }
+    public void Weapon2(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            _animator.SetInteger("WeapoNummer", 1);
+            _bulletType = "ProyectilCaca";
+            _weaponIndex = 1;
+            _weaponsObjects[0].SetActive(false);
+            _weaponsObjects[1].SetActive(true);
+        }
+    }
+    
     #endregion
 
 
@@ -180,21 +206,6 @@ public class PlayerControler : CustomMonoBehaviour, IDamageabe<float>, IObservab
         Gizmos.DrawWireCube(_groundCheckPoint.position, _groundCheckSize);
     }
     #region Method
-    private void Controls()
-    {
-        ChangeWeapon();
-        // _horizontal = Input.GetAxisRaw("Horizontal");
-        // _vertical = Input.GetAxisRaw("Vertical");
-
-
-        // if (Input.GetButton("Fire1"))
-        // {
-
-        //     Shooting();
-
-        // }
-
-    }
     //Comprueba el contacto con el suelo
     private void GroundCheck()
     {
@@ -271,34 +282,12 @@ public class PlayerControler : CustomMonoBehaviour, IDamageabe<float>, IObservab
     {
         _cC.Move(-transform.right * 400 * Time.deltaTime);
     }
-
-    private void ChangeWeapon()
-    {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-
-            _animator.SetInteger("WeapoNummer", 0);
-            _weaponIndex = 0;
-            _weaponsObjects[0].SetActive(true);
-            _weaponsObjects[1].SetActive(false);
-            _bulletType = "Wind";
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            _animator.SetInteger("WeapoNummer", 1);
-            _bulletType = "ProyectilCaca";
-            _weaponIndex = 1;
-            _weaponsObjects[0].SetActive(false);
-            _weaponsObjects[1].SetActive(true);
-        }
-    }
-
     private void Aiming()
     {
         //Plano virtual a la altura del pecho para que el Raycast sea 100% estable
 
         Plane playerPlane = new Plane(Vector3.up, transform.position + Vector3.up * 0.5f);
-        Ray ray = _mainCamera.ScreenPointToRay(Input.mousePosition);
+        Ray ray = _mainCamera.ScreenPointToRay(_posicionDelRaton);
 
         if (playerPlane.Raycast(ray, out float hitDist))
         {
@@ -310,9 +299,9 @@ public class PlayerControler : CustomMonoBehaviour, IDamageabe<float>, IObservab
             if (dirToMouse.sqrMagnitude > 0.1f)
             {
                 Quaternion targetRot = Quaternion.LookRotation(dirToMouse);
-                float currentRotSpeed = Input.GetButtonDown("Fire1") ? _rotationSpeed * 3 : _rotationSpeed;
+                float currentRotSpeed = _disparando ? _rotationSpeed * 3 : _rotationSpeed;
 
-                if (Input.GetButton("Fire1") || _currentVelocity.magnitude < 0.1f)
+                if (_disparando || _currentVelocity.magnitude < 0.1f)
                 {
                     // Rotación de cuerpo completo en reposo
                     transform.rotation = Quaternion.Slerp(transform.rotation, targetRot, Time.deltaTime * currentRotSpeed);
