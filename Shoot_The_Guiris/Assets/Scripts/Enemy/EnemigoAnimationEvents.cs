@@ -3,7 +3,8 @@ using UnityEngine;
 public class EnemigoAnimationEvents : MonoBehaviour
 {
     
-    [SerializeField] private MeleeWeapons _armaScript; 
+    [SerializeField] MeleeWeapons _armaScript;
+    [SerializeField] EnemigoIngles _enemigoIngles;
 
     
     public void StartAttack()
@@ -14,5 +15,9 @@ public class EnemigoAnimationEvents : MonoBehaviour
     public void StopAttack()
     {
         if (_armaScript != null) _armaScript.StopAtaque();
+    }
+    public void ReturnToPool()
+    {
+        if (_enemigoIngles != null) _enemigoIngles.ReturnToPool();
     }
 }

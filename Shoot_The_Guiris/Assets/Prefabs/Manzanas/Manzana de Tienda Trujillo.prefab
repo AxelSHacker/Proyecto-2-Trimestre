@@ -753,6 +753,7 @@ GameObject:
   - component: {fileID: 529062140724930673}
   - component: {fileID: 837301590548020641}
   - component: {fileID: 8777041730955966555}
+  - component: {fileID: 6870307443964907214}
   m_Layer: 0
   m_Name: building-d (2)
   m_TagString: Untagged
@@ -832,6 +833,27 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &6870307443964907214
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5656778966739159551}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.724832, y: 1.2929995, z: 0.89999986}
+  m_Center: {x: -0.44241592, y: 0.64650005, z: -0.000000114440915}
 --- !u!1 &5763114115647498539
 GameObject:
   m_ObjectHideFlags: 0
@@ -896,8 +918,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 315.97638, y: 134.23755, z: 71.81527}
-  m_Center: {x: 144.89651, y: 67.046875, z: -60.944542}
+  m_Size: {x: 320.0999, y: 134.23755, z: 77.03099}
+  m_Center: {x: 146.95828, y: 67.046875, z: -63.55241}
 --- !u!1 &6443305943019373450
 GameObject:
   m_ObjectHideFlags: 0

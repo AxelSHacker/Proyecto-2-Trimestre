@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 
 using UnityEngine;
+using UnityEngine.Animations.Rigging;
 using UnityEngine.InputSystem;
 
 public class PlayerControler : CustomMonoBehaviour, IDamageabe<float>, IObservable<IDamageableObserver>
@@ -28,6 +29,7 @@ public class PlayerControler : CustomMonoBehaviour, IDamageabe<float>, IObservab
     [SerializeField] Transform _aimReference;
     //Referncia a la camara principal
     [SerializeField] Camera _mainCamera;
+    
 
     [Header("Shooting")]
     [SerializeField] GameObject[] _weaponsObjects;
@@ -37,11 +39,11 @@ public class PlayerControler : CustomMonoBehaviour, IDamageabe<float>, IObservab
     [SerializeField] Transform _shootPointWind;
     [SerializeField] Transform _shootingPointPoop;
     [SerializeField] string _bulletType;
-    [SerializeField] int _weaponIndex = 0;
+    int _weaponIndex = 0;
     [SerializeField] float _fireRateWind;
     [SerializeField] float _fireRatePoop;
     [SerializeField] int _cargadorCaca;
-     bool _disparando;
+    bool _disparando;
 
     [Header("Physics")]
     [SerializeField] CharacterController _cC;
@@ -152,7 +154,8 @@ public class PlayerControler : CustomMonoBehaviour, IDamageabe<float>, IObservab
         if (context.performed)
         {
             _disparando = true;
-        }else if (context.canceled)
+        }
+        else if (context.canceled)
         {
             _disparando = false;
         }
@@ -193,7 +196,7 @@ public class PlayerControler : CustomMonoBehaviour, IDamageabe<float>, IObservab
             _weaponsObjects[1].SetActive(true);
         }
     }
-    
+
     #endregion
 
 
@@ -340,9 +343,14 @@ public class PlayerControler : CustomMonoBehaviour, IDamageabe<float>, IObservab
         }
         else if (_shootingPointPoop != null && _bulletType == "ProyectilCaca")
         {
-            if (_shootDelayPoop >  0) return;
+            if (_shootDelayPoop > 0) return;
             DisparodeCaca(position, rotation);
         }
+    }
+
+    private void AtaqueEspecial()
+    {
+        
     }
     private void ParticleFX()
     {

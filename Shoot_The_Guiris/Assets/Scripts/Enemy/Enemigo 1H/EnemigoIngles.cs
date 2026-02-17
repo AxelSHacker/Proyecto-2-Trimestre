@@ -16,7 +16,7 @@ public class EnemigoIngles : PoolEntity, IDamageabe<float>, IDamageableObserver
    [SerializeField] Transform _weapon2;
    [SerializeField] Animator _animator;
    [SerializeField] Rigidbody _rB;
-   [SerializeField] DissolveBehaviour _dissolve;
+   
    [Header("Configuracion")]
    Transform _target;
    [SerializeField] string _targetTag = "Player";
@@ -60,13 +60,14 @@ public class EnemigoIngles : PoolEntity, IDamageabe<float>, IDamageableObserver
    public UnityEvent OnInizialize;
    public UnityEvent OnDeactivate;
    public UnityEvent OnDeadUE;
+   #region Start/Update
    public override void EditorInit()
    {
       base.EditorInit();
       _agent = GetComponent<NavMeshAgent>();
       _animator = GetComponentInChildren<Animator>();
       _rB = GetComponent<Rigidbody>();
-      _dissolve = GetComponent<DissolveBehaviour>();
+      //_dissolve = GetComponent<DissolveBehaviour>();
    }
    void Start()
    {
@@ -74,7 +75,7 @@ public class EnemigoIngles : PoolEntity, IDamageabe<float>, IDamageableObserver
       CheckForTarget(_targetTag);
       _actualVelocity = _agent.velocity;
       
-      _agent.speed = Random.Range(10f, 15f);
+      _agent.speed = Random.Range(10f, 20f);
    }
    void Update()
    {
@@ -93,6 +94,8 @@ public class EnemigoIngles : PoolEntity, IDamageabe<float>, IDamageableObserver
       Gizmos.color = Color.red;
       Gizmos.DrawWireSphere(_groundCheckPoint.position, _groundCheckSize);
    }
+   #endregion
+   #region Funciones
    private void GroundCheck()
    {
       //Solo vamos a comprobar si es mayor que 0, asi que no necesitamos mas capacida de buffer
@@ -175,6 +178,7 @@ public class EnemigoIngles : PoolEntity, IDamageabe<float>, IDamageableObserver
          _animator.SetFloat("Velocidad", 0);
       }
    }
+   #endregion
    #region PooEntity
    public override void Initialize()
    {
@@ -191,6 +195,7 @@ public class EnemigoIngles : PoolEntity, IDamageabe<float>, IDamageableObserver
    #endregion
    public void TakeDamag(float damage, Vector3 impactPoint = default)
    {
+      if(IsDead) return;
       _currentealth -= damage;
       _currentealth = Mathf.Clamp(_currentealth, 0, _maxhealth);
       if (_currentealth == 0)
@@ -200,8 +205,9 @@ public class EnemigoIngles : PoolEntity, IDamageabe<float>, IDamageableObserver
    }
    private void Death()
    {
-      _animator.SetTrigger("Dead");
-      OnDeadUE?.Invoke();
+      int tipoMuerte = Random.Range(1, 4);
+      _animator.SetInteger("Muerte", tipoMuerte);
+      //OnDeadUE?.Invoke();
       // _dissolve.StartDissolve();
       // _dissolve.ResetDissolve();
    }
@@ -224,7 +230,6 @@ public class EnemigoIngles : PoolEntity, IDamageabe<float>, IDamageableObserver
       _currentealth = _maxhealth;
 
       //_dissolve.StopDissolve();
-      _animator.ResetTrigger("Dead");
    }
 }
 

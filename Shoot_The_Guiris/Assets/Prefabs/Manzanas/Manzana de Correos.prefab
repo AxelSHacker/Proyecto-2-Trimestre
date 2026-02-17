@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 1862020578248052249}
   - component: {fileID: 9044069047366715921}
   - component: {fileID: 3197542221803872673}
-  - component: {fileID: 8566236995228780902}
   m_Layer: 0
   m_Name: building-type-g (1)
   m_TagString: Untagged
@@ -91,27 +90,6 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &8566236995228780902
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 790849814994652332}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1.5801567, y: 0.7682097, z: 0.86562234}
-  m_Center: {x: 0.22126809, y: 0.38410485, z: 0.15618877}
 --- !u!1 &860836936928619639
 GameObject:
   m_ObjectHideFlags: 0
@@ -425,7 +403,6 @@ GameObject:
   - component: {fileID: 1150561875810010511}
   - component: {fileID: 5781499610890219062}
   - component: {fileID: 252286447727321074}
-  - component: {fileID: 3636835815877763200}
   m_Layer: 0
   m_Name: building-type-g (2)
   m_TagString: Untagged
@@ -505,27 +482,6 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &3636835815877763200
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1871907301845258418}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1.5801567, y: 0.7682097, z: 0.86562234}
-  m_Center: {x: 0.22126809, y: 0.38410485, z: 0.15618877}
 --- !u!1 &1899189543963750545
 GameObject:
   m_ObjectHideFlags: 0
@@ -537,6 +493,7 @@ GameObject:
   - component: {fileID: 1801671246472344409}
   - component: {fileID: 4046870556875107384}
   - component: {fileID: 1552585536505004930}
+  - component: {fileID: 6901212153510967525}
   m_Layer: 0
   m_Name: building-b (1)
   m_TagString: Untagged
@@ -616,6 +573,27 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &6901212153510967525
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1899189543963750545}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.842846, y: 1.293, z: 0.9400002}
+  m_Center: {x: -0.06357729, y: 0.6465, z: 0.000000042889724}
 --- !u!1 &2550035657964689529
 GameObject:
   m_ObjectHideFlags: 0
@@ -1098,6 +1076,7 @@ GameObject:
   - component: {fileID: 6870446672710965843}
   - component: {fileID: 2236215124173456672}
   - component: {fileID: 3432841552787997073}
+  - component: {fileID: 7130761951293853725}
   m_Layer: 0
   m_Name: building-type-n (2)
   m_TagString: Untagged
@@ -1177,6 +1156,27 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &7130761951293853725
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6784637124516797117}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.9112922, y: 1.1374998, z: 0.9749791}
+  m_Center: {x: 0.36933804, y: 0.56875, z: 0.13430446}
 --- !u!1 &7513687513733811822
 GameObject:
   m_ObjectHideFlags: 0
