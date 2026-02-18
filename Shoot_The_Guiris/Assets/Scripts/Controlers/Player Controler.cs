@@ -29,7 +29,10 @@ public class PlayerControler : CustomMonoBehaviour, IDamageabe<float>, IObservab
     [SerializeField] Transform _aimReference;
     //Referncia a la camara principal
     [SerializeField] Camera _mainCamera;
-    
+    [SerializeField] TwoBoneIKConstraint _rightConstrain;
+    [SerializeField] TwoBoneIKConstraint _leftConstrain;
+    [SerializeField] Transform[] _rightHandPosition;
+    [SerializeField] Transform[] _leftHandPosition;
 
     [Header("Shooting")]
     [SerializeField] GameObject[] _weaponsObjects;
@@ -178,22 +181,15 @@ public class PlayerControler : CustomMonoBehaviour, IDamageabe<float>, IObservab
     {
         if (context.performed)
         {
-            _animator.SetInteger("WeapoNummer", 0);
-            _bulletType = "Wind";
-            _weaponIndex = 0;
-            _weaponsObjects[0].SetActive(true);
-            _weaponsObjects[1].SetActive(false);
+            ArmadeViento();
         }
     }
+
     public void Weapon2(InputAction.CallbackContext context)
     {
         if (context.performed)
         {
-            _animator.SetInteger("WeapoNummer", 1);
-            _bulletType = "ProyectilCaca";
-            _weaponIndex = 1;
-            _weaponsObjects[0].SetActive(false);
-            _weaponsObjects[1].SetActive(true);
+            ArmaDeCaca();
         }
     }
 
@@ -350,7 +346,7 @@ public class PlayerControler : CustomMonoBehaviour, IDamageabe<float>, IObservab
 
     private void AtaqueEspecial()
     {
-        
+
     }
     private void ParticleFX()
     {
@@ -381,6 +377,7 @@ public class PlayerControler : CustomMonoBehaviour, IDamageabe<float>, IObservab
     #region  Funciones funcionales
     private void DisparodeViento(Vector3 position, Quaternion rotation)
     {
+
         _animator.SetTrigger("ShootWind");
         _shootDelayWind = _fireRateWind;
         position = _shootPointWind.position;
@@ -395,6 +392,55 @@ public class PlayerControler : CustomMonoBehaviour, IDamageabe<float>, IObservab
         rotation = Quaternion.LookRotation(transform.forward);
         PoolManager.Instance.Pull(_bulletType, position, rotation);
     }
+    private void ArmadeViento()
+    {
+        
+        _weaponsObjects[0].SetActive(true);
+        _weaponsObjects[1].SetActive(false);
+
+        
+        _animator.SetInteger("WeapoNummer", 0);
+
+        
+        var derecha = _rightConstrain.data;
+        var izquierda = _leftConstrain.data;
+
+        derecha.target = _rightHandPosition[0];
+        izquierda.target = _leftHandPosition[0];
+
+        _rightConstrain.data = derecha;
+        _leftConstrain.data = izquierda;
+
+        
+
+        _bulletType = "Wind";
+        _weaponIndex = 0;
+    }
+    private void ArmaDeCaca()
+    {
+
+        _weaponsObjects[0].SetActive(false);
+        _weaponsObjects[1].SetActive(true);
+
+
+        _animator.SetInteger("WeapoNummer", 1);
+
+
+        var derecha = _rightConstrain.data;
+        var izquierda = _leftConstrain.data;
+
+        derecha.target = _rightHandPosition[1];
+        izquierda.target = _leftHandPosition[1];
+
+        _rightConstrain.data = derecha;
+        _leftConstrain.data = izquierda;
+
+
+
+        _bulletType = "ProyectilCaca";
+        _weaponIndex = 1;
+    }
+
     #endregion
     #region IDamagable && Observable
     public void TakeDamag(float damage, Vector3 impactPoint = default(Vector3))

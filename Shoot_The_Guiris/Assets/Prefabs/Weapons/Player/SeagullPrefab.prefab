@@ -17,7 +17,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &9173243132085257101
 Transform:
   m_ObjectHideFlags: 0
@@ -28,10 +28,11 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: 428.7221, y: -41.5551, z: 520.3704}
-  m_LocalScale: {x: 2.1349, y: 1.6898, z: 3.3455348}
+  m_LocalScale: {x: 0.6935492, y: 0.5740207, z: 0.65356135}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5592553024986083234}
+  - {fileID: 2155707028183530906}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!33 &1027506257158802453
@@ -91,6 +92,37 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &2972351385608008191
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2155707028183530906}
+  m_Layer: 0
+  m_Name: ShotingPointPoop
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2155707028183530906
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2972351385608008191}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.000000022351731, y: 0.9999524, z: -0.009762595, w: -0.00000011920923}
+  m_LocalPosition: {x: 0.000018867555, y: -0.0000019539002, z: -0.57100415}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 9173243132085257101}
+  m_LocalEulerAnglesHint: {x: 1.119, y: 180, z: 0}
 --- !u!1 &3740235977470795523
 GameObject:
   m_ObjectHideFlags: 0

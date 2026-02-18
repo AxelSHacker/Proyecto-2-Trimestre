@@ -165,7 +165,7 @@ GameObject:
   - component: {fileID: 7813992977390916444}
   - component: {fileID: 3286766377619316381}
   - component: {fileID: 6206084861948496487}
-  - component: {fileID: -6924533994269417451}
+  - component: {fileID: 627603590183169733}
   - component: {fileID: 540820127353183798}
   m_Layer: 0
   m_Name: Bola de tinta
@@ -237,9 +237,9 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.26
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &-6924533994269417451
+  m_Radius: 0.9198494
+  m_Center: {x: 0, y: -0.011787415, z: 0}
+--- !u!114 &627603590183169733
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -248,24 +248,34 @@ MonoBehaviour:
   m_GameObject: {fileID: 3719411609480955312}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa0bbc8c7608ec84e90a878ed12135a8, type: 3}
+  m_Script: {fileID: 11500000, guid: 9a4249ca6089e474a8221c2233fb0f1b, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Proyectil
-  _poolID: ProyectilBase
+  m_EditorClassIdentifier: Assembly-CSharp::Misil
+  _poolID: Misil
   _renderers:
   - {fileID: 2453184983566478375}
   - {fileID: 3496005186387658555}
   - {fileID: 4568627969503784459}
   _isActive: 0
-  _rB: {fileID: 3286766377619316381}
-  _collider: {fileID: 6206084861948496487}
-  _trailParticles: {fileID: 2473697494686930802}
   _damage: 50
-  _speed: 20
-  _lifetime: 5
-  _shootableLayers:
+  _damageRadio: 5
+  _velocidad: 10
+  _vidadelMisil: 5
+  _disparable:
     serializedVersion: 2
-    m_Bits: 65
+    m_Bits: 193
+  _startPosicion: {x: 0, y: 0, z: 0}
+  _posicionTarget: {x: 0, y: 0, z: 0}
+  _posiciondedisparo: {x: 0, y: 0, z: 0}
+  OnInizialize:
+    m_PersistentCalls:
+      m_Calls: []
+  OnImpact:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDeactivate:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &540820127353183798
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -335,8 +345,8 @@ ParticleSystem:
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
   emitterVelocityMode: 1
-  looping: 1
-  prewarm: 1
+  looping: 0
+  prewarm: 0
   playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
@@ -393,7 +403,7 @@ ParticleSystem:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-  moveWithTransform: 1
+  moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
   randomSeed: 0
@@ -4922,8 +4932,8 @@ ParticleSystem:
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
   emitterVelocityMode: 1
-  looping: 1
-  prewarm: 1
+  looping: 0
+  prewarm: 0
   playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
@@ -4980,7 +4990,7 @@ ParticleSystem:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-  moveWithTransform: 1
+  moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
   randomSeed: 0
