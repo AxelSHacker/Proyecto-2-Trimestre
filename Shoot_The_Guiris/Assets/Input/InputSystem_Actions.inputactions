@@ -61,7 +61,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Previous",
+                    "name": "Arma1",
                     "type": "Button",
                     "id": "2776c80d-3c14-4091-8c56-d04ced07a2b0",
                     "expectedControlType": "",
@@ -70,9 +70,18 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Next",
+                    "name": "Arma2",
                     "type": "Button",
                     "id": "b7230bb6-fc9b-4f52-8b25-f5e19cb2c2ba",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Arma3",
+                    "type": "Button",
+                    "id": "14221694-938d-41d8-9824-fcbc61d34039",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -307,7 +316,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
-                    "action": "Next",
+                    "action": "Arma2",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -318,7 +327,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
-                    "action": "Next",
+                    "action": "Arma2",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -362,7 +371,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
-                    "action": "Previous",
+                    "action": "Arma1",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -373,7 +382,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
-                    "action": "Previous",
+                    "action": "Arma1",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -418,6 +427,17 @@
                     "processors": "",
                     "groups": "Keyboard&Mouse",
                     "action": "DashRight",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "959db758-95fa-4195-9e30-b7f67da7d3ac",
+                    "path": "<Keyboard>/3",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Arma3",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

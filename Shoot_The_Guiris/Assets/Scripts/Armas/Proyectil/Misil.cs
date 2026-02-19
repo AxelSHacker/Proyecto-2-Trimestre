@@ -1,5 +1,6 @@
 using TMPro;
 using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -8,13 +9,13 @@ public class Misil : PoolEntity
    [Header("Misil")]
    [SerializeField] float _damage;
    [SerializeField] float _damageRadio;
-   [SerializeField] float _velocidad;
-   [SerializeField] float _vidadelMisil;
-   float _tiempodeMisil;
+   [SerializeField] float _pathTime = 1f;
+   float _pathTimer; 
+   
    [SerializeField] LayerMask _disparable;
    [SerializeField] Vector3 _startPosicion;
    [SerializeField] Vector3 _posicionTarget;
-   [SerializeField] Vector3 _posiciondedisparo;
+   Vector3 _posiciondedisparo;
    IDamageabe<float> _damageable;
    public UnityEvent OnInizialize;
    public UnityEvent OnImpact;
@@ -27,13 +28,10 @@ public class Misil : PoolEntity
 
    void Update()
    {
-      if (_tiempodeMisil < -1 && IsActive) ReturnToPool();
+      transform.position =_posiciondedisparo + Vector3.Slerp(_startPosicion - _posiciondedisparo, _posicionTarget - _posiciondedisparo, 1 - _pathTimer / _pathTime);
 
-      transform.position = Vector3.Slerp(_startPosicion - _posiciondedisparo, _posicionTarget - _posiciondedisparo, 1 - _tiempodeMisil / _vidadelMisil);
-
-      _tiempodeMisil -= Time.deltaTime;
+      _pathTimer -= Time.deltaTime;
    }
-
    void OnTriggerEnter(Collider other)
    {
       if (!IsActive) return;
@@ -55,20 +53,32 @@ public class Misil : PoolEntity
          ReturnToPool();
       }
    }
-    #region PoolEntity
-    public override void Initialize()
-    {
-        base.Initialize();
-        _tiempodeMisil = _vidadelMisil;
-    }
-    public override void Deactivate()
-    {
-        base.Deactivate();
-        OnDeactivate?.Invoke();
-    }
+   public void IniciarMisil(Vector3 startPoint, Vector3 targetPoint, Vector3 shooterpoint)
+   {
+      _startPosicion = startPoint;
+      _posicionTarget = targetPoint;
+      _posiciondedisparo = shooterpoint;
+   }
+   [ContextMenu("Inizialize")]
+   #region PoolEntity
+   public override void Initialize()
+   {
+      base.Initialize();
+      _pathTimer = _pathTime;
+      OnInizialize?.Invoke();
+   }
+   public override void Deactivate()
+   {
+      base.Deactivate();
+      OnDeactivate?.Invoke();
+   }
 
    #endregion
 }
+      
+
+      
+
 
 
 

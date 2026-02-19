@@ -147,7 +147,7 @@ public partial class @NuevoImput: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Previous"",
+                    ""name"": ""Arma1"",
                     ""type"": ""Button"",
                     ""id"": ""2776c80d-3c14-4091-8c56-d04ced07a2b0"",
                     ""expectedControlType"": """",
@@ -156,9 +156,18 @@ public partial class @NuevoImput: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Next"",
+                    ""name"": ""Arma2"",
                     ""type"": ""Button"",
                     ""id"": ""b7230bb6-fc9b-4f52-8b25-f5e19cb2c2ba"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Arma3"",
+                    ""type"": ""Button"",
+                    ""id"": ""14221694-938d-41d8-9824-fcbc61d34039"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
@@ -393,7 +402,7 @@ public partial class @NuevoImput: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""Next"",
+                    ""action"": ""Arma2"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -404,7 +413,7 @@ public partial class @NuevoImput: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
-                    ""action"": ""Next"",
+                    ""action"": ""Arma2"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -448,7 +457,7 @@ public partial class @NuevoImput: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""Previous"",
+                    ""action"": ""Arma1"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -459,7 +468,7 @@ public partial class @NuevoImput: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
-                    ""action"": ""Previous"",
+                    ""action"": ""Arma1"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -504,6 +513,17 @@ public partial class @NuevoImput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
                     ""action"": ""DashRight"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""959db758-95fa-4195-9e30-b7f67da7d3ac"",
+                    ""path"": ""<Keyboard>/3"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Arma3"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1097,8 +1117,9 @@ public partial class @NuevoImput: IInputActionCollection2, IDisposable
         m_Player_Reload = m_Player.FindAction("Reload", throwIfNotFound: true);
         m_Player_DashRight = m_Player.FindAction("DashRight", throwIfNotFound: true);
         m_Player_Dasheft = m_Player.FindAction("Dasheft", throwIfNotFound: true);
-        m_Player_Previous = m_Player.FindAction("Previous", throwIfNotFound: true);
-        m_Player_Next = m_Player.FindAction("Next", throwIfNotFound: true);
+        m_Player_Arma1 = m_Player.FindAction("Arma1", throwIfNotFound: true);
+        m_Player_Arma2 = m_Player.FindAction("Arma2", throwIfNotFound: true);
+        m_Player_Arma3 = m_Player.FindAction("Arma3", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1198,8 +1219,9 @@ public partial class @NuevoImput: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Reload;
     private readonly InputAction m_Player_DashRight;
     private readonly InputAction m_Player_Dasheft;
-    private readonly InputAction m_Player_Previous;
-    private readonly InputAction m_Player_Next;
+    private readonly InputAction m_Player_Arma1;
+    private readonly InputAction m_Player_Arma2;
+    private readonly InputAction m_Player_Arma3;
     /// <summary>
     /// Provides access to input actions defined in input action map "Player".
     /// </summary>
@@ -1236,13 +1258,17 @@ public partial class @NuevoImput: IInputActionCollection2, IDisposable
         /// </summary>
         public InputAction @Dasheft => m_Wrapper.m_Player_Dasheft;
         /// <summary>
-        /// Provides access to the underlying input action "Player/Previous".
+        /// Provides access to the underlying input action "Player/Arma1".
         /// </summary>
-        public InputAction @Previous => m_Wrapper.m_Player_Previous;
+        public InputAction @Arma1 => m_Wrapper.m_Player_Arma1;
         /// <summary>
-        /// Provides access to the underlying input action "Player/Next".
+        /// Provides access to the underlying input action "Player/Arma2".
         /// </summary>
-        public InputAction @Next => m_Wrapper.m_Player_Next;
+        public InputAction @Arma2 => m_Wrapper.m_Player_Arma2;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/Arma3".
+        /// </summary>
+        public InputAction @Arma3 => m_Wrapper.m_Player_Arma3;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -1287,12 +1313,15 @@ public partial class @NuevoImput: IInputActionCollection2, IDisposable
             @Dasheft.started += instance.OnDasheft;
             @Dasheft.performed += instance.OnDasheft;
             @Dasheft.canceled += instance.OnDasheft;
-            @Previous.started += instance.OnPrevious;
-            @Previous.performed += instance.OnPrevious;
-            @Previous.canceled += instance.OnPrevious;
-            @Next.started += instance.OnNext;
-            @Next.performed += instance.OnNext;
-            @Next.canceled += instance.OnNext;
+            @Arma1.started += instance.OnArma1;
+            @Arma1.performed += instance.OnArma1;
+            @Arma1.canceled += instance.OnArma1;
+            @Arma2.started += instance.OnArma2;
+            @Arma2.performed += instance.OnArma2;
+            @Arma2.canceled += instance.OnArma2;
+            @Arma3.started += instance.OnArma3;
+            @Arma3.performed += instance.OnArma3;
+            @Arma3.canceled += instance.OnArma3;
         }
 
         /// <summary>
@@ -1322,12 +1351,15 @@ public partial class @NuevoImput: IInputActionCollection2, IDisposable
             @Dasheft.started -= instance.OnDasheft;
             @Dasheft.performed -= instance.OnDasheft;
             @Dasheft.canceled -= instance.OnDasheft;
-            @Previous.started -= instance.OnPrevious;
-            @Previous.performed -= instance.OnPrevious;
-            @Previous.canceled -= instance.OnPrevious;
-            @Next.started -= instance.OnNext;
-            @Next.performed -= instance.OnNext;
-            @Next.canceled -= instance.OnNext;
+            @Arma1.started -= instance.OnArma1;
+            @Arma1.performed -= instance.OnArma1;
+            @Arma1.canceled -= instance.OnArma1;
+            @Arma2.started -= instance.OnArma2;
+            @Arma2.performed -= instance.OnArma2;
+            @Arma2.canceled -= instance.OnArma2;
+            @Arma3.started -= instance.OnArma3;
+            @Arma3.performed -= instance.OnArma3;
+            @Arma3.canceled -= instance.OnArma3;
         }
 
         /// <summary>
@@ -1671,19 +1703,26 @@ public partial class @NuevoImput: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnDasheft(InputAction.CallbackContext context);
         /// <summary>
-        /// Method invoked when associated input action "Previous" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// Method invoked when associated input action "Arma1" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnPrevious(InputAction.CallbackContext context);
+        void OnArma1(InputAction.CallbackContext context);
         /// <summary>
-        /// Method invoked when associated input action "Next" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// Method invoked when associated input action "Arma2" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnNext(InputAction.CallbackContext context);
+        void OnArma2(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Arma3" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnArma3(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "UI" which allows adding and removing callbacks.

@@ -38,15 +38,18 @@ public class PlayerControler : CustomMonoBehaviour, IDamageabe<float>, IObservab
     [SerializeField] GameObject[] _weaponsObjects;
     [SerializeField] float _shootDelayWind;
     [SerializeField] float _shootDelayPoop;
+    [SerializeField] float _pulpoDelay;
     [SerializeField] Vector3 _targetPoint;
     [SerializeField] Transform _shootPointWind;
     [SerializeField] Transform _shootingPointPoop;
+    [SerializeField] Transform _shootingpointPulpo;
     [SerializeField] string _bulletType;
-    int _weaponIndex = 0;
     [SerializeField] float _fireRateWind;
     [SerializeField] float _fireRatePoop;
+    [SerializeField] float _firerateTinta;
     [SerializeField] int _cargadorCaca;
     bool _disparando;
+    [SerializeField] float _misiverticalOffset = -5f;
 
     [Header("Physics")]
     [SerializeField] CharacterController _cC;
@@ -88,24 +91,18 @@ public class PlayerControler : CustomMonoBehaviour, IDamageabe<float>, IObservab
     #endregion
     void Start()
     {
-        _shootDelayWind = 0;
+        ArmadeViento();
         _currentealth = _maxhealth;
-        _weaponsObjects[0].SetActive(true);
-        _weaponsObjects[1].SetActive(false);
+        
         _mainCamera = Camera.main;
-
-        _animator.SetInteger("WeapoNummer", 0);
-        _weaponIndex = 0;
-        _weaponsObjects[0].SetActive(true);
-        _weaponsObjects[1].SetActive(false);
-        _bulletType = "Wind";
-        _animator.SetFloat("Velocidad de disparo", _fireRateWind);
         for (int i = 0; i < _observable.Count; i++)
         {
             _observable[i].OnHealtUpdate(_currentealth, _maxhealth);
         }
-
     }
+
+        
+
 
 
     void Update()
@@ -121,6 +118,10 @@ public class PlayerControler : CustomMonoBehaviour, IDamageabe<float>, IObservab
         if (_shootDelayPoop > 0)
         {
             _shootDelayPoop -= Time.deltaTime;
+        }
+        if (_pulpoDelay > 0)
+        {
+            _pulpoDelay -= Time.deltaTime;
         }
     }
     void FixedUpdate()
@@ -190,6 +191,13 @@ public class PlayerControler : CustomMonoBehaviour, IDamageabe<float>, IObservab
         if (context.performed)
         {
             ArmaDeCaca();
+        }
+    }
+    public void Weapon3(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            ArmaDeTinta();
         }
     }
 
@@ -342,6 +350,11 @@ public class PlayerControler : CustomMonoBehaviour, IDamageabe<float>, IObservab
             if (_shootDelayPoop > 0) return;
             DisparodeCaca(position, rotation);
         }
+        else if (_shootingpointPulpo != null && _bulletType == "Misil")
+        {
+            if (_pulpoDelay > 0) return;
+            DisparodeTinta(position, rotation);
+        }
     }
 
     private void AtaqueEspecial()
@@ -392,16 +405,25 @@ public class PlayerControler : CustomMonoBehaviour, IDamageabe<float>, IObservab
         rotation = Quaternion.LookRotation(transform.forward);
         PoolManager.Instance.Pull(_bulletType, position, rotation);
     }
+    private void DisparodeTinta(Vector3 position, Quaternion rotacion)
+    {
+        _animator.SetTrigger("ShootTinta");
+        _pulpoDelay = _firerateTinta;
+        position = _shootingpointPulpo.position;
+        rotacion = Quaternion.LookRotation(transform.forward);
+        Misil tempMisil = PoolManager.Instance.Pull(_bulletType, position, rotacion) as Misil;
+        Vector3 puntodeImpacto = _aimingPivot.position;
+        puntodeImpacto.y += _misiverticalOffset;
+        tempMisil.IniciarMisil(position, puntodeImpacto, transform.position);
+    }
     private void ArmadeViento()
     {
-        
-        _weaponsObjects[0].SetActive(true);
         _weaponsObjects[1].SetActive(false);
+        _weaponsObjects[2].SetActive(false);
+        _weaponsObjects[0].SetActive(true);
 
-        
         _animator.SetInteger("WeapoNummer", 0);
 
-        
         var derecha = _rightConstrain.data;
         var izquierda = _leftConstrain.data;
 
@@ -411,20 +433,16 @@ public class PlayerControler : CustomMonoBehaviour, IDamageabe<float>, IObservab
         _rightConstrain.data = derecha;
         _leftConstrain.data = izquierda;
 
-        
-
         _bulletType = "Wind";
-        _weaponIndex = 0;
     }
+        
     private void ArmaDeCaca()
     {
-
+        _weaponsObjects[2].SetActive(false);
         _weaponsObjects[0].SetActive(false);
         _weaponsObjects[1].SetActive(true);
 
-
         _animator.SetInteger("WeapoNummer", 1);
-
 
         var derecha = _rightConstrain.data;
         var izquierda = _leftConstrain.data;
@@ -435,11 +453,41 @@ public class PlayerControler : CustomMonoBehaviour, IDamageabe<float>, IObservab
         _rightConstrain.data = derecha;
         _leftConstrain.data = izquierda;
 
-
-
         _bulletType = "ProyectilCaca";
-        _weaponIndex = 1;
     }
+        
+    private void ArmaDeTinta()
+    {
+        _weaponsObjects[0].SetActive(false);
+        _weaponsObjects[1].SetActive(false);
+        _weaponsObjects[2].SetActive(true);
+
+        _animator.SetInteger("WeapoNummer", 2);
+
+        var derecha = _rightConstrain.data;
+        var izquierda = _leftConstrain.data;
+
+        derecha.target = _rightHandPosition[2];
+        izquierda.target = _leftHandPosition[2];
+
+        _rightConstrain.data = derecha;
+        _leftConstrain.data = izquierda;
+
+        _bulletType = "Misil";
+    }
+        
+
+
+
+
+
+
+
+
+
+
+
+
 
     #endregion
     #region IDamagable && Observable
