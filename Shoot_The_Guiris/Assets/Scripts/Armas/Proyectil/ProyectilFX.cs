@@ -9,7 +9,6 @@ public class ProyectilFX : CustomMonoBehaviour
    [SerializeField] MeleeWeapons _meeeWeapons;
    public override void EditorInit()
    {
-
    }
    void OnEnable()
    {
@@ -23,9 +22,7 @@ public class ProyectilFX : CustomMonoBehaviour
          _meeeWeapons.OnInitialize += OnInitialize.Invoke;
          _meeeWeapons.OnImpact += OnImpact.Invoke;
       }
-
    }
-
    void OnDestroy()
    {
       if (_proyectil != null)
@@ -41,6 +38,9 @@ public class ProyectilFX : CustomMonoBehaviour
       }
    }
 }
+
+
+
 
 
 

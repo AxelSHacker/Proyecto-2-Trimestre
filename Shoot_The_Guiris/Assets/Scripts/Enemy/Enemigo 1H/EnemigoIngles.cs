@@ -113,13 +113,13 @@ public class EnemigoIngles : PoolEntity, IDamageabe<float>, IDamageableObserver
       _volando = true;
       _agent.enabled = false;
       _rB.isKinematic = false;
-      _rB.constraints = RigidbodyConstraints.None;
+      
       _rB.AddForce(direccion, ForceMode.Impulse);
    }
    private IEnumerator Ralentizacion()
    {
       _agent.velocity = _actualVelocity * 0.5f;
-      yield return new WaitForSeconds(1f);
+      yield return new WaitForSeconds(5f);
       _agent.velocity = _actualVelocity;
       _ralentizacion = null;
    }
@@ -130,7 +130,7 @@ public class EnemigoIngles : PoolEntity, IDamageabe<float>, IDamageableObserver
    }
    private IEnumerator RutinaLevantarse()
    {
-      yield return new WaitForSeconds(Random.Range(1f, 3f));
+      yield return new WaitForSeconds(Random.Range(5f, 10f));
       //Lo rotamos a posicion normal
       transform.rotation = Quaternion.Euler(0, transform.rotation.eulerAngles.y, 0);
       //Volvemos a estado grounded
@@ -139,11 +139,10 @@ public class EnemigoIngles : PoolEntity, IDamageabe<float>, IDamageableObserver
       _agent.Warp(transform.position);
       _levantarse = null;
    }
-   //Buscamos el objeto mas cercano con el ltag indicado
+   //Buscamos el objeto mas cercano con el tag indicado
    public void CheckForTarget(string name)
    {
       GameObject[] possibleTarget = GameObject.FindGameObjectsWithTag(_targetTag);
-
 
       if (possibleTarget == null || possibleTarget.Length == 0) return;
       _target = possibleTarget[0].transform;
@@ -207,20 +206,16 @@ public class EnemigoIngles : PoolEntity, IDamageabe<float>, IDamageableObserver
    {
       int tipoMuerte = Random.Range(1, 4);
       _animator.SetInteger("Muerte", tipoMuerte);
-      //OnDeadUE?.Invoke();
+      OnDeadUE?.Invoke();
       // _dissolve.StartDissolve();
       // _dissolve.ResetDissolve();
    }
    public void OnHealtUpdate(float currentealt, float maxealt)
    {
-      
    }
-
    public void OnHit()
    {
-      
    }
-
    public void OnDead()
    {
       _animator.Play("Idle");
@@ -228,10 +223,15 @@ public class EnemigoIngles : PoolEntity, IDamageabe<float>, IDamageableObserver
    private void Revivir()
    {
       _currentealth = _maxhealth;
-
-      //_dissolve.StopDissolve();
    }
 }
+
+      
+
+      
+
+
+      
 
 
 

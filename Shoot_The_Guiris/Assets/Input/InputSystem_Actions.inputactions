@@ -34,6 +34,15 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "AtaqueEspecial",
+                    "type": "Button",
+                    "id": "837127db-8ca3-494a-ad4f-c87b7697febf",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "Reload",
                     "type": "Button",
                     "id": "852140f2-7766-474d-8707-702459ba45f3",
@@ -438,6 +447,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Arma3",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0b87aeb8-cad2-4713-ba99-03b6e07237a0",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "AtaqueEspecial",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

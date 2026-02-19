@@ -149,7 +149,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 1
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 16
   m_CollisionDetection: 0
 --- !u!136 &7657128750796563172
 CapsuleCollider:
@@ -193,32 +193,19 @@ MonoBehaviour:
   - {fileID: 98838254554249765}
   - {fileID: 1418478607112325588}
   - {fileID: 4981624053098405747}
-  - {fileID: 1155257377089096277}
   - {fileID: 3102131441066182758}
+  - {fileID: 6429480068748646902}
+  - {fileID: 2277023897201995351}
   - {fileID: 6035003206590473134}
-  - {fileID: 6821102575136586779}
-  - {fileID: 8766366804458751696}
-  - {fileID: 8159219849453015493}
-  - {fileID: 7707858798585093168}
-  - {fileID: 9053267477620317995}
-  - {fileID: 9188507632428764663}
-  - {fileID: 1411638444526954769}
   - {fileID: 7614418423979587071}
   - {fileID: 2787402127018109228}
-  - {fileID: 1249912017217671267}
-  - {fileID: 1339614304653863787}
-  - {fileID: 8817769298625149835}
-  - {fileID: 3230249015455032418}
   - {fileID: 5126865869221656518}
-  - {fileID: 357651931766435228}
   - {fileID: 4898841623414449261}
-  - {fileID: 3399513364164363377}
-  - {fileID: 859986371349088334}
-  - {fileID: 4155698421774338067}
   - {fileID: 2485158224133319072}
   _isActive: 0
   _agent: {fileID: 9033997094744315477}
   _weapon: {fileID: 4778539070231119254}
+  _weapon2: {fileID: 0}
   _animator: {fileID: 945463109062626167}
   _rB: {fileID: 4064034426831217530}
   _targetTag: Player
@@ -232,6 +219,87 @@ MonoBehaviour:
   _inRange: 20
   _maxhealth: 100
   _currentealth: 0
+  OnInizialize:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7657128750796563172}
+        m_TargetAssemblyTypeName: UnityEngine.CapsuleCollider, UnityEngine
+        m_MethodName: set_enabled
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 9033997094744315477}
+        m_TargetAssemblyTypeName: UnityEngine.AI.NavMeshAgent, UnityEngine
+        m_MethodName: set_isStopped
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnDeactivate:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7657128750796563172}
+        m_TargetAssemblyTypeName: UnityEngine.CapsuleCollider, UnityEngine
+        m_MethodName: set_enabled
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 9033997094744315477}
+        m_TargetAssemblyTypeName: UnityEngine.AI.NavMeshAgent, UnityEngine
+        m_MethodName: set_isStopped
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+  OnDeadUE:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7657128750796563172}
+        m_TargetAssemblyTypeName: UnityEngine.CapsuleCollider, UnityEngine
+        m_MethodName: set_enabled
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 9033997094744315477}
+        m_TargetAssemblyTypeName: UnityEngine.AI.NavMeshAgent, UnityEngine
+        m_MethodName: set_isStopped
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!1001 &2487545079347687230
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -534,6 +602,11 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 1086042262351521099}
   m_SourcePrefab: {fileID: 100100000, guid: 3094edbe6d4409e4da4e491f23acbb55, type: 3}
+--- !u!23 &2277023897201995351 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 9085035490508527597, guid: 3094edbe6d4409e4da4e491f23acbb55, type: 3}
+  m_PrefabInstance: {fileID: 7029303796058503610}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2695203359432778547 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4965873501663730313, guid: 3094edbe6d4409e4da4e491f23acbb55, type: 3}
@@ -563,6 +636,11 @@ MonoBehaviour:
     m_Bits: 512
   _tamanioCaja: {x: 0.5, y: 2, z: 0.5}
   _offset: {x: 0, y: 0.77, z: 0}
+--- !u!23 &6429480068748646902 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 4086735743100690508, guid: 3094edbe6d4409e4da4e491f23acbb55, type: 3}
+  m_PrefabInstance: {fileID: 7029303796058503610}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7523265654795527084
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -690,39 +768,9 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 5248450496491526315}
   m_SourcePrefab: {fileID: 100100000, guid: ca07331127dfbe14aa3e2c7a46050111, type: 3}
---- !u!137 &357651931766435228 stripped
-SkinnedMeshRenderer:
-  m_CorrespondingSourceObject: {fileID: 7826869990565367344, guid: ca07331127dfbe14aa3e2c7a46050111, type: 3}
-  m_PrefabInstance: {fileID: 7523265654795527084}
-  m_PrefabAsset: {fileID: 0}
---- !u!137 &859986371349088334 stripped
-SkinnedMeshRenderer:
-  m_CorrespondingSourceObject: {fileID: 7171783723934510050, guid: ca07331127dfbe14aa3e2c7a46050111, type: 3}
-  m_PrefabInstance: {fileID: 7523265654795527084}
-  m_PrefabAsset: {fileID: 0}
 --- !u!95 &945463109062626167 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 7311303659324827867, guid: ca07331127dfbe14aa3e2c7a46050111, type: 3}
-  m_PrefabInstance: {fileID: 7523265654795527084}
-  m_PrefabAsset: {fileID: 0}
---- !u!137 &1155257377089096277 stripped
-SkinnedMeshRenderer:
-  m_CorrespondingSourceObject: {fileID: 8674018878188186105, guid: ca07331127dfbe14aa3e2c7a46050111, type: 3}
-  m_PrefabInstance: {fileID: 7523265654795527084}
-  m_PrefabAsset: {fileID: 0}
---- !u!137 &1249912017217671267 stripped
-SkinnedMeshRenderer:
-  m_CorrespondingSourceObject: {fileID: 8732644723169932239, guid: ca07331127dfbe14aa3e2c7a46050111, type: 3}
-  m_PrefabInstance: {fileID: 7523265654795527084}
-  m_PrefabAsset: {fileID: 0}
---- !u!137 &1339614304653863787 stripped
-SkinnedMeshRenderer:
-  m_CorrespondingSourceObject: {fileID: 8862879952707979463, guid: ca07331127dfbe14aa3e2c7a46050111, type: 3}
-  m_PrefabInstance: {fileID: 7523265654795527084}
-  m_PrefabAsset: {fileID: 0}
---- !u!137 &1411638444526954769 stripped
-SkinnedMeshRenderer:
-  m_CorrespondingSourceObject: {fileID: 8934904095016979133, guid: ca07331127dfbe14aa3e2c7a46050111, type: 3}
   m_PrefabInstance: {fileID: 7523265654795527084}
   m_PrefabAsset: {fileID: 0}
 --- !u!137 &2485158224133319072 stripped
@@ -738,21 +786,6 @@ SkinnedMeshRenderer:
 --- !u!137 &3102131441066182758 stripped
 SkinnedMeshRenderer:
   m_CorrespondingSourceObject: {fileID: 4856285972920921034, guid: ca07331127dfbe14aa3e2c7a46050111, type: 3}
-  m_PrefabInstance: {fileID: 7523265654795527084}
-  m_PrefabAsset: {fileID: 0}
---- !u!137 &3230249015455032418 stripped
-SkinnedMeshRenderer:
-  m_CorrespondingSourceObject: {fileID: 4952873399970645966, guid: ca07331127dfbe14aa3e2c7a46050111, type: 3}
-  m_PrefabInstance: {fileID: 7523265654795527084}
-  m_PrefabAsset: {fileID: 0}
---- !u!137 &3399513364164363377 stripped
-SkinnedMeshRenderer:
-  m_CorrespondingSourceObject: {fileID: 5135648545684989917, guid: ca07331127dfbe14aa3e2c7a46050111, type: 3}
-  m_PrefabInstance: {fileID: 7523265654795527084}
-  m_PrefabAsset: {fileID: 0}
---- !u!137 &4155698421774338067 stripped
-SkinnedMeshRenderer:
-  m_CorrespondingSourceObject: {fileID: 5891838552965721023, guid: ca07331127dfbe14aa3e2c7a46050111, type: 3}
   m_PrefabInstance: {fileID: 7523265654795527084}
   m_PrefabAsset: {fileID: 0}
 --- !u!137 &4898841623414449261 stripped
@@ -775,11 +808,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3475400870306121372, guid: ca07331127dfbe14aa3e2c7a46050111, type: 3}
   m_PrefabInstance: {fileID: 7523265654795527084}
   m_PrefabAsset: {fileID: 0}
---- !u!137 &6821102575136586779 stripped
-SkinnedMeshRenderer:
-  m_CorrespondingSourceObject: {fileID: 3945556683605893047, guid: ca07331127dfbe14aa3e2c7a46050111, type: 3}
-  m_PrefabInstance: {fileID: 7523265654795527084}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &7351510376878213174 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1039713571888917402, guid: ca07331127dfbe14aa3e2c7a46050111, type: 3}
@@ -788,31 +816,6 @@ Transform:
 --- !u!137 &7614418423979587071 stripped
 SkinnedMeshRenderer:
   m_CorrespondingSourceObject: {fileID: 127186516438275667, guid: ca07331127dfbe14aa3e2c7a46050111, type: 3}
-  m_PrefabInstance: {fileID: 7523265654795527084}
-  m_PrefabAsset: {fileID: 0}
---- !u!137 &7707858798585093168 stripped
-SkinnedMeshRenderer:
-  m_CorrespondingSourceObject: {fileID: 189101695797788572, guid: ca07331127dfbe14aa3e2c7a46050111, type: 3}
-  m_PrefabInstance: {fileID: 7523265654795527084}
-  m_PrefabAsset: {fileID: 0}
---- !u!137 &8159219849453015493 stripped
-SkinnedMeshRenderer:
-  m_CorrespondingSourceObject: {fileID: 1824905050603745897, guid: ca07331127dfbe14aa3e2c7a46050111, type: 3}
-  m_PrefabInstance: {fileID: 7523265654795527084}
-  m_PrefabAsset: {fileID: 0}
---- !u!137 &8766366804458751696 stripped
-SkinnedMeshRenderer:
-  m_CorrespondingSourceObject: {fileID: 1279134896915326332, guid: ca07331127dfbe14aa3e2c7a46050111, type: 3}
-  m_PrefabInstance: {fileID: 7523265654795527084}
-  m_PrefabAsset: {fileID: 0}
---- !u!137 &8817769298625149835 stripped
-SkinnedMeshRenderer:
-  m_CorrespondingSourceObject: {fileID: 1312518046905948199, guid: ca07331127dfbe14aa3e2c7a46050111, type: 3}
-  m_PrefabInstance: {fileID: 7523265654795527084}
-  m_PrefabAsset: {fileID: 0}
---- !u!137 &9053267477620317995 stripped
-SkinnedMeshRenderer:
-  m_CorrespondingSourceObject: {fileID: 1570534219499453575, guid: ca07331127dfbe14aa3e2c7a46050111, type: 3}
   m_PrefabInstance: {fileID: 7523265654795527084}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &9062582419548088667 stripped
@@ -833,8 +836,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemigoAnimationEvents
   _armaScript: {fileID: 1086042262351521099}
---- !u!137 &9188507632428764663 stripped
-SkinnedMeshRenderer:
-  m_CorrespondingSourceObject: {fileID: 1723789327111695963, guid: ca07331127dfbe14aa3e2c7a46050111, type: 3}
-  m_PrefabInstance: {fileID: 7523265654795527084}
-  m_PrefabAsset: {fileID: 0}
+  _enemigoIngles: {fileID: 0}

@@ -1,6 +1,6 @@
 
 using System.Collections.Generic;
-
+using TMPro;
 using UnityEngine;
 using UnityEngine.Animations.Rigging;
 using UnityEngine.InputSystem;
@@ -10,7 +10,9 @@ public class PlayerControler : CustomMonoBehaviour, IDamageabe<float>, IObservab
     #region Variables
     [SerializeField] bool showGizmos = true;
     [SerializeField] PlayerInput _playerinput;
-
+    [SerializeField] TextMeshProUGUI _moneyText;
+    [SerializeField] TextMeshProUGUI _coolDownWeapon;
+    
     [Header("Player Movement")]
     [SerializeField] float _movementSpeed = 8f;
     [SerializeField] float _rotationSpeed = 14f;
@@ -62,6 +64,7 @@ public class PlayerControler : CustomMonoBehaviour, IDamageabe<float>, IObservab
     [SerializeField] AudioSource _playerSound;
     [SerializeField] float _playerBasePitch = 0.4f;
     [SerializeField] float _playerMaxPitch = 3f;
+
     [Header("Effects")]
     [SerializeField] ParticleSystem[] _dustParticles;
     [SerializeField] Transform _modelTransform;
@@ -73,38 +76,35 @@ public class PlayerControler : CustomMonoBehaviour, IDamageabe<float>, IObservab
 
     [Header("Animator")]
     [SerializeField] Animator _animator;
+
     #region IDamagables
     [SerializeField] float _maxhealth;
     [SerializeField] float _currentealth;
+
     public float Maxhealt { get => _maxhealth; }
     public float Currentealt { get => _currentealth; }
     public bool IsDead => _currentealth <= 0;
     #endregion
-
-
     public override void EditorInit()
     {
         _cC = GetComponent<CharacterController>();
         _playerSound = GetComponent<AudioSource>();
 
     }
+
+
     #endregion
     void Start()
     {
         ArmadeViento();
         _currentealth = _maxhealth;
-        
+
         _mainCamera = Camera.main;
         for (int i = 0; i < _observable.Count; i++)
         {
             _observable[i].OnHealtUpdate(_currentealth, _maxhealth);
         }
     }
-
-        
-
-
-
     void Update()
     {
         GroundCheck();
@@ -133,9 +133,13 @@ public class PlayerControler : CustomMonoBehaviour, IDamageabe<float>, IObservab
         }
     }
 
+
+
+
+
+
     #region ImputSystem
     public void OnMovement(InputAction.CallbackContext context)
-
     {
         if (context.performed)
         {
@@ -164,6 +168,13 @@ public class PlayerControler : CustomMonoBehaviour, IDamageabe<float>, IObservab
             _disparando = false;
         }
     }
+    public void OnSpecialAttack(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            _animator.SetTrigger("SpecialAttack");
+        }
+    }
     public void OnRightDasching(InputAction.CallbackContext context)
     {
         if (context.performed)
@@ -185,7 +196,6 @@ public class PlayerControler : CustomMonoBehaviour, IDamageabe<float>, IObservab
             ArmadeViento();
         }
     }
-
     public void Weapon2(InputAction.CallbackContext context)
     {
         if (context.performed)
@@ -200,8 +210,10 @@ public class PlayerControler : CustomMonoBehaviour, IDamageabe<float>, IObservab
             ArmaDeTinta();
         }
     }
-
     #endregion
+
+
+
 
 
     void OnDrawGizmos()
@@ -291,65 +303,86 @@ public class PlayerControler : CustomMonoBehaviour, IDamageabe<float>, IObservab
     }
     private void Aiming()
     {
-        //Plano virtual a la altura del pecho para que el Raycast sea 100% estable
-
+        // Crea un plano matemático invisible orientado hacia arriba, a 0.5 unidades por encima del personaje.
         Plane playerPlane = new Plane(Vector3.up, transform.position + Vector3.up * 0.5f);
+        // Lanza un rayo desde la cámara que pasa por la posición actual del cursor en la pantalla.
         Ray ray = _mainCamera.ScreenPointToRay(_posicionDelRaton);
 
+        // Calcula si el rayo del ratón choca con el plano virtual creado antes.
         if (playerPlane.Raycast(ray, out float hitDist))
         {
+            // Obtiene las coordenadas 3D exactas donde el rayo tocó el plano.
             Vector3 targetPoint = ray.GetPoint(hitDist);
+            // Guarda ese punto en una variable global.
             _targetPoint = targetPoint;
-
+            // Calcula la dirección desde el personaje hacia ese punto del ratón.
             Vector3 dirToMouse = targetPoint - transform.position;
+            // Ignora la diferencia de altura para que el personaje no se incline.
             dirToMouse.y = 0;
+
+            // Si el ratón no está justo encima del personaje (evita errores de rotación).
             if (dirToMouse.sqrMagnitude > 0.1f)
             {
+                // Crea la rotación necesaria para mirar hacia el ratón.
                 Quaternion targetRot = Quaternion.LookRotation(dirToMouse);
+                // Si está disparando, la rotación es 3 veces más rápida para mayor precisión.
                 float currentRotSpeed = _disparando ? _rotationSpeed * 3 : _rotationSpeed;
 
+                // Si está disparando o está quieto:
                 if (_disparando || _currentVelocity.magnitude < 0.1f)
                 {
-                    // Rotación de cuerpo completo en reposo
+                    // Gira el cuerpo entero (el objeto principal) hacia el ratón suavemente.
                     transform.rotation = Quaternion.Slerp(transform.rotation, targetRot, Time.deltaTime * currentRotSpeed);
+                    // Resetea la rotación del "hijo" (el modelo visual) para que mire al frente.
                     _childTransform.localRotation = Quaternion.Slerp(_childTransform.localRotation,
                                                                           Quaternion.identity,
                                                                           Time.deltaTime * currentRotSpeed);
                 }
+                // Si se está moviendo pero NO disparando:
                 else
                 {
+                    // El cuerpo principal sigue mirando al ratón, pero el modelo visual mira hacia la dirección del movimiento.
                     Quaternion moveRoot = Quaternion.LookRotation(_currentVelocity);
                     _childTransform.rotation = Quaternion.Slerp(_childTransform.rotation, moveRoot, Time.deltaTime * currentRotSpeed);
                 }
             }
 
+            // Convierte el punto del ratón de coordenadas del mundo a coordenadas locales del personaje.
             Vector3 locaTarget = transform.InverseTransformPoint(targetPoint);
-            // Clamp simétrico puro
+            // Limita qué tan a la izquierda o derecha puede ir el punto de mira.
             float clampedX = Mathf.Clamp(locaTarget.x, -_maxDistanceSide, _maxDistanceSide);
+            // Asegura que el punto de mira esté siempre al menos a 0.5 unidades frente al personaje.
             float clampedZ = Mathf.Max(locaTarget.z, 0.5f);
 
-            // Recomponemos la posición mundial
+            // Reconstruye la posición local limitada.
             Vector3 locaFinalPos = new Vector3(clampedX, 0.5f, clampedZ);
+            // Convierte esa posición limitada de vuelta a coordenadas del mundo.
             Vector3 finalPosWorld = transform.TransformPoint(locaFinalPos);
+
+            // Mueve el objeto "_aimingPivot" (donde apunta el arma) a esa posición con un suavizado muy rápido (* 40).
             _aimingPivot.position = Vector3.Lerp(_aimingPivot.position, finalPosWorld, Time.deltaTime * 40);
+            // Asegura que el pivote siempre mire hacia adelante respecto al personaje.
             _aimingPivot.forward = transform.forward;
         }
     }
     private void Shooting()
     {
+        //Reiniciamos las posiciones para que no se sumen o de errores
         Vector3 position = Vector3.zero;
         Quaternion rotation = Quaternion.Euler(Vector3.zero);
-
+        //Comprobamos queel proyectil de viento esta activo para poder dispararlo y los demas no
         if (_shootPointWind != null && _bulletType == "Wind")
         {
             if (_shootDelayWind > 0) return;
             DisparodeViento(position, rotation);
         }
+        //Comprobamos queel proyectil de caca esta activo para poder dispararlo y los demas no
         else if (_shootingPointPoop != null && _bulletType == "ProyectilCaca")
         {
             if (_shootDelayPoop > 0) return;
             DisparodeCaca(position, rotation);
         }
+        //Comprobamos queel proyectil del pulpo esta activo para poder dispararlo y los demas no
         else if (_shootingpointPulpo != null && _bulletType == "Misil")
         {
             if (_pulpoDelay > 0) return;
@@ -359,7 +392,7 @@ public class PlayerControler : CustomMonoBehaviour, IDamageabe<float>, IObservab
 
     private void AtaqueEspecial()
     {
-
+        _animator.SetTrigger("SpecialAttack");
     }
     private void ParticleFX()
     {
@@ -376,12 +409,10 @@ public class PlayerControler : CustomMonoBehaviour, IDamageabe<float>, IObservab
         {
             foreach (ParticleSystem ps in _dustParticles)
             {
-
                 ps.Stop();
             }
         }
     }
-
     private void UpdateAnimator()
     {
         _animator.SetFloat("Velocity", _currentVelocity.magnitude, 0.001f, Time.deltaTime);
@@ -435,7 +466,6 @@ public class PlayerControler : CustomMonoBehaviour, IDamageabe<float>, IObservab
 
         _bulletType = "Wind";
     }
-        
     private void ArmaDeCaca()
     {
         _weaponsObjects[2].SetActive(false);
@@ -455,7 +485,6 @@ public class PlayerControler : CustomMonoBehaviour, IDamageabe<float>, IObservab
 
         _bulletType = "ProyectilCaca";
     }
-        
     private void ArmaDeTinta()
     {
         _weaponsObjects[0].SetActive(false);
@@ -475,7 +504,11 @@ public class PlayerControler : CustomMonoBehaviour, IDamageabe<float>, IObservab
 
         _bulletType = "Misil";
     }
-        
+
+
+
+
+
 
 
 
@@ -524,7 +557,6 @@ public class PlayerControler : CustomMonoBehaviour, IDamageabe<float>, IObservab
         _observable.Add(observable);
 
     }
-
     public void RemoveObservable(IDamageableObserver observable)
     {
         if (_observable == null)
@@ -533,30 +565,31 @@ public class PlayerControler : CustomMonoBehaviour, IDamageabe<float>, IObservab
         }
         _observable.Remove(observable);
     }
-
-
     #endregion
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

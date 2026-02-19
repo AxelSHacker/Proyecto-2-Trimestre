@@ -8,7 +8,6 @@ public class ProyectilViendo : Proyectil
 
     public override void Initialize()
     {
-
         base.Initialize();
         //Lógica de partículas REFORZADA
         if (_particulasViento != null)
@@ -20,12 +19,6 @@ public class ProyectilViendo : Proyectil
             _particulasViento.Play(true);
         }
     }
-
-
-
-
-
-
     public override void Deactivate()
     {
         _isActive = false;
@@ -35,23 +28,30 @@ public class ProyectilViendo : Proyectil
         }
         CancelInvoke("ReturnToPool");
     }
-
     private void OnParticleCollision(GameObject other)
     {
         if ((_shootableLayers & (1 << other.gameObject.layer)) != 0)
         { 
             if (other.TryGetComponent(out EnemigoIngles enemigo))
             {
-
                 Vector3 direccion = transform.forward;
-                direccion.y = 0.1f;
+                direccion.y = 0.5f;
                 enemigo.ImpactoViento(direccion * _fuerzadelViento);
-               
-
             }
         }
     }
 }
+
+
+
+
+
+
+
+
+
+               
+
 
 
 
