@@ -35,7 +35,7 @@ public class EnemiIngleAttackState : StateMachineBehaviour
          {
             animator.SetInteger("EspadaEscudo", _espadaEscudo);
             animator.SetFloat("ReproduccionVelocidad", _velocidadAtaque);
-            animator.SetBool("EnRango", true);
+            
          }
       }
       else

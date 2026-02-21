@@ -8,13 +8,14 @@ public class EnemigoDisparo : StateMachineBehaviour
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         enemigoIngles = animator.GetComponentInParent<EnemigoIngles>();
-        _velocidadAtaque = Random.Range(0.7f, 1.3f);
+        _velocidadAtaque = Random.Range(0.3f, 1f);
 
         animator.SetFloat("ReproduccionVelocidad", _velocidadAtaque);
 
         Quaternion rotation = Quaternion.LookRotation(enemigoIngles.transform.forward);
         PoolManager.Instance.Pull("ProyectilEnemigo", enemigoIngles.Posicion.position, rotation);
         PoolManager.Instance.Pull("ProyectilEnemigo", enemigoIngles.Posicion2.position, rotation);
+        enemigoIngles.DisparoRealizado();
     }
     
 

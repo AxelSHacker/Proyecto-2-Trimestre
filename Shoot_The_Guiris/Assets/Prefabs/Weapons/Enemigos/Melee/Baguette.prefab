@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 1378249390967233734}
   - component: {fileID: 2340966053546403207}
   - component: {fileID: 1396704369156837311}
-  - component: {fileID: 373652519209613891}
   - component: {fileID: 1131299852974239942}
   - component: {fileID: 1224222083900331521}
   m_Layer: 0
@@ -29,7 +28,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2116034514252388449}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.15223113, y: 0.0748077, z: 0.11621517, w: 0.97863346}
+  m_LocalRotation: {x: -0.15223482, y: 0.07480508, z: 0.11621313, w: 0.9786334}
   m_LocalPosition: {x: 0.152, y: 0.395, z: 0.66}
   m_LocalScale: {x: 1.5, y: 1.5, z: 4}
   m_ConstrainProportionsScale: 0
@@ -93,27 +92,6 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &373652519209613891
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2116034514252388449}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.07458442, y: 0.06660483, z: 0.32960942}
-  m_Center: {x: 0.00012315191, y: 0.0013653692, z: 0.13933504}
 --- !u!114 &1131299852974239942
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -126,12 +104,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b675f10db745184fbe4491c8b3ae017, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MeleeWeapons
-  _fuerzaEscudo: 0
   _trailParticles: {fileID: 0}
   _damage: 20
   _shootableLayers:
     serializedVersion: 2
     m_Bits: 512
+  _tamanioCaja: {x: 0.5, y: 0.5, z: 2}
+  _offset: {x: 0, y: 0, z: 0.25}
 --- !u!114 &1224222083900331521
 MonoBehaviour:
   m_ObjectHideFlags: 0

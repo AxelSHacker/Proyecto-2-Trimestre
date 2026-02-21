@@ -10,8 +10,8 @@ public class Misil : PoolEntity
    [SerializeField] float _damage;
    [SerializeField] float _damageRadio;
    [SerializeField] float _pathTime = 1f;
-   float _pathTimer; 
-   
+   float _pathTimer;
+
    [SerializeField] LayerMask _disparable;
    [SerializeField] Vector3 _startPosicion;
    [SerializeField] Vector3 _posicionTarget;
@@ -28,9 +28,14 @@ public class Misil : PoolEntity
 
    void Update()
    {
-      transform.position =_posiciondedisparo + Vector3.Slerp(_startPosicion - _posiciondedisparo, _posicionTarget - _posiciondedisparo, 1 - _pathTimer / _pathTime);
+      transform.position = _posiciondedisparo + Vector3.Slerp(_startPosicion - _posiciondedisparo, _posicionTarget - _posiciondedisparo, 1 - _pathTimer / _pathTime);
 
       _pathTimer -= Time.deltaTime;
+   }
+   void OnDrawGizmos()
+   {
+      Gizmos.color = Color.red;
+      Gizmos.DrawWireSphere(transform.position, _damageRadio);
    }
    void OnTriggerEnter(Collider other)
    {
@@ -42,9 +47,10 @@ public class Misil : PoolEntity
          foreach (Collider impact in impactos)
          {
             _damageable = null;
-            if (other.TryGetComponent(out _damageable))
+            if (impact.TryGetComponent(out _damageable))
             {
                _damageable.TakeDamag(_damage, transform.position);
+
             }
          }
 
@@ -52,6 +58,7 @@ public class Misil : PoolEntity
          OnImpact?.Invoke();
          ReturnToPool();
       }
+
    }
    public void IniciarMisil(Vector3 startPoint, Vector3 targetPoint, Vector3 shooterpoint)
    {
@@ -75,9 +82,9 @@ public class Misil : PoolEntity
 
    #endregion
 }
-      
 
-      
+
+
 
 
 

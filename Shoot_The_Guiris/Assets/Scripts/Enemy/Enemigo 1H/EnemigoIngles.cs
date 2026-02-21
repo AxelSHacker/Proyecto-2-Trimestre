@@ -40,6 +40,8 @@ public class EnemigoIngles : PoolEntity, IDamageabe<float>, IDamageableObserver
    [SerializeField] float _inRange;
    [SerializeField] float _maxhealth;
    [SerializeField] float _currentealth;
+   [SerializeField] int _cargadorMax;
+   int _cargador;
    #endregion
    [Header("Getters")]
    #region Getters
@@ -55,8 +57,9 @@ public class EnemigoIngles : PoolEntity, IDamageabe<float>, IDamageableObserver
    public bool IsDead => _currentealth <= 0;
    public Transform Posicion => _weapon;
    public Transform Posicion2 => _weapon2;
-
    #endregion
+    
+
    public UnityEvent OnInizialize;
    public UnityEvent OnDeactivate;
    public UnityEvent OnDeadUE;
@@ -71,6 +74,7 @@ public class EnemigoIngles : PoolEntity, IDamageabe<float>, IDamageableObserver
    }
    void Start()
    {
+      _cargador = _cargadorMax;
       Revivir();
       CheckForTarget(_targetTag);
       _actualVelocity = _agent.velocity;
@@ -139,6 +143,18 @@ public class EnemigoIngles : PoolEntity, IDamageabe<float>, IDamageableObserver
       _agent.Warp(transform.position);
       _levantarse = null;
    }
+   public void DisparoRealizado()
+   {
+      _cargador--;
+      if (_cargador <= 0)
+      {
+         _animator.SetTrigger("Recarga");
+      }
+   }
+   public void RecargaRealizada()
+   {
+      _cargador = _cargadorMax;
+   }
    //Buscamos el objeto mas cercano con el tag indicado
    public void CheckForTarget(string name)
    {
@@ -204,6 +220,7 @@ public class EnemigoIngles : PoolEntity, IDamageabe<float>, IDamageableObserver
    }
    private void Death()
    {
+      
       int tipoMuerte = Random.Range(1, 4);
       _animator.SetInteger("Muerte", tipoMuerte);
       OnDeadUE?.Invoke();

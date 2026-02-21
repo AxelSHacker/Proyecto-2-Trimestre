@@ -256,7 +256,7 @@ MonoBehaviour:
   - {fileID: 2453184983566478375}
   _isActive: 0
   _damage: 50
-  _damageRadio: 5
+  _damageRadio: 10
   _pathTime: 1
   _disparable:
     serializedVersion: 2
@@ -290,21 +290,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UnityEngine.ParticleSystem, UnityEngine
-        m_MethodName: Stop
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
       - m_Target: {fileID: 424579184437248206}
         m_TargetAssemblyTypeName: UnityEngine.ParticleSystem, UnityEngine
-        m_MethodName: Stop
+        m_MethodName: Clear
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -321,18 +309,6 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: UnityEngine.SphereCollider, UnityEngine
         m_MethodName: set_enabled
         m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UnityEngine.ParticleSystem, UnityEngine
-        m_MethodName: Play
-        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -370,19 +346,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 919846359823955111}
         m_TargetAssemblyTypeName: UnityEngine.ParticleSystem, UnityEngine
-        m_MethodName: Stop
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UnityEngine.ParticleSystem, UnityEngine
-        m_MethodName: Play
+        m_MethodName: Clear
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -394,7 +358,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 424579184437248206}
         m_TargetAssemblyTypeName: UnityEngine.ParticleSystem, UnityEngine
-        m_MethodName: Play
+        m_MethodName: Clear
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -480,18 +444,6 @@ PrefabInstance:
     m_TransformParent: {fileID: 7422815109673506704}
     m_Modifications:
     - target: {fileID: 950326094650266977, guid: 214cffebd086d3c419280a1586889814, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 950326094650266977, guid: 214cffebd086d3c419280a1586889814, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 950326094650266977, guid: 214cffebd086d3c419280a1586889814, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 950326094650266977, guid: 214cffebd086d3c419280a1586889814, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -534,26 +486,6 @@ PrefabInstance:
     - target: {fileID: 3537988044397165477, guid: 214cffebd086d3c419280a1586889814, type: 3}
       propertyPath: m_Name
       value: Disparo de canion
-      objectReference: {fileID: 0}
-    - target: {fileID: 3900420677320512642, guid: 214cffebd086d3c419280a1586889814, type: 3}
-      propertyPath: ShapeModule.radius.value
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 8104584377720253007, guid: 214cffebd086d3c419280a1586889814, type: 3}
-      propertyPath: m_BoundingSphereOverride.w
-      value: 71201.625
-      objectReference: {fileID: 0}
-    - target: {fileID: 8104584377720253007, guid: 214cffebd086d3c419280a1586889814, type: 3}
-      propertyPath: m_BoundingSphereOverride.x
-      value: 9.64e-43
-      objectReference: {fileID: 0}
-    - target: {fileID: 8104584377720253007, guid: 214cffebd086d3c419280a1586889814, type: 3}
-      propertyPath: m_BoundingSphereOverride.y
-      value: NaN
-      objectReference: {fileID: 0}
-    - target: {fileID: 8104584377720253007, guid: 214cffebd086d3c419280a1586889814, type: 3}
-      propertyPath: m_BoundingSphereOverride.z
-      value: 9.64e-43
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

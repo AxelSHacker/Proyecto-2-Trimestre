@@ -6,7 +6,6 @@ public class MeleeWeapons : CustomMonoBehaviour
 {
    public Action OnInitialize;
    public Action<Vector3> OnImpact;
-   [SerializeField] ParticleSystem _trailParticles;
    [SerializeField] float _damage;
    [SerializeField] LayerMask _shootableLayers;
    [SerializeField] Vector3 _tamanioCaja = new Vector3(0.5f, 0.5f, 0.5f);
@@ -71,7 +70,6 @@ public class MeleeWeapons : CustomMonoBehaviour
          }
       }
    }
-
     void OnDisable()
     {
         _atacando = false;
@@ -95,6 +93,7 @@ public class MeleeWeapons : CustomMonoBehaviour
     //    }
     // }
 }
+
 
 
 

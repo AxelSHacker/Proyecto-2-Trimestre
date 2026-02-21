@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 4894704718484313665}
   - component: {fileID: 4894704718483019361}
   - component: {fileID: 4894704718481888417}
-  - component: {fileID: 4894704718483918023}
   - component: {fileID: 7726059054974987373}
   - component: {fileID: 6021297291500815890}
   m_Layer: 0
@@ -94,27 +93,6 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &4894704718483918023
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4894704718483819105}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.4, y: 2.391008, z: 0.4}
-  m_Center: {x: -0.0000032976411, y: 4.438845, z: -0.000026403297}
 --- !u!114 &7726059054974987373
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -127,12 +105,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b675f10db745184fbe4491c8b3ae017, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MeleeWeapons
-  _fuerzaEscudo: 0
   _trailParticles: {fileID: 0}
   _damage: 20
   _shootableLayers:
     serializedVersion: 2
     m_Bits: 512
+  _tamanioCaja: {x: 0.5, y: 0.5, z: 0.5}
+  _offset: {x: 0, y: 0, z: 1}
 --- !u!114 &6021297291500815890
 MonoBehaviour:
   m_ObjectHideFlags: 0

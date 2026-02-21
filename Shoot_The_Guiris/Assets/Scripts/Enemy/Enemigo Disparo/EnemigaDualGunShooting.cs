@@ -7,13 +7,11 @@ public class EnemigaDualGunShooting : StateMachineBehaviour
    override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
    {
       enemigoIngles = animator.GetComponentInParent<EnemigoIngles>();
-
-      
    }
-
    // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
    override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
    {
+      if (enemigoIngles.IsDead) return;
       if (enemigoIngles == null) return;
       float distancia = enemigoIngles.RemainingDistanceToTarget;
 
@@ -35,12 +33,6 @@ public class EnemigaDualGunShooting : StateMachineBehaviour
          animator.SetBool("EnRango", false);
       }
    }
-            
-            
-         
-            
-
-
    // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
    //override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
    //{
@@ -59,3 +51,12 @@ public class EnemigaDualGunShooting : StateMachineBehaviour
    //    // Implement code that sets up animation IK (inverse kinematics)
    //}
 }
+
+      
+
+            
+            
+         
+            
+
+
