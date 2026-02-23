@@ -1,13 +1,12 @@
-using System.Collections;
 
-using Unity.VisualScripting;
-using UnityEditor.Rendering;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Events;
-using UnityEngine.Rendering;
 
-public class EnemigoIngles : PoolEntity, IDamageabe<float>, IDamageableObserver
+
+public class EnemigoIngles : PoolEntity, IDamageabe<float>, PlayerObserver, IObservable<PlayerObserver>
 {
    #region Variables
    [Header("Referencias")]
@@ -16,7 +15,7 @@ public class EnemigoIngles : PoolEntity, IDamageabe<float>, IDamageableObserver
    [SerializeField] Transform _weapon2;
    [SerializeField] Animator _animator;
    [SerializeField] Rigidbody _rB;
-   
+
    [Header("Configuracion")]
    Transform _target;
    [SerializeField] string _targetTag = "Player";
@@ -58,7 +57,7 @@ public class EnemigoIngles : PoolEntity, IDamageabe<float>, IDamageableObserver
    public Transform Posicion => _weapon;
    public Transform Posicion2 => _weapon2;
    #endregion
-    
+
 
    public UnityEvent OnInizialize;
    public UnityEvent OnDeactivate;
@@ -70,15 +69,14 @@ public class EnemigoIngles : PoolEntity, IDamageabe<float>, IDamageableObserver
       _agent = GetComponent<NavMeshAgent>();
       _animator = GetComponentInChildren<Animator>();
       _rB = GetComponent<Rigidbody>();
-      //_dissolve = GetComponent<DissolveBehaviour>();
    }
    void Start()
    {
-      _cargador = _cargadorMax;
-      Revivir();
       CheckForTarget(_targetTag);
+      _cargador = _cargadorMax;
+
       _actualVelocity = _agent.velocity;
-      
+
       _agent.speed = Random.Range(10f, 20f);
    }
    void Update()
@@ -114,12 +112,25 @@ public class EnemigoIngles : PoolEntity, IDamageabe<float>, IDamageableObserver
    {
       //Si volamos cancelamos la recuperacion
       if (_levantarse != null) StopCoroutine(_levantarse);
+      _animator.SetLayerWeight(1, 0);
       _volando = true;
       _agent.enabled = false;
       _rB.isKinematic = false;
-      
       _rB.AddForce(direccion, ForceMode.Impulse);
    }
+   public IEnumerator ImpactoPatada(Vector3 direccion)
+   {
+      _agent.enabled = false;
+      _rB.isKinematic = false;
+      _animator.SetLayerWeight(1, 0);
+      _rB.AddForce(direccion, ForceMode.Impulse);
+      yield return new WaitForSeconds(3f);
+      _animator.SetLayerWeight(1, 1);
+      _agent.enabled = true;
+      _rB.isKinematic = true;
+      _agent.Warp(transform.position);
+   }
+
    private IEnumerator Ralentizacion()
    {
       _agent.velocity = _actualVelocity * 0.5f;
@@ -134,10 +145,11 @@ public class EnemigoIngles : PoolEntity, IDamageabe<float>, IDamageableObserver
    }
    private IEnumerator RutinaLevantarse()
    {
-      yield return new WaitForSeconds(Random.Range(5f, 10f));
+      yield return new WaitForSeconds(Random.Range(2f, 5f));
       //Lo rotamos a posicion normal
       transform.rotation = Quaternion.Euler(0, transform.rotation.eulerAngles.y, 0);
       //Volvemos a estado grounded
+      _animator.SetLayerWeight(1, 1);
       _rB.isKinematic = true;
       _agent.enabled = true;
       _agent.Warp(transform.position);
@@ -192,27 +204,54 @@ public class EnemigoIngles : PoolEntity, IDamageabe<float>, IDamageableObserver
       {
          _animator.SetFloat("Velocidad", 0);
       }
+
+      _animator.SetBool("Grounded", _grounded);
    }
    #endregion
    #region PooEntity
    public override void Initialize()
    {
+      _agent.enabled = false;
       base.Initialize();
-      _agent.Warp(transform.position);
+      _agent.enabled = true;
+
+      if (_agent.isOnNavMesh)
+      {
+         _agent.Warp(transform.position);
+      }
+
+      Revivir();
+
       OnInizialize?.Invoke();
    }
 
    public override void Deactivate()
    {
+      if (_agent.isOnNavMesh && _agent.enabled)
+      {
+         _agent.isStopped = true;
+         _agent.ResetPath();
+      }
+
       base.Deactivate();
+
+      StopAllCoroutines();
+      
+      _levantarse = null;
+      _ralentizacion = null;
       OnDeactivate?.Invoke();
    }
    #endregion
    public void TakeDamag(float damage, Vector3 impactPoint = default)
    {
-      if(IsDead) return;
+      if (IsDead) return;
       _currentealth -= damage;
       _currentealth = Mathf.Clamp(_currentealth, 0, _maxhealth);
+      for (int i = 0; i < _observers.Count; i++)
+      {
+         _observers[i].OnHealtUpdate(_currentealth, _maxhealth);
+         _observers[i].OnHit();
+      }
       if (_currentealth == 0)
       {
          Death();
@@ -220,13 +259,18 @@ public class EnemigoIngles : PoolEntity, IDamageabe<float>, IDamageableObserver
    }
    private void Death()
    {
-      
       int tipoMuerte = Random.Range(1, 4);
       _animator.SetInteger("Muerte", tipoMuerte);
+      _animator.SetLayerWeight(1, 0);
       OnDeadUE?.Invoke();
-      // _dissolve.StartDissolve();
-      // _dissolve.ResetDissolve();
+      for (int i = 0; i < _observers.Count; i++)
+      {
+         _observers[i].OnDead();
+      }
+      _observers.Clear();
    }
+
+
    public void OnHealtUpdate(float currentealt, float maxealt)
    {
    }
@@ -237,18 +281,46 @@ public class EnemigoIngles : PoolEntity, IDamageabe<float>, IDamageableObserver
    {
       _animator.Play("Idle");
    }
-   private void Revivir()
+   public void Revivir()
    {
       _currentealth = _maxhealth;
+      _animator.SetLayerWeight(1, 1);
    }
+
+   public void OnAtaqueEspecial(float timer, float time)
+   {
+
+   }
+
+   public void OnDasch(float timer, float time)
+   {
+
+   }
+
+   #region IObservable implementation
+   private List<PlayerObserver> _observers = new List<PlayerObserver>();
+   public void AddObservable(PlayerObserver observable)
+   {
+      if (_observers == null) _observers = new List<PlayerObserver>();
+
+      _observers.Add(observable);
+   }
+
+   public void RemoveObservable(PlayerObserver observable)
+   {
+      if (_observers == null) _observers = new List<PlayerObserver>();
+
+      _observers.Remove(observable);
+   }
+   #endregion
 }
 
-      
-
-      
 
 
-      
+
+
+
+
 
 
 

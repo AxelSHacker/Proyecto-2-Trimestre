@@ -4,13 +4,16 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class HUDController : CustomMonoBehaviour, IDamageableObserver
+public class HUDController : CustomMonoBehaviour, PlayerObserver
 {
    #region Variables
    [SerializeField] Image _barradeVida;
    [SerializeField] CanvasGroup _canvasGroupdeDanio;
    [SerializeField] float _velocidadFlash = 1f;
    private Coroutine _coroutinaDanio;
+   [SerializeField] Image _ataqueEspecial;
+   [SerializeField] Image[] _dash;
+
    #endregion
    public override void EditorInit()
    {
@@ -19,7 +22,7 @@ public class HUDController : CustomMonoBehaviour, IDamageableObserver
 
    void Start()
    {
-
+      _ataqueEspecial.fillAmount = 1f;
    }
 
    void Update()
@@ -32,6 +35,17 @@ public class HUDController : CustomMonoBehaviour, IDamageableObserver
       _barradeVida.fillAmount = Mathf.Clamp01((float)vidaActual / vidaMaxima);
    }
 
+   private void UpdateAtaqueEspecial(float timer, float time)
+   {
+      _ataqueEspecial.fillAmount = 1f - (timer / time);
+   }
+   private void UpdateDash(float timer, float time)
+   {
+      for (int i = 0; i < _dash.Length; i++)
+      {
+         _dash[i].fillAmount = 1f - (timer / time);
+      }
+   }
 
    private void FlashDanio()
    {
@@ -71,6 +85,16 @@ public class HUDController : CustomMonoBehaviour, IDamageableObserver
    public void OnDead()
    {
 
+   }
+
+   public void OnAtaqueEspecial(float timer, float time)
+   {
+      UpdateAtaqueEspecial(timer, time);
+   }
+
+   public void OnDasch(float timer, float time)
+   {
+      UpdateDash(timer, time);
    }
    #endregion
 }

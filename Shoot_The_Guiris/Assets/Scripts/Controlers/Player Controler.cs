@@ -5,14 +5,14 @@ using UnityEngine;
 using UnityEngine.Animations.Rigging;
 using UnityEngine.InputSystem;
 
-public class PlayerControler : CustomMonoBehaviour, IDamageabe<float>, IObservable<IDamageableObserver>
+public class PlayerControler : CustomMonoBehaviour, IDamageabe<float>, IObservable<PlayerObserver>
 {
     #region Variables
     [SerializeField] bool showGizmos = true;
     [SerializeField] PlayerInput _playerinput;
     [SerializeField] TextMeshProUGUI _moneyText;
     [SerializeField] TextMeshProUGUI _coolDownWeapon;
-    
+
     [Header("Player Movement")]
     [SerializeField] float _movementSpeed = 8f;
     [SerializeField] float _rotationSpeed = 14f;
@@ -40,7 +40,6 @@ public class PlayerControler : CustomMonoBehaviour, IDamageabe<float>, IObservab
     [SerializeField] GameObject[] _weaponsObjects;
     [SerializeField] float _shootDelayWind;
     [SerializeField] float _shootDelayPoop;
-    [SerializeField] float _pulpoDelay;
     [SerializeField] Vector3 _targetPoint;
     [SerializeField] Transform _shootPointWind;
     [SerializeField] Transform _shootingPointPoop;
@@ -48,10 +47,20 @@ public class PlayerControler : CustomMonoBehaviour, IDamageabe<float>, IObservab
     [SerializeField] string _bulletType;
     [SerializeField] float _fireRateWind;
     [SerializeField] float _fireRatePoop;
-    [SerializeField] float _firerateTinta;
     [SerializeField] int _cargadorCaca;
+    [SerializeField] int _cargadorMaxCaca;
+    [SerializeField] int _cargadorTinta;
+    [SerializeField] int _cargadorMaxTinta;
     bool _disparando;
     [SerializeField] float _misiverticalOffset = -5f;
+    [Header("Dasching")]
+    [SerializeField] float _daschTime;
+    [SerializeField] float _daschTimer;
+    [SerializeField] float _daschForce;
+
+    [Header("Ataque Especial")]
+    [SerializeField] float _ataqueEspecialTime;
+    [SerializeField] float _ataqueEspecialTimer;
 
     [Header("Physics")]
     [SerializeField] CharacterController _cC;
@@ -96,6 +105,8 @@ public class PlayerControler : CustomMonoBehaviour, IDamageabe<float>, IObservab
     #endregion
     void Start()
     {
+        _cargadorCaca = _cargadorMaxCaca;
+        _cargadorTinta = _cargadorMaxTinta;
         ArmadeViento();
         _currentealth = _maxhealth;
 
@@ -109,21 +120,15 @@ public class PlayerControler : CustomMonoBehaviour, IDamageabe<float>, IObservab
     {
         GroundCheck();
 
+        Contadores();
+
         Movement();
+
         UpdateAnimator();
-        if (_shootDelayWind > 0)
-        {
-            _shootDelayWind -= Time.deltaTime;
-        }
-        if (_shootDelayPoop > 0)
-        {
-            _shootDelayPoop -= Time.deltaTime;
-        }
-        if (_pulpoDelay > 0)
-        {
-            _pulpoDelay -= Time.deltaTime;
-        }
     }
+
+
+
     void FixedUpdate()
     {
         Aiming();
@@ -168,25 +173,45 @@ public class PlayerControler : CustomMonoBehaviour, IDamageabe<float>, IObservab
             _disparando = false;
         }
     }
+
+    public void OnReload(InputAction.CallbackContext context)
+    {
+        if (context.performed && _bulletType == "ProyectilCaca" && _cargadorCaca < _cargadorMaxCaca)
+        {
+            _animator.SetTrigger("ReloadRifle");
+        }
+        else if (context.performed && _bulletType == "Misil" && _cargadorTinta < _cargadorMaxTinta)
+        {
+            _animator.SetTrigger("ReloadBazooca");
+        }
+        else
+        {
+            _animator.ResetTrigger("ReloadRifle");
+            _animator.ResetTrigger("ReloadBazooca");
+        }
+    }
     public void OnSpecialAttack(InputAction.CallbackContext context)
     {
-        if (context.performed)
+        if (context.performed && _ataqueEspecialTimer <= 0)
         {
             _animator.SetTrigger("SpecialAttack");
+            _ataqueEspecialTimer = _ataqueEspecialTime;
         }
     }
     public void OnRightDasching(InputAction.CallbackContext context)
     {
-        if (context.performed)
+        if (context.performed && _daschTimer <= 0)
         {
             DaschRight();
+            _daschTimer = _daschTime;
         }
     }
     public void OnLeftDasching(InputAction.CallbackContext context)
     {
-        if (context.performed)
+        if (context.performed && _daschTimer <= 0)
         {
             DaschLeft();
+            _daschTimer = _daschTime;
         }
     }
     public void Weapon1(InputAction.CallbackContext context)
@@ -295,11 +320,11 @@ public class PlayerControler : CustomMonoBehaviour, IDamageabe<float>, IObservab
 
     private void DaschRight()
     {
-        _cC.Move(transform.right * 400 * Time.deltaTime);
+        _cC.Move(transform.right * _daschForce * Time.deltaTime);
     }
     private void DaschLeft()
     {
-        _cC.Move(-transform.right * 400 * Time.deltaTime);
+        _cC.Move(-transform.right * _daschForce * Time.deltaTime);
     }
     private void Aiming()
     {
@@ -379,21 +404,21 @@ public class PlayerControler : CustomMonoBehaviour, IDamageabe<float>, IObservab
         //Comprobamos queel proyectil de caca esta activo para poder dispararlo y los demas no
         else if (_shootingPointPoop != null && _bulletType == "ProyectilCaca")
         {
-            if (_shootDelayPoop > 0) return;
+            if (_shootDelayPoop > 0 || _cargadorCaca <= 0) return;
             DisparodeCaca(position, rotation);
+            _cargadorCaca--;
+
         }
         //Comprobamos queel proyectil del pulpo esta activo para poder dispararlo y los demas no
         else if (_shootingpointPulpo != null && _bulletType == "Misil")
         {
-            if (_pulpoDelay > 0) return;
+            if (_cargadorTinta <= 0) return;
             DisparodeTinta(position, rotation);
+            _cargadorTinta--;
+
         }
     }
 
-    private void AtaqueEspecial()
-    {
-        _animator.SetTrigger("SpecialAttack");
-    }
     private void ParticleFX()
     {
         //Si estamos en el suelo y nos movemos, activamos las partículas de polvo
@@ -418,6 +443,11 @@ public class PlayerControler : CustomMonoBehaviour, IDamageabe<float>, IObservab
         _animator.SetFloat("Velocity", _currentVelocity.magnitude, 0.001f, Time.deltaTime);
     }
     #endregion
+    
+    
+    
+    
+    
     #region  Funciones funcionales
     private void DisparodeViento(Vector3 position, Quaternion rotation)
     {
@@ -431,6 +461,7 @@ public class PlayerControler : CustomMonoBehaviour, IDamageabe<float>, IObservab
     private void DisparodeCaca(Vector3 position, Quaternion rotation)
     {
         _animator.SetTrigger("ShootPoop");
+        
         _shootDelayPoop = _fireRatePoop;
         position = _shootingPointPoop.position;
         rotation = Quaternion.LookRotation(transform.forward);
@@ -439,7 +470,7 @@ public class PlayerControler : CustomMonoBehaviour, IDamageabe<float>, IObservab
     private void DisparodeTinta(Vector3 position, Quaternion rotacion)
     {
         _animator.SetTrigger("ShootTinta");
-        _pulpoDelay = _firerateTinta;
+        
         position = _shootingpointPulpo.position;
         rotacion = Quaternion.LookRotation(transform.forward);
         Misil tempMisil = PoolManager.Instance.Pull(_bulletType, position, rotacion) as Misil;
@@ -447,6 +478,7 @@ public class PlayerControler : CustomMonoBehaviour, IDamageabe<float>, IObservab
         puntodeImpacto.y += _misiverticalOffset;
         tempMisil.IniciarMisil(position, puntodeImpacto, transform.position);
     }
+
     private void ArmadeViento()
     {
         _weaponsObjects[1].SetActive(false);
@@ -504,11 +536,43 @@ public class PlayerControler : CustomMonoBehaviour, IDamageabe<float>, IObservab
 
         _bulletType = "Misil";
     }
+    private void Contadores()
+    {
+        if (_shootDelayWind > 0)
+        {
+            _shootDelayWind -= Time.deltaTime;
+        }
+        if (_shootDelayPoop > 0f)
+        {
+            _shootDelayPoop -= Time.deltaTime;
+        }
+        if (_ataqueEspecialTimer > 0)
+        {
+            _ataqueEspecialTimer -= Time.deltaTime;
+            for (int i = 0; i < _observable.Count; i++)
+            {
+                _observable[i].OnAtaqueEspecial(_ataqueEspecialTimer, _ataqueEspecialTime);
+            }
+        }
+        if (_daschTimer > 0)
+        {
+            _daschTimer -= Time.deltaTime;
+            for (int i = 0; i < _observable.Count; i++)
+            {
+                _observable[i].OnDasch(_daschTimer, _daschTime);
+            }
+        }
+    }
 
+    public void RecargacacaRealizada()
+    {
+        _cargadorCaca = _cargadorMaxCaca;
+    }
 
-
-
-
+    public void RecargaPulpoRealizada()
+    {
+        _cargadorTinta = _cargadorMaxTinta;
+    }
 
 
 
@@ -523,6 +587,11 @@ public class PlayerControler : CustomMonoBehaviour, IDamageabe<float>, IObservab
 
 
     #endregion
+    
+    
+    
+    
+    
     #region IDamagable && Observable
     public void TakeDamag(float damage, Vector3 impactPoint = default(Vector3))
     {
@@ -547,21 +616,21 @@ public class PlayerControler : CustomMonoBehaviour, IDamageabe<float>, IObservab
             _observable[i].OnDead();
         }
     }
-    private List<IDamageableObserver> _observable;
-    public void AddObservable(IDamageableObserver observable)
+    private List<PlayerObserver> _observable;
+    public void AddObservable(PlayerObserver observable)
     {
         if (_observable == null)
         {
-            _observable = new List<IDamageableObserver>();
+            _observable = new List<PlayerObserver>();
         }
         _observable.Add(observable);
 
     }
-    public void RemoveObservable(IDamageableObserver observable)
+    public void RemoveObservable(PlayerObserver observable)
     {
         if (_observable == null)
         {
-            _observable = new List<IDamageableObserver>();
+            _observable = new List<PlayerObserver>();
         }
         _observable.Remove(observable);
     }

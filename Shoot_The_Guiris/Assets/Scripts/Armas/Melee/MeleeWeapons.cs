@@ -7,6 +7,7 @@ public class MeleeWeapons : CustomMonoBehaviour
    public Action OnInitialize;
    public Action<Vector3> OnImpact;
    [SerializeField] float _damage;
+   [SerializeField] float _fuerzaPatada;
    [SerializeField] LayerMask _shootableLayers;
    [SerializeField] Vector3 _tamanioCaja = new Vector3(0.5f, 0.5f, 0.5f);
    [SerializeField] Vector3 _offset = new Vector3(0f, 0f, 1f);
@@ -59,13 +60,13 @@ public class MeleeWeapons : CustomMonoBehaviour
             damageable.TakeDamag(_damage, transform.position);
             OnImpact?.Invoke(transform.position);
 
-            // if (other.TryGetComponent(out CharacterController component))
-            // {
-
-            //    Vector3 direccion = (other.transform.position - transform.position).normalized;
-            //    direccion.y = 0.1f;
-            //    component.Move(direccion * _fuerzaEscudo);
-            // }
+            if (other.TryGetComponent(out EnemigoIngles enemigo))
+            {
+                Vector3 direccion = transform.forward;
+                direccion.y = 0.3f;
+                enemigo.StartCoroutine(enemigo.ImpactoPatada(direccion * _fuerzaPatada)); // Puedes ajustar la fuerza según tus necesidades
+                
+            }
             _impactado.Add(other.gameObject);
          }
       }

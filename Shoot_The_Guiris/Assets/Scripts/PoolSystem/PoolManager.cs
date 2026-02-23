@@ -79,10 +79,12 @@ public class PoolManager : CustomMonoBehaviour
       {
          entity = CreatePoolEntity(poolId);
       }
+      
       if (entity != null)
       {
          entity.transform.position = position;
          entity.transform.rotation = rotation;
+
          entity.Initialize();
       }
 

@@ -141,7 +141,7 @@ NavMeshAgent:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8375531070269603190}
-  m_Enabled: 1
+  m_Enabled: 0
   m_AgentTypeID: 0
   m_Radius: 2.5
   m_Speed: 10
@@ -252,7 +252,7 @@ MonoBehaviour:
   _grounded: 0
   _attackDistance: 20
   _inRange: 20
-  _maxhealth: 100
+  _maxhealth: 70
   _currentealth: 0
   _cargadorMax: 0
   OnInizialize:
@@ -294,6 +294,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 7613199379866540630}
+        m_TargetAssemblyTypeName: EnemigoIngles, Assembly-CSharp
+        m_MethodName: Revivir
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   OnDeactivate:
     m_PersistentCalls:
       m_Calls:
@@ -308,18 +320,6 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1075637460764009268}
-        m_TargetAssemblyTypeName: UnityEngine.AI.NavMeshAgent, UnityEngine
-        m_MethodName: set_isStopped
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
         m_CallState: 2
   OnDeadUE:
     m_PersistentCalls:
@@ -481,7 +481,17 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 4199952320344497027, guid: 55ecc23ce0a864f4aa75f4dbff8bbccf, type: 3}
+    - {fileID: 6912755795869697265, guid: 55ecc23ce0a864f4aa75f4dbff8bbccf, type: 3}
+    - {fileID: 4949534986402581805, guid: 55ecc23ce0a864f4aa75f4dbff8bbccf, type: 3}
+    - {fileID: 517520798983117944, guid: 55ecc23ce0a864f4aa75f4dbff8bbccf, type: 3}
+    - {fileID: 2251170536156262692, guid: 55ecc23ce0a864f4aa75f4dbff8bbccf, type: 3}
+    - {fileID: 5943685668458127538, guid: 55ecc23ce0a864f4aa75f4dbff8bbccf, type: 3}
+    - {fileID: 5277822978403371558, guid: 55ecc23ce0a864f4aa75f4dbff8bbccf, type: 3}
+    - {fileID: 894177996155486524, guid: 55ecc23ce0a864f4aa75f4dbff8bbccf, type: 3}
+    - {fileID: 6993923672836387231, guid: 55ecc23ce0a864f4aa75f4dbff8bbccf, type: 3}
+    - {fileID: 6885564859662828147, guid: 55ecc23ce0a864f4aa75f4dbff8bbccf, type: 3}
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 4874312042710183988, guid: 55ecc23ce0a864f4aa75f4dbff8bbccf, type: 3}
       insertIndex: -1

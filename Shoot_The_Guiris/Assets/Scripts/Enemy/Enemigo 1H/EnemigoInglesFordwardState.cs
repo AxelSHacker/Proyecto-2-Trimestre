@@ -29,11 +29,15 @@ public class EnemigoInglesFordwardState : StateMachineBehaviour
                                                                Quaternion.LookRotation(dirrecion),
                                                                Time.deltaTime);
         }
+
         if (!enemigoIngles.PathPending && enemigoIngles.RemainingDistanceToTarget < enemigoIngles.InRange)
         {
             animator.SetBool("EnRango", true);
-        }
-
+        } 
+        else
+        {
+            animator.SetBool("EnRango", false);
+        }      
 
     }
 

@@ -27,64 +27,60 @@ public class EnemiIngleAttackState : StateMachineBehaviour
       enemigoIngles.transform.rotation = Quaternion.Slerp(enemigoIngles.transform.rotation,
                                                          Quaternion.LookRotation(dirrecion),
                                                          Time.deltaTime);
-      if (!enemigoIngles.PathPending && enemigoIngles.RemainingDistanceToTarget < enemigoIngles.InRange)
-      {
-         animator.SetBool("EnRango", true);
 
-         if (enemigoIngles.RemainingDistanceToTarget < enemigoIngles.AttacDistance && animator.GetBool("EnRango"))
-         {
-            animator.SetInteger("EspadaEscudo", _espadaEscudo);
-            animator.SetFloat("ReproduccionVelocidad", _velocidadAtaque);
-            
-         }
-      }
-      else
+      if (distancia < enemigoIngles.AttacDistance)
       {
-         _espadaEscudo = -1;
-         _velocidadAtaque = 1;
-         animator.SetBool("EnRango", false);
+         animator.SetInteger("EspadaEscudo", _espadaEscudo);
+         animator.SetFloat("ReproduccionVelocidad", _velocidadAtaque);
       }
    }
+      
+
+
+
    // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
-   // override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-   // {
-
-   // }
-   // OnStateMove is called right after Animator.OnAnimatorMove()
-   //override public void OnStateMove(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-   //{
-   //    // Implement code that processes and affects root motion
-   //}
-
-   // OnStateIK is called right after Animator.OnAnimatorIK()
-   //override public void OnStateIK(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-   //{
-   //    // Implement code that sets up animation IK (inverse kinematics)
-   //}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+   override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+   {
+      _espadaEscudo = -1;
+      _velocidadAtaque = 1;
+       animator.SetBool("EnRango", false);
+   }
 }
+// OnStateMove is called right after Animator.OnAnimatorMove()
+//override public void OnStateMove(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+//{
+//    // Implement code that processes and affects root motion
+//}
+
+// OnStateIK is called right after Animator.OnAnimatorIK()
+//override public void OnStateIK(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+//{
+//    // Implement code that sets up animation IK (inverse kinematics)
+//}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
