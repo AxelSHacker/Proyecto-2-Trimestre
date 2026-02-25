@@ -461,8 +461,8 @@ public class PlayerControler : CustomMonoBehaviour, IDamageabe<float>, IObservab
     private void DisparodeCaca(Vector3 position, Quaternion rotation)
     {
         _animator.SetTrigger("ShootPoop");
-        
         _shootDelayPoop = _fireRatePoop;
+        _animator.SetFloat("Velocidad de disparo", 1f / _fireRatePoop);
         position = _shootingPointPoop.position;
         rotation = Quaternion.LookRotation(transform.forward);
         PoolManager.Instance.Pull(_bulletType, position, rotation);

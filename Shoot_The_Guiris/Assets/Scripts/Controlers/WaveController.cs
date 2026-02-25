@@ -1,14 +1,16 @@
 using Unity.VisualScripting;
 using UnityEngine;
-
+using System;
 public class WaveController : MonoBehaviour, PlayerObserver
 {
+    public Action<int> OnWaveStart;
+    public Action<int> OnWaveEnd;
     [SerializeField] string[] _enemyPrefab;
     [SerializeField] Transform[] _spawnPoints;
     [SerializeField] float _spawnDelay  = 0.5f;
     [SerializeField] int _waveEnemyNumberMultiplier;
     [SerializeField] int _waveEnemies;
-    int _remainingEnemies;
+    [SerializeField] int _remainingEnemies;
     float _spawnTimer;
     int _currentWave;
     void Start()
@@ -35,6 +37,8 @@ public class WaveController : MonoBehaviour, PlayerObserver
         _currentWave++;
         _waveEnemies = _currentWave * _waveEnemyNumberMultiplier;
         _remainingEnemies = _waveEnemies;
+
+        OnWaveStart?.Invoke(_currentWave);
     }
     private void GenerateEnemy()
     {
@@ -43,8 +47,8 @@ public class WaveController : MonoBehaviour, PlayerObserver
             Debug.LogError("Spawn points or enemy prefab not set in WaveController.");
             return;
         }
-        int randomSpawnIndex = Random.Range(0, _spawnPoints.Length);
-        int randomEnemyPoolIndex = Random.Range(0, _enemyPrefab.Length);
+        int randomSpawnIndex = UnityEngine.Random.Range(0, _spawnPoints.Length);
+        int randomEnemyPoolIndex = UnityEngine.Random.Range(0, _enemyPrefab.Length);
 
         EnemigoIngles enemigo = PoolManager.Instance.Pull(_enemyPrefab[randomEnemyPoolIndex],
                                                           _spawnPoints[randomSpawnIndex].position,
@@ -69,7 +73,8 @@ public class WaveController : MonoBehaviour, PlayerObserver
 
         if (_remainingEnemies <= 0)
         {
-            StartWave();
+            //StartWave();
+            OnWaveEnd?.Invoke(_currentWave);
         }
     }
 

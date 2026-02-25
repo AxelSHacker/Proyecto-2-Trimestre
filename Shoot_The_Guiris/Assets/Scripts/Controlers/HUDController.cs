@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
@@ -13,6 +14,8 @@ public class HUDController : CustomMonoBehaviour, PlayerObserver
    private Coroutine _coroutinaDanio;
    [SerializeField] Image _ataqueEspecial;
    [SerializeField] Image[] _dash;
+   [SerializeField] Animator _wavePanel;
+   [SerializeField] TextMeshProUGUI _waveText;
 
    #endregion
    public override void EditorInit()
@@ -46,7 +49,11 @@ public class HUDController : CustomMonoBehaviour, PlayerObserver
          _dash[i].fillAmount = 1f - (timer / time);
       }
    }
-
+public void ShowWavePanel(int waveNumber)
+   {
+      _waveText.text = waveNumber.ToString();
+      _wavePanel.SetTrigger("Oleada");
+   }
    private void FlashDanio()
    {
       if (_coroutinaDanio != null)
