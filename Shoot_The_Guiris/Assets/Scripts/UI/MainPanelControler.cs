@@ -16,7 +16,7 @@ public class MainPanelControler : MonoBehaviour
 
     public void StartGame()
     {
-        SceneManager.LoadScene("GameScene");
+        SceneManager.LoadScene("SampleScene");
     }
 
     public void ExitGame()

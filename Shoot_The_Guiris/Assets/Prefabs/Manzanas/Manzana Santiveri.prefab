@@ -10,7 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 914135559443028924}
   - component: {fileID: 3079721746283292950}
-  m_Layer: 0
+  - component: {fileID: 2503397417821987150}
+  m_Layer: 11
   m_Name: Manzana Santiveri
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -25,7 +26,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 329856059259314524}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -606.15924, y: -65.54888, z: -1263.5657}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -66,6 +67,26 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 350.703, y: 119.203674, z: 150.93176}
   m_Center: {x: -70.95834, y: 73.78247, z: -31.894165}
+--- !u!114 &2503397417821987150
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 329856059259314524}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.AI.Navigation::Unity.AI.Navigation.NavMeshModifier
+  m_SerializedVersion: 0
+  m_OverrideArea: 1
+  m_Area: 1
+  m_OverrideGenerateLinks: 0
+  m_GenerateLinks: 0
+  m_IgnoreFromBuild: 0
+  m_ApplyToChildren: 1
+  m_AffectedAgents: ffffffff
 --- !u!1001 &5030504179717979
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -77,6 +98,10 @@ PrefabInstance:
     - target: {fileID: 931538546288842936, guid: fcd811d2f5928cd49bddd79a54dcfdb2, type: 3}
       propertyPath: m_Name
       value: building-type-a
+      objectReference: {fileID: 0}
+    - target: {fileID: 931538546288842936, guid: fcd811d2f5928cd49bddd79a54dcfdb2, type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 4627669353816379182, guid: fcd811d2f5928cd49bddd79a54dcfdb2, type: 3}
       propertyPath: m_LocalPosition.x
@@ -204,6 +229,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: building-type-b (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 1342483793489705946, guid: 161f290b3dc91f240978f3533c2294e8, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -266,6 +295,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Building_Bar
       objectReference: {fileID: 0}
+    - target: {fileID: 6764189948376684253, guid: c5c42d018ba86974ab6012cd847e1e0d, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -287,6 +320,10 @@ PrefabInstance:
     - target: {fileID: 3403883465163012334, guid: 5fc1a678ae847644fb8b76c885b1095a, type: 3}
       propertyPath: m_Name
       value: building-type-o
+      objectReference: {fileID: 0}
+    - target: {fileID: 3403883465163012334, guid: 5fc1a678ae847644fb8b76c885b1095a, type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 4742971933056727033, guid: 5fc1a678ae847644fb8b76c885b1095a, type: 3}
       propertyPath: m_LocalScale.x
@@ -362,6 +399,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Building_Restaurant
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: bc532b78ce09f234ea01da2deecfe035, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: bc532b78ce09f234ea01da2deecfe035, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.08627843
@@ -435,6 +476,10 @@ PrefabInstance:
     - target: {fileID: 1225493786534177237, guid: 37cb03d1e2899a646907a6808e6c6391, type: 3}
       propertyPath: m_Name
       value: building-type-j
+      objectReference: {fileID: 0}
+    - target: {fileID: 1225493786534177237, guid: 37cb03d1e2899a646907a6808e6c6391, type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 1894331779542758255, guid: 37cb03d1e2899a646907a6808e6c6391, type: 3}
       propertyPath: m_LocalPosition.x
@@ -550,6 +595,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: building-type-e
       objectReference: {fileID: 0}
+    - target: {fileID: 7613877154222136798, guid: 569f9f8598ebcc64d846ed088afab137, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -641,6 +690,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: building-type-k
       objectReference: {fileID: 0}
+    - target: {fileID: 8448871746508342218, guid: 925b1f734bc530d4f8af6bafe4f8e6b8, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -703,6 +756,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: building-type-h
       objectReference: {fileID: 0}
+    - target: {fileID: 5502641034915219056, guid: 39619d81d528b18488e0af607a41ad1c, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -724,6 +781,10 @@ PrefabInstance:
     - target: {fileID: 6182976669370610863, guid: 8c740500c72b10f4aa299515456531bd, type: 3}
       propertyPath: m_Name
       value: building-e (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6182976669370610863, guid: 8c740500c72b10f4aa299515456531bd, type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 7384987924401543910, guid: 8c740500c72b10f4aa299515456531bd, type: 3}
       propertyPath: m_LocalScale.z
@@ -831,6 +892,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: building-type-b
       objectReference: {fileID: 0}
+    - target: {fileID: 8268566623788465803, guid: f79bffc0fcc6c7b499b08706fd4bfb4a, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -852,6 +917,10 @@ PrefabInstance:
     - target: {fileID: 820797336478089679, guid: cc95c244459b4774ba099b535aead1a2, type: 3}
       propertyPath: m_Name
       value: building-d
+      objectReference: {fileID: 0}
+    - target: {fileID: 820797336478089679, guid: cc95c244459b4774ba099b535aead1a2, type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 4680090456466079280, guid: cc95c244459b4774ba099b535aead1a2, type: 3}
       propertyPath: m_LocalPosition.x
@@ -914,6 +983,10 @@ PrefabInstance:
     - target: {fileID: 6182976669370610863, guid: 8c740500c72b10f4aa299515456531bd, type: 3}
       propertyPath: m_Name
       value: building-e (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6182976669370610863, guid: 8c740500c72b10f4aa299515456531bd, type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 7384987924401543910, guid: 8c740500c72b10f4aa299515456531bd, type: 3}
       propertyPath: m_LocalScale.z
@@ -1021,6 +1094,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Tienda Hippie
       objectReference: {fileID: 0}
+    - target: {fileID: 4792573721330146796, guid: e244aa500bcef74448b181c56d3f117a, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 6033621955447147006, guid: e244aa500bcef74448b181c56d3f117a, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1083,6 +1164,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: building-type-g
       objectReference: {fileID: 0}
+    - target: {fileID: 5304891371498495083, guid: ee6c5dbae5a730540b487b6858af210b, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1104,6 +1189,10 @@ PrefabInstance:
     - target: {fileID: 232376585399092574, guid: 38295bb6da643af45bd40cd307487a31, type: 3}
       propertyPath: m_Name
       value: building-c (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 232376585399092574, guid: 38295bb6da643af45bd40cd307487a31, type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 3305135083122262752, guid: 38295bb6da643af45bd40cd307487a31, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1214,6 +1303,14 @@ PrefabInstance:
     - target: {fileID: 4792573721330146796, guid: e244aa500bcef74448b181c56d3f117a, type: 3}
       propertyPath: m_Name
       value: Tienda Hippie
+      objectReference: {fileID: 0}
+    - target: {fileID: 4792573721330146796, guid: e244aa500bcef74448b181c56d3f117a, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 6033621955447147006, guid: e244aa500bcef74448b181c56d3f117a, type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

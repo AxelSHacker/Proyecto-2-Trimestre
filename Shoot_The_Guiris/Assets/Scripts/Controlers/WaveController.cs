@@ -1,21 +1,23 @@
 using Unity.VisualScripting;
 using UnityEngine;
 using System;
+using TMPro;
 public class WaveController : MonoBehaviour, PlayerObserver
 {
     public Action<int> OnWaveStart;
     public Action<int> OnWaveEnd;
     [SerializeField] string[] _enemyPrefab;
     [SerializeField] Transform[] _spawnPoints;
-    [SerializeField] float _spawnDelay  = 0.5f;
+    [SerializeField] float _spawnDelay = 0.5f;
     [SerializeField] int _waveEnemyNumberMultiplier;
     [SerializeField] int _waveEnemies;
     [SerializeField] int _remainingEnemies;
+    [SerializeField] TextMeshProUGUI _remainingEnemyText;
     float _spawnTimer;
     int _currentWave;
     void Start()
     {
-
+        
     }
 
     // Update is called once per frame
@@ -31,6 +33,7 @@ public class WaveController : MonoBehaviour, PlayerObserver
             GenerateEnemy();
             _spawnTimer = 0f;
         }
+        _remainingEnemyText.text = _remainingEnemies.ToString();
     }
     public void StartWave()
     {
@@ -70,7 +73,7 @@ public class WaveController : MonoBehaviour, PlayerObserver
     public void OnDead()
     {
         _remainingEnemies--;
-
+        _remainingEnemyText.text = _remainingEnemies.ToString();
         if (_remainingEnemies <= 0)
         {
             //StartWave();

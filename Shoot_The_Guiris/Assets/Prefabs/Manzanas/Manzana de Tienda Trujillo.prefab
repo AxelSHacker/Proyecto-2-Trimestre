@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4834390039103263808}
   - component: {fileID: 7765689626942990304}
   - component: {fileID: 4257007547180577593}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: building-block
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -101,7 +101,7 @@ GameObject:
   - component: {fileID: 1831320617278948848}
   - component: {fileID: 3497473873729577452}
   - component: {fileID: 7367138341743550779}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: building-window-wide-sill (6)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -191,7 +191,7 @@ GameObject:
   - component: {fileID: 3739504738555937270}
   - component: {fileID: 1760326873543044040}
   - component: {fileID: 1944157211876618743}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: building-b
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -282,7 +282,7 @@ GameObject:
   - component: {fileID: 6470938619451609874}
   - component: {fileID: 8801436649719414565}
   - component: {fileID: 719918769283491296}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: building-f
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -393,7 +393,7 @@ GameObject:
   - component: {fileID: 9143042789804404388}
   - component: {fileID: 4152573473069308640}
   - component: {fileID: 7272990748309721466}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Building_Pizza
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -483,7 +483,7 @@ GameObject:
   - component: {fileID: 3915663726060057600}
   - component: {fileID: 1648672923578108092}
   - component: {fileID: 8623945455905882994}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Building_Residential_color03
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -573,7 +573,7 @@ GameObject:
   - component: {fileID: 6478762982952173063}
   - component: {fileID: 8861507363074674472}
   - component: {fileID: 463457935329852933}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: building-a
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -663,7 +663,7 @@ GameObject:
   - component: {fileID: 3957508417195372542}
   - component: {fileID: 9078346004882960633}
   - component: {fileID: 5226159402961959224}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: building-d
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -754,7 +754,7 @@ GameObject:
   - component: {fileID: 837301590548020641}
   - component: {fileID: 8777041730955966555}
   - component: {fileID: 6870307443964907214}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: building-d (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -864,7 +864,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1220770436823238485}
   - component: {fileID: 1570370611528817763}
-  m_Layer: 0
+  - component: {fileID: 6078042323374663253}
+  m_Layer: 11
   m_Name: Manzana de Tienda Trujillo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -920,6 +921,26 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 320.0999, y: 134.23755, z: 77.03099}
   m_Center: {x: 146.95828, y: 67.046875, z: -63.55241}
+--- !u!114 &6078042323374663253
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5763114115647498539}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.AI.Navigation::Unity.AI.Navigation.NavMeshModifier
+  m_SerializedVersion: 0
+  m_OverrideArea: 1
+  m_Area: 1
+  m_OverrideGenerateLinks: 0
+  m_GenerateLinks: 0
+  m_IgnoreFromBuild: 0
+  m_ApplyToChildren: 1
+  m_AffectedAgents: ffffffff
 --- !u!1 &6443305943019373450
 GameObject:
   m_ObjectHideFlags: 0
@@ -933,7 +954,7 @@ GameObject:
   - component: {fileID: 7016863070956592024}
   - component: {fileID: 1918759243557701912}
   - component: {fileID: 6339359937307647866}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Building_Music Store
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1066,7 +1087,7 @@ GameObject:
   - component: {fileID: 8091666251996126183}
   - component: {fileID: 6682717519449419228}
   - component: {fileID: 4869130752340175593}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: building-c (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1157,7 +1178,7 @@ GameObject:
   - component: {fileID: 3493210574823051969}
   - component: {fileID: 1475897741625709515}
   - component: {fileID: 5042863858133105361}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Building_Books Shop
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1270,7 +1291,7 @@ GameObject:
   - component: {fileID: 6918799381897154829}
   - component: {fileID: 842389681849275318}
   - component: {fileID: 1247248601112760995}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: building-h
   m_TagString: Untagged
   m_Icon: {fileID: 0}

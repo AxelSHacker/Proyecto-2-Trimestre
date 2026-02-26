@@ -26,10 +26,12 @@ public class EnemigoIngles : PoolEntity, IDamageabe<float>, PlayerObserver, IObs
    [SerializeField] float _groundCheckSize;
    [SerializeField] bool _grounded;
    bool _volando;
+   bool _cegado;
 
    [Header("Coroutine")]
    Coroutine _levantarse;
    Coroutine _ralentizacion;
+   Coroutine _ceguera;
 
    [Header("Movimiento")]
    Vector3 _actualVelocity;
@@ -108,6 +110,7 @@ public class EnemigoIngles : PoolEntity, IDamageabe<float>, PlayerObserver, IObs
       //Actualitzamos el estado de _grounded
       _grounded = colliderBuffer[0] != null;
    }
+   //Funcuion que se llama desde la municion de viento, para lanzar al enemigo por los aires
    public void ImpactoViento(Vector3 direccion)
    {
       //Si volamos cancelamos la recuperacion
@@ -118,6 +121,7 @@ public class EnemigoIngles : PoolEntity, IDamageabe<float>, PlayerObserver, IObs
       _rB.isKinematic = false;
       _rB.AddForce(direccion, ForceMode.Impulse);
    }
+   //Funcion que se llama desde el ataque especial, para lanzar al enemigo por los aires
    public IEnumerator ImpactoPatada(Vector3 direccion)
    {
       _agent.enabled = false;
@@ -130,7 +134,7 @@ public class EnemigoIngles : PoolEntity, IDamageabe<float>, PlayerObserver, IObs
       _rB.isKinematic = true;
       _agent.Warp(transform.position);
    }
-
+   //Coroutina que ralentiza al enemigo cuando es golpeado por la municion de caca
    private IEnumerator Ralentizacion()
    {
       _agent.velocity = _actualVelocity * 0.5f;
@@ -138,11 +142,7 @@ public class EnemigoIngles : PoolEntity, IDamageabe<float>, PlayerObserver, IObs
       _agent.velocity = _actualVelocity;
       _ralentizacion = null;
    }
-   public void RaletizacionCoroutina()
-   {
-      if (_ralentizacion != null) StopCoroutine(_ralentizacion);
-      _ralentizacion = StartCoroutine(Ralentizacion());
-   }
+   //Coroutina que se encarga de levantar al enemigo despues de ser lanzado por los aires
    private IEnumerator RutinaLevantarse()
    {
       yield return new WaitForSeconds(Random.Range(2f, 5f));
@@ -154,6 +154,38 @@ public class EnemigoIngles : PoolEntity, IDamageabe<float>, PlayerObserver, IObs
       _agent.enabled = true;
       _agent.Warp(transform.position);
       _levantarse = null;
+   }
+   //Coroutine de ceguera, el enemigo se mueve de manera erratica durante 3 segundos, y luego vuelve a la normalidad
+   private IEnumerator Ceguera()
+   {
+      _cegado = true;
+      _agent.velocity = _actualVelocity * 0.3f;
+
+      Vector3 puntoAleatorio = transform.position + Random.insideUnitSphere * 5f;
+      NavMeshHit hit;
+
+      if (NavMesh.SamplePosition(puntoAleatorio, out hit, 5f,
+            NavMesh.AllAreas))
+      {
+         _agent.SetDestination(hit.position);
+      }
+      yield return new WaitForSeconds(3f);
+
+      _agent.velocity = _actualVelocity;
+      _cegado = false;
+      SetDestinationToTarget();
+   }
+   //Funcion que llamamos desde la municion de tinta, para cegar al enemigo
+   public void Cegar()
+   {
+      if (_ceguera != null) StopCoroutine(_ceguera);
+      _ceguera = StartCoroutine(Ceguera());
+   }
+   //Funcion que llamamos desde la municion de caca, para ralentizar al enemigo
+   public void RaletizacionCoroutina()
+   {
+      if (_ralentizacion != null) StopCoroutine(_ralentizacion);
+      _ralentizacion = StartCoroutine(Ralentizacion());
    }
    public void DisparoRealizado()
    {
@@ -236,7 +268,7 @@ public class EnemigoIngles : PoolEntity, IDamageabe<float>, PlayerObserver, IObs
       base.Deactivate();
 
       StopAllCoroutines();
-      
+
       _levantarse = null;
       _ralentizacion = null;
       OnDeactivate?.Invoke();

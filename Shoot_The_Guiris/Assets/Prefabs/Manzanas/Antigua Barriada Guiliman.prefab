@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6987283785966649080}
   - component: {fileID: 3719568214341574986}
   - component: {fileID: 3102114913368461876}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: building-f (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -124,7 +124,7 @@ GameObject:
   - component: {fileID: 3699388477672954292}
   - component: {fileID: 8751801884855855353}
   - component: {fileID: 9101720639794441206}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: building-h (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -233,7 +233,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4138377707060754487}
-  m_Layer: 0
+  - component: {fileID: 2243054044907621485}
+  m_Layer: 11
   m_Name: Antigua Barriada Guiliman
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -257,3 +258,23 @@ Transform:
   - {fileID: 2867236539568005413}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2243054044907621485
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6324436849473284977}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.AI.Navigation::Unity.AI.Navigation.NavMeshModifier
+  m_SerializedVersion: 0
+  m_OverrideArea: 1
+  m_Area: 1
+  m_OverrideGenerateLinks: 0
+  m_GenerateLinks: 0
+  m_IgnoreFromBuild: 0
+  m_ApplyToChildren: 1
+  m_AffectedAgents: ffffffff

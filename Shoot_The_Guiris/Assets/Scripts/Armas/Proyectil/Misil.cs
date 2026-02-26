@@ -2,6 +2,7 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.Events;
 
 public class Misil : PoolEntity
@@ -52,14 +53,19 @@ public class Misil : PoolEntity
                _damageable.TakeDamag(_damage, transform.position);
 
             }
+            if (impact.TryGetComponent(out EnemigoIngles enemigo))
+            {
+               enemigo.Cegar();
+            }
          }
-
          _posicionTarget = transform.position;
          OnImpact?.Invoke();
          ReturnToPool();
       }
-
    }
+
+
+
    public void IniciarMisil(Vector3 startPoint, Vector3 targetPoint, Vector3 shooterpoint)
    {
       _startPosicion = startPoint;

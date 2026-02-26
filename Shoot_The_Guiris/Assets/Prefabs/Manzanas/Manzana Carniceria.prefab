@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8355866212019509423}
   - component: {fileID: 8900575356470404208}
   - component: {fileID: 6932788584372310837}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: building-type-a
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -101,7 +101,7 @@ GameObject:
   - component: {fileID: 6298671517506420028}
   - component: {fileID: 3771254258366529119}
   - component: {fileID: 5146003503306030567}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: building-type-e (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -191,7 +191,7 @@ GameObject:
   - component: {fileID: 8302260858522278008}
   - component: {fileID: 8180135247348411280}
   - component: {fileID: 2292440366927721348}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: building-type-k
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -281,7 +281,7 @@ GameObject:
   - component: {fileID: 9056308292242759796}
   - component: {fileID: 3211600598110587935}
   - component: {fileID: 7256165508349548215}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: building-type-j
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -371,7 +371,7 @@ GameObject:
   - component: {fileID: 8254243942086547222}
   - component: {fileID: 6428802938333634269}
   - component: {fileID: 1980974466531439638}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: building-type-e
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -461,7 +461,7 @@ GameObject:
   - component: {fileID: 2261317873560567749}
   - component: {fileID: 1488005075301983020}
   - component: {fileID: 6966885520161697072}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: building-type-o (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -550,7 +550,8 @@ GameObject:
   m_Component:
   - component: {fileID: 6061506128916465377}
   - component: {fileID: 5415279128130458850}
-  m_Layer: 0
+  - component: {fileID: 7917720825265493536}
+  m_Layer: 11
   m_Name: Manzana Carniceria
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -602,6 +603,26 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 209.03949, y: 10, z: 204.98578}
   m_Center: {x: -7.499481, y: 0, z: 18.44461}
+--- !u!114 &7917720825265493536
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6986576497720642975}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.AI.Navigation::Unity.AI.Navigation.NavMeshModifier
+  m_SerializedVersion: 0
+  m_OverrideArea: 1
+  m_Area: 1
+  m_OverrideGenerateLinks: 0
+  m_GenerateLinks: 0
+  m_IgnoreFromBuild: 0
+  m_ApplyToChildren: 1
+  m_AffectedAgents: ffffffff
 --- !u!1 &7422573935882559456
 GameObject:
   m_ObjectHideFlags: 0
@@ -613,7 +634,7 @@ GameObject:
   - component: {fileID: 8337835966886029581}
   - component: {fileID: 3205879656679304639}
   - component: {fileID: 3270082669705855420}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: building-type-o
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -703,7 +724,7 @@ GameObject:
   - component: {fileID: 5603880313659711662}
   - component: {fileID: 2400590250242816788}
   - component: {fileID: 8541213741327096395}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: building-type-e (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -793,7 +814,7 @@ GameObject:
   - component: {fileID: 7858804210712577146}
   - component: {fileID: 2060477021771315236}
   - component: {fileID: 6616716371141361327}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: building-type-d
   m_TagString: Untagged
   m_Icon: {fileID: 0}

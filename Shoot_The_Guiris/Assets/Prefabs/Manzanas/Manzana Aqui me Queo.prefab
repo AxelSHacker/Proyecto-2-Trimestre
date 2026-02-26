@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3905933711390178917}
   - component: {fileID: 5534648961890708837}
   - component: {fileID: 2453623782868784806}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: building-g (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -102,7 +102,7 @@ GameObject:
   - component: {fileID: 3412668489629251034}
   - component: {fileID: 3023173209459823994}
   - component: {fileID: 8221710805891002902}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Building_Fast Food
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -213,7 +213,7 @@ GameObject:
   - component: {fileID: 4946458754964685021}
   - component: {fileID: 7872555036765834193}
   - component: {fileID: 520396177294325186}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: building-g
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -303,7 +303,7 @@ GameObject:
   - component: {fileID: 1824984314203560475}
   - component: {fileID: 7942353672767353064}
   - component: {fileID: 4983921727964441435}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: building-type-b
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -393,7 +393,7 @@ GameObject:
   - component: {fileID: 4055720050509928861}
   - component: {fileID: 8998485040822882153}
   - component: {fileID: 586525365153574686}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: building-d
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -483,7 +483,7 @@ GameObject:
   - component: {fileID: 1005916540758499772}
   - component: {fileID: 5276035845038202608}
   - component: {fileID: 2103534138694670204}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: building-j
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -572,7 +572,8 @@ GameObject:
   m_Component:
   - component: {fileID: 8606676410771888706}
   - component: {fileID: 8989651506241351694}
-  m_Layer: 0
+  - component: {fileID: 7236154516695075445}
+  m_Layer: 11
   m_Name: Manzana Aqui me Queo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -625,6 +626,26 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 188.651, y: 120.00199, z: 290.2069}
   m_Center: {x: 3.9275513, y: 56.825184, z: -134.37927}
+--- !u!114 &7236154516695075445
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4745012568637178936}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.AI.Navigation::Unity.AI.Navigation.NavMeshModifier
+  m_SerializedVersion: 0
+  m_OverrideArea: 1
+  m_Area: 1
+  m_OverrideGenerateLinks: 0
+  m_GenerateLinks: 0
+  m_IgnoreFromBuild: 0
+  m_ApplyToChildren: 1
+  m_AffectedAgents: ffffffff
 --- !u!1 &5403395646580965879
 GameObject:
   m_ObjectHideFlags: 0
@@ -636,7 +657,7 @@ GameObject:
   - component: {fileID: 8650381645174520552}
   - component: {fileID: 7188296807147292202}
   - component: {fileID: 8656481754974723420}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: building-type-o
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -726,7 +747,7 @@ GameObject:
   - component: {fileID: 8391706674332227416}
   - component: {fileID: 941072723551901633}
   - component: {fileID: 3248043268161744585}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: building-type-j
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -816,7 +837,7 @@ GameObject:
   - component: {fileID: 108400725099154649}
   - component: {fileID: 2867374870792218966}
   - component: {fileID: 5374152078953584536}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: building-c
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -906,7 +927,7 @@ GameObject:
   - component: {fileID: 2328099105214482348}
   - component: {fileID: 2354048642250904569}
   - component: {fileID: 5278985564590644293}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: building-e
   m_TagString: Untagged
   m_Icon: {fileID: 0}

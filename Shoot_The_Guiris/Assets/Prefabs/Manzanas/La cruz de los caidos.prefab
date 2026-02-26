@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4257079875777923612}
   - component: {fileID: 6663601133099217907}
   - component: {fileID: 5023227841222512731}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: building-d
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -101,7 +101,7 @@ GameObject:
   - component: {fileID: 5202887675665259509}
   - component: {fileID: 3372856257081393858}
   - component: {fileID: 2549854682879018617}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: building-type-j
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -190,7 +190,7 @@ GameObject:
   m_Component:
   - component: {fileID: 907038099679326345}
   - component: {fileID: 1844639136055115257}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: roadTile_084
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -246,7 +246,7 @@ GameObject:
   - component: {fileID: 3555946192964299350}
   - component: {fileID: 6750615325284821837}
   - component: {fileID: 7267869507089046185}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Mesh1_Group1_Model (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -358,7 +358,7 @@ GameObject:
   - component: {fileID: 1845416811448909028}
   - component: {fileID: 3314231785858612389}
   - component: {fileID: 9026415012056646853}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Mesh1_Group1_Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -469,7 +469,7 @@ GameObject:
   - component: {fileID: 589434416412809242}
   - component: {fileID: 862620493432257165}
   - component: {fileID: 5759328562514969407}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Mesh1_Group1_Model (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -559,7 +559,7 @@ GameObject:
   - component: {fileID: 7960441833420326901}
   - component: {fileID: 5856713382264950435}
   - component: {fileID: 6498297196571041857}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: building-e
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -650,7 +650,7 @@ GameObject:
   - component: {fileID: 8767088941087592291}
   - component: {fileID: 7239292896231799210}
   - component: {fileID: 3978324786024556493}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Mesh1_Group1_Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -762,7 +762,7 @@ GameObject:
   - component: {fileID: 6139953406696655209}
   - component: {fileID: 4030858456793250750}
   - component: {fileID: 4809721926127241550}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Mesh1_Group1_Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -874,7 +874,7 @@ GameObject:
   - component: {fileID: 6028524516787362507}
   - component: {fileID: 5777322018990976460}
   - component: {fileID: 923727452007470474}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Mesh1_Group1_Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -983,7 +983,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6464533525339932677}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: roadTile_001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1019,7 +1019,7 @@ GameObject:
   - component: {fileID: 9129947090068634144}
   - component: {fileID: 3312260935877595397}
   - component: {fileID: 8700140114795075995}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: building-e
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1110,7 +1110,7 @@ GameObject:
   - component: {fileID: 3320324126877780560}
   - component: {fileID: 1163702967037249880}
   - component: {fileID: 3097929376695818685}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Mesh1_Group1_Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1219,7 +1219,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1792681918526827642}
-  m_Layer: 0
+  - component: {fileID: 7275838511995232520}
+  m_Layer: 11
   m_Name: La cruz de los caidos
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1252,6 +1253,26 @@ Transform:
   - {fileID: 9129947090068634144}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7275838511995232520
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6213152005880301928}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.AI.Navigation::Unity.AI.Navigation.NavMeshModifier
+  m_SerializedVersion: 0
+  m_OverrideArea: 1
+  m_Area: 1
+  m_OverrideGenerateLinks: 0
+  m_GenerateLinks: 0
+  m_IgnoreFromBuild: 0
+  m_ApplyToChildren: 1
+  m_AffectedAgents: ffffffff
 --- !u!1 &6413195211300850026
 GameObject:
   m_ObjectHideFlags: 0
@@ -1264,7 +1285,7 @@ GameObject:
   - component: {fileID: 6216089634772936365}
   - component: {fileID: 4547335864211783908}
   - component: {fileID: 6377976139000971975}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Mesh1_Group1_Model (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1375,7 +1396,7 @@ GameObject:
   - component: {fileID: 2788801020490930007}
   - component: {fileID: 5289025178488670088}
   - component: {fileID: 2566795577283009713}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Mesh1_Group1_Model (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1463,7 +1484,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3034394172903463723}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: roadTile_091 (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1499,7 +1520,7 @@ GameObject:
   - component: {fileID: 7300540364298789135}
   - component: {fileID: 3387840532959426382}
   - component: {fileID: 202968929407871014}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: building-type-l
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1597,8 +1618,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 2.513273, y: 1.0491933, z: 1.986523}
-  m_Center: {x: 0.8601435, y: 0.52459663, z: 0.66194564}
+  m_Size: {x: 2.5571468, y: 1.0491933, z: 2.078679}
+  m_Center: {x: 0.8820804, y: 0.52459663, z: 0.66194576}
 --- !u!1 &8029835361235241410
 GameObject:
   m_ObjectHideFlags: 0
@@ -1608,7 +1629,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7113394926347351994}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: roadTile_091
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1643,7 +1664,8 @@ GameObject:
   - component: {fileID: 2686724891211508634}
   - component: {fileID: 3714765173061680754}
   - component: {fileID: 2927390025827533634}
-  m_Layer: 0
+  - component: {fileID: 577279229488923770}
+  m_Layer: 11
   m_Name: building-type-q
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1722,6 +1744,27 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &577279229488923770
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8574576627267862677}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.82934195, y: 0.9179999, z: 0.88558817}
+  m_Center: {x: -0.20532937, y: 0.45899996, z: 0.02079445}
 --- !u!1 &8639907746655229490
 GameObject:
   m_ObjectHideFlags: 0
@@ -1731,7 +1774,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7294260387075568143}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: roadTile_001 (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}

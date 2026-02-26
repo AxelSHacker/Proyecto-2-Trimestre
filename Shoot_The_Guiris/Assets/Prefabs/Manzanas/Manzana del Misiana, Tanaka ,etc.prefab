@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5561028500490981099}
   - component: {fileID: 5563714364965755846}
   - component: {fileID: 1976617711557312262}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: building-type-k
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -101,7 +101,7 @@ GameObject:
   - component: {fileID: 4971512915928075524}
   - component: {fileID: 7832490644799868123}
   - component: {fileID: 824383946661851219}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: building-type-l (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -192,7 +192,7 @@ GameObject:
   - component: {fileID: 215478992853454012}
   - component: {fileID: 5617502462197517429}
   - component: {fileID: 3712764782800466525}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: building-type-l
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -303,7 +303,7 @@ GameObject:
   - component: {fileID: 8145576536214607573}
   - component: {fileID: 408939237690759298}
   - component: {fileID: 5467234601141686775}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: building-type-l (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -393,7 +393,7 @@ GameObject:
   - component: {fileID: 8492622924541778707}
   - component: {fileID: 7729931044369841229}
   - component: {fileID: 6791717195905572950}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: building-b (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -484,7 +484,7 @@ GameObject:
   - component: {fileID: 3091132508695763436}
   - component: {fileID: 1464124942384832834}
   - component: {fileID: 4361285600039841312}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: building-type-e
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -596,7 +596,7 @@ GameObject:
   - component: {fileID: 8911054049766880377}
   - component: {fileID: 2298723443941328869}
   - component: {fileID: 2314132727258186226}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Building Sky_small_color02
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -707,7 +707,7 @@ GameObject:
   - component: {fileID: 7555568852869222959}
   - component: {fileID: 1715305903317929182}
   - component: {fileID: 3940601813742649192}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: building-a (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -797,7 +797,7 @@ GameObject:
   - component: {fileID: 8567582529036958392}
   - component: {fileID: 1300022901784091996}
   - component: {fileID: 4305521895894185568}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: building-l
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -887,7 +887,7 @@ GameObject:
   - component: {fileID: 4566241871637298422}
   - component: {fileID: 126036432204906279}
   - component: {fileID: 7577112288866127269}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: building-k
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -977,7 +977,7 @@ GameObject:
   - component: {fileID: 7041850746903310016}
   - component: {fileID: 8366300271109314770}
   - component: {fileID: 3693911504547990519}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Building_Fruits  Shop
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1067,7 +1067,7 @@ GameObject:
   - component: {fileID: 4013352849537656985}
   - component: {fileID: 1152959718959963082}
   - component: {fileID: 6719314021408627998}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: building-type-r
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1156,7 +1156,8 @@ GameObject:
   m_Component:
   - component: {fileID: 9043157722218050426}
   - component: {fileID: 6060168887744242252}
-  m_Layer: 0
+  - component: {fileID: 5480184585737139105}
+  m_Layer: 11
   m_Name: Manzana del Misiana, Tanaka ,etc
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1221,6 +1222,26 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 309.21942, y: 156.71782, z: 372.3136}
   m_Center: {x: 75.99982, y: 73.35891, z: 4.30188}
+--- !u!114 &5480184585737139105
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7134539506769898314}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.AI.Navigation::Unity.AI.Navigation.NavMeshModifier
+  m_SerializedVersion: 0
+  m_OverrideArea: 1
+  m_Area: 1
+  m_OverrideGenerateLinks: 0
+  m_GenerateLinks: 0
+  m_IgnoreFromBuild: 0
+  m_ApplyToChildren: 1
+  m_AffectedAgents: ffffffff
 --- !u!1 &7357509611316639576
 GameObject:
   m_ObjectHideFlags: 0
@@ -1233,7 +1254,7 @@ GameObject:
   - component: {fileID: 4756794567404822107}
   - component: {fileID: 2021994179868432574}
   - component: {fileID: 148913951713035436}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: building-type-j
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1345,7 +1366,7 @@ GameObject:
   - component: {fileID: 1167280077363720992}
   - component: {fileID: 4949562669741401565}
   - component: {fileID: 4313062930500585738}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Building_Music Store
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1457,7 +1478,7 @@ GameObject:
   - component: {fileID: 6769461129668806456}
   - component: {fileID: 8362920036530995083}
   - component: {fileID: 4388422468456337112}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: building-type-e (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1547,7 +1568,7 @@ GameObject:
   - component: {fileID: 6296851351235590245}
   - component: {fileID: 4092551783968072159}
   - component: {fileID: 5488662849201597175}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: building-a (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1637,7 +1658,7 @@ GameObject:
   - component: {fileID: 8492516107142410762}
   - component: {fileID: 4594530636049988397}
   - component: {fileID: 7588277184429885220}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: building-d
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1777,6 +1798,10 @@ PrefabInstance:
       value: Pared (5)
       objectReference: {fileID: 0}
     - target: {fileID: 8042069925015785787, guid: 0df8275fdd8aeef46b1102779ed1c4f8, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 8042069925015785787, guid: 0df8275fdd8aeef46b1102779ed1c4f8, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
@@ -1843,6 +1868,10 @@ PrefabInstance:
       value: Pared (3)
       objectReference: {fileID: 0}
     - target: {fileID: 8042069925015785787, guid: 0df8275fdd8aeef46b1102779ed1c4f8, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 8042069925015785787, guid: 0df8275fdd8aeef46b1102779ed1c4f8, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
@@ -1907,6 +1936,10 @@ PrefabInstance:
     - target: {fileID: 8552062725841297999, guid: 3f1233c8357d71b4cb4fa90fff5748cf, type: 3}
       propertyPath: m_Name
       value: Building_Pizza
+      objectReference: {fileID: 0}
+    - target: {fileID: 8552062725841297999, guid: 3f1233c8357d71b4cb4fa90fff5748cf, type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 8552062725841297999, guid: 3f1233c8357d71b4cb4fa90fff5748cf, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -1981,6 +2014,10 @@ PrefabInstance:
     - target: {fileID: 8042069925015785787, guid: 0df8275fdd8aeef46b1102779ed1c4f8, type: 3}
       propertyPath: m_Name
       value: Pared (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8042069925015785787, guid: 0df8275fdd8aeef46b1102779ed1c4f8, type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 8042069925015785787, guid: 0df8275fdd8aeef46b1102779ed1c4f8, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -2059,6 +2096,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 9ec05a396a4e072439b7ace6fb686be5, type: 3}
       propertyPath: m_Name
       value: building-type-k (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 9ec05a396a4e072439b7ace6fb686be5, type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 9ec05a396a4e072439b7ace6fb686be5, type: 3}
       propertyPath: m_StaticEditorFlags

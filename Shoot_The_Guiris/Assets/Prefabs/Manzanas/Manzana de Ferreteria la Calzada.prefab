@@ -10,7 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 7282215336045770992}
   - component: {fileID: 4847499988345405459}
-  m_Layer: 0
+  - component: {fileID: 6892164941675086371}
+  m_Layer: 11
   m_Name: Manzana de Ferreteria la Calzada
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -60,6 +61,26 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 275.59094, y: 112.71434, z: 80.274284}
   m_Center: {x: -27.383972, y: 51.35717, z: 38.390583}
+--- !u!114 &6892164941675086371
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 681184861676764819}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.AI.Navigation::Unity.AI.Navigation.NavMeshModifier
+  m_SerializedVersion: 0
+  m_OverrideArea: 1
+  m_Area: 1
+  m_OverrideGenerateLinks: 0
+  m_GenerateLinks: 0
+  m_IgnoreFromBuild: 0
+  m_ApplyToChildren: 1
+  m_AffectedAgents: ffffffff
 --- !u!1 &1006366433457494658
 GameObject:
   m_ObjectHideFlags: 0
@@ -72,7 +93,7 @@ GameObject:
   - component: {fileID: 5900922023059308964}
   - component: {fileID: 6892529153255525006}
   - component: {fileID: 6056402435447649577}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: building-h
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -183,7 +204,7 @@ GameObject:
   - component: {fileID: 4305531163903125540}
   - component: {fileID: 9067133336705533936}
   - component: {fileID: 6348039198354606059}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: building-e
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -274,7 +295,7 @@ GameObject:
   - component: {fileID: 7014699045723316886}
   - component: {fileID: 5298928537469036542}
   - component: {fileID: 3020570220788652995}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: building-type-u
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -385,7 +406,7 @@ GameObject:
   - component: {fileID: 6472408473377993467}
   - component: {fileID: 8981447581270601377}
   - component: {fileID: 548016348850696277}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: building-a
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -476,7 +497,7 @@ GameObject:
   - component: {fileID: 2260227102141175740}
   - component: {fileID: 7299825409795298641}
   - component: {fileID: 5265195615405075757}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: building-i
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -588,7 +609,7 @@ GameObject:
   - component: {fileID: 820716709203996864}
   - component: {fileID: 4656426759521267317}
   - component: {fileID: 2215219386374044588}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Building_Shoes Shop
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -752,6 +773,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 26aeb75154226c1439651ab8b2c7e63c, type: 3}
       propertyPath: m_Name
       value: building-d
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 26aeb75154226c1439651ab8b2c7e63c, type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 26aeb75154226c1439651ab8b2c7e63c, type: 3}
       propertyPath: m_StaticEditorFlags

@@ -320,11 +320,12 @@ public class PlayerControler : CustomMonoBehaviour, IDamageabe<float>, IObservab
 
     private void DaschRight()
     {
-        _cC.Move(transform.right * _daschForce * Time.deltaTime);
+        _animator.SetTrigger("EsquivarRight");
     }
+        
     private void DaschLeft()
     {
-        _cC.Move(-transform.right * _daschForce * Time.deltaTime);
+        _animator.SetTrigger("EsquivarLeft");
     }
     private void Aiming()
     {

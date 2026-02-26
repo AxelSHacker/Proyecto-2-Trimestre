@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6717704225277514689}
   - component: {fileID: 4670899851595929797}
   - component: {fileID: 7987268074180558719}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: fence (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -102,7 +102,7 @@ GameObject:
   - component: {fileID: 750918720867286467}
   - component: {fileID: 1124957045172631353}
   - component: {fileID: 4453322837924696537}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Ventanas con toldo (7)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -214,7 +214,7 @@ GameObject:
   - component: {fileID: 7651547701773272530}
   - component: {fileID: 4085482906641245016}
   - component: {fileID: 6801287609240289408}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: fence (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -325,7 +325,7 @@ GameObject:
   - component: {fileID: 6619182867181256510}
   - component: {fileID: 8579257637427952008}
   - component: {fileID: 8100135897062211282}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Tienda Hippie (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -417,7 +417,7 @@ GameObject:
   - component: {fileID: 3094050120752359131}
   - component: {fileID: 6972076139287285604}
   - component: {fileID: 3880699067639316323}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: fence
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -528,7 +528,7 @@ GameObject:
   - component: {fileID: 1906234781974367784}
   - component: {fileID: 8906673529028338020}
   - component: {fileID: 3180881358379842524}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: fence (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -619,7 +619,7 @@ GameObject:
   - component: {fileID: 5821403449978986807}
   - component: {fileID: 2501411989662174585}
   - component: {fileID: 494389840994748293}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: fence (6)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -730,7 +730,7 @@ GameObject:
   - component: {fileID: 3513607473799252413}
   - component: {fileID: 3965866071281266784}
   - component: {fileID: 2567569046518355993}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: fence (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -819,7 +819,8 @@ GameObject:
   m_Component:
   - component: {fileID: 5865213501679827746}
   - component: {fileID: 3547338307072596693}
-  m_Layer: 0
+  - component: {fileID: 2573519329770067046}
+  m_Layer: 11
   m_Name: Manzana de los Melli
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -885,8 +886,28 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 220.38257, y: 60.612057, z: 90.09004}
-  m_Center: {x: -50.99695, y: 31.246645, z: -116.732735}
+  m_Size: {x: 226.58533, y: 60.612057, z: 91.64073}
+  m_Center: {x: -49.44635, y: 31.246645, z: -117.50808}
+--- !u!114 &2573519329770067046
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6527147272758162244}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.AI.Navigation::Unity.AI.Navigation.NavMeshModifier
+  m_SerializedVersion: 0
+  m_OverrideArea: 1
+  m_Area: 1
+  m_OverrideGenerateLinks: 0
+  m_GenerateLinks: 0
+  m_IgnoreFromBuild: 0
+  m_ApplyToChildren: 1
+  m_AffectedAgents: ffffffff
 --- !u!1 &7902833493181429424
 GameObject:
   m_ObjectHideFlags: 0
@@ -899,7 +920,7 @@ GameObject:
   - component: {fileID: 4532233731104103690}
   - component: {fileID: 5133292772228973923}
   - component: {fileID: 3164845062111111466}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: fence (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1064,6 +1085,10 @@ PrefabInstance:
       value: building-type-o
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: f945f5c54e6f6044da5c667ee19164cd, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: f945f5c54e6f6044da5c667ee19164cd, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
@@ -1171,6 +1196,10 @@ PrefabInstance:
       value: building-k
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 6a15b9e5b6582e94ab8594a3467bfb2b, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 6a15b9e5b6582e94ab8594a3467bfb2b, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
@@ -1211,8 +1240,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 3.9838576, y: 1.4699998, z: 0.9419998}
-  m_Center: {x: 0.9501382, y: 0.7349999, z: 0.000000048608246}
+  m_Size: {x: 3.9838567, y: 1.4699998, z: 0.9923815}
+  m_Center: {x: 0.9501387, y: 0.7349999, z: -0.025190901}
 --- !u!1001 &1504882098357379029
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1224,6 +1253,10 @@ PrefabInstance:
     - target: {fileID: 100000, guid: 4dc7028a3a83758439585b7c7c98cb27, type: 3}
       propertyPath: m_Name
       value: Building_Fast Food
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 4dc7028a3a83758439585b7c7c98cb27, type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: 4dc7028a3a83758439585b7c7c98cb27, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -1385,6 +1418,10 @@ PrefabInstance:
       value: building-e
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 814d8e2d59d6ab341ba2986a666a4622, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 814d8e2d59d6ab341ba2986a666a4622, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
@@ -1409,6 +1446,10 @@ PrefabInstance:
     - target: {fileID: 100000, guid: 3667b1c4d7f532647b9156782c0c80f0, type: 3}
       propertyPath: m_Name
       value: Building_Bar
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 3667b1c4d7f532647b9156782c0c80f0, type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: 3667b1c4d7f532647b9156782c0c80f0, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -1519,6 +1560,10 @@ PrefabInstance:
       value: Building_Restaurant
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: bc532b78ce09f234ea01da2deecfe035, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: bc532b78ce09f234ea01da2deecfe035, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
@@ -1597,6 +1642,10 @@ PrefabInstance:
       value: Building_Fast Food (1)
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: 4dc7028a3a83758439585b7c7c98cb27, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 4dc7028a3a83758439585b7c7c98cb27, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
@@ -1673,6 +1722,10 @@ PrefabInstance:
     - target: {fileID: 100000, guid: 1d53359c70324d14c989d7058b50ec6b, type: 3}
       propertyPath: m_Name
       value: Building_Pizza
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 1d53359c70324d14c989d7058b50ec6b, type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: 1d53359c70324d14c989d7058b50ec6b, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -1762,8 +1815,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 14.971008, y: 7.7953634, z: 13.567872}
-  m_Center: {x: -0.6906128, y: 3.8976827, z: 0.07850246}
+  m_Size: {x: 13.912365, y: 7.795364, z: 12.135509}
+  m_Center: {x: -0.16129085, y: 3.8976827, z: -0.6376809}
 --- !u!4 &3314626903732569965 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: 1d53359c70324d14c989d7058b50ec6b, type: 3}
@@ -1832,6 +1885,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: a2dd79cafc19a954580f657cf7ca4470, type: 3}
       propertyPath: m_Name
       value: building-g
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: a2dd79cafc19a954580f657cf7ca4470, type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: a2dd79cafc19a954580f657cf7ca4470, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -1910,6 +1967,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 26aeb75154226c1439651ab8b2c7e63c, type: 3}
       propertyPath: m_Name
       value: building-d
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 26aeb75154226c1439651ab8b2c7e63c, type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 26aeb75154226c1439651ab8b2c7e63c, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -2019,6 +2080,10 @@ PrefabInstance:
       value: building-type-g
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: c216d675a34aaa144a13f36b2bc85547, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: c216d675a34aaa144a13f36b2bc85547, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
@@ -2095,6 +2160,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: d9f97c32ce0fbbb4ea9576bf5ab731b9, type: 3}
       propertyPath: m_Name
       value: building-type-d
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: d9f97c32ce0fbbb4ea9576bf5ab731b9, type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: d9f97c32ce0fbbb4ea9576bf5ab731b9, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -2175,6 +2244,10 @@ PrefabInstance:
       value: building-type-c
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: f25076dd8bbc3bb4783f6c39b81713d5, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: f25076dd8bbc3bb4783f6c39b81713d5, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
@@ -2251,6 +2324,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: e1398b41db190a54b99198dda4ac0fbd, type: 3}
       propertyPath: m_Name
       value: building-i
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: e1398b41db190a54b99198dda4ac0fbd, type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: e1398b41db190a54b99198dda4ac0fbd, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -2331,6 +2408,10 @@ PrefabInstance:
       value: building-type-h
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 52db850b3c0773342846038d1b3078f0, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 52db850b3c0773342846038d1b3078f0, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
@@ -2355,6 +2436,10 @@ PrefabInstance:
     - target: {fileID: 100000, guid: 8b3eca4c34b9e1148a3c4d42a48dd5b8, type: 3}
       propertyPath: m_Name
       value: Building_Chicken Shop (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 8b3eca4c34b9e1148a3c4d42a48dd5b8, type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: 8b3eca4c34b9e1148a3c4d42a48dd5b8, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -2433,6 +2518,10 @@ PrefabInstance:
     - target: {fileID: 100000, guid: 8b3eca4c34b9e1148a3c4d42a48dd5b8, type: 3}
       propertyPath: m_Name
       value: Building_Chicken Shop
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 8b3eca4c34b9e1148a3c4d42a48dd5b8, type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: 8b3eca4c34b9e1148a3c4d42a48dd5b8, type: 3}
       propertyPath: m_StaticEditorFlags
