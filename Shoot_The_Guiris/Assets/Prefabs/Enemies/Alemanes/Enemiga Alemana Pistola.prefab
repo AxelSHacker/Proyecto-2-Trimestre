@@ -284,17 +284,20 @@ MonoBehaviour:
   _animator: {fileID: 137115068467918132}
   _rB: {fileID: 482237588109864923}
   _targetTag: Player
+  _rewardPoolID: Reward
+  _rewardChance: 100
   _groundLayer:
     serializedVersion: 2
     m_Bits: 64
   _groundCheckPoint: {fileID: 5813268918581029884}
-  _groundCheckSize: 2.48
+  _groundCheckSize: 1.5
   _grounded: 0
   _attackDistance: 70
   _inRange: 100
   _maxhealth: 50
   _currentealth: 0
   _cargadorMax: 15
+  _velocidadAtaque: 20
   OnInizialize:
     m_PersistentCalls:
       m_Calls:

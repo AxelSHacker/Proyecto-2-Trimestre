@@ -26,14 +26,14 @@ public class MeleeWeapons : CustomMonoBehaviour
       }
    }
    void OnDrawGizmos()
-    {
-        if (_atacando) Gizmos.color = Color.red;
-        else Gizmos.color = Color.yellow;
+   {
+      if (_atacando) Gizmos.color = Color.red;
+      else Gizmos.color = Color.yellow;
 
-        Matrix4x4 rotationMatrix = Matrix4x4.TRS(transform.TransformPoint(_offset), transform.rotation, _tamanioCaja);
-        Gizmos.matrix = rotationMatrix;
-        Gizmos.DrawWireCube(Vector3.zero, Vector3.one);
-    }
+      Matrix4x4 rotationMatrix = Matrix4x4.TRS(transform.TransformPoint(_offset), transform.rotation, _tamanioCaja);
+      Gizmos.matrix = rotationMatrix;
+      Gizmos.DrawWireCube(Vector3.zero, Vector3.one);
+   }
    //Llamada en el animation event para comenzar
    public void StartAtaque()
    {
@@ -62,37 +62,37 @@ public class MeleeWeapons : CustomMonoBehaviour
 
             if (other.TryGetComponent(out EnemigoIngles enemigo))
             {
-                Vector3 direccion = transform.forward;
-                direccion.y = 0.3f;
-                enemigo.StartCoroutine(enemigo.ImpactoPatada(direccion * _fuerzaPatada)); // Puedes ajustar la fuerza según tus necesidades
-                
+               Vector3 direccion = transform.forward;
+               direccion.y = 0.3f;
+               enemigo.StartCoroutine(enemigo.ImpactoPatada(direccion * _fuerzaPatada)); // Puedes ajustar la fuerza según tus necesidades
+
             }
             _impactado.Add(other.gameObject);
          }
       }
    }
-    void OnDisable()
-    {
-        _atacando = false;
-        _impactado.Clear();
-    }
+   void OnDisable()
+   {
+      _atacando = false;
+      _impactado.Clear();
+   }
 
-    // void OnTriggerEnter(Collider other)
-    // {
-    //    if ((_shootableLayers & (1 << other.gameObject.layer)) != 0 && other.TryGetComponent(out IDamageabe<float> damageable))
-    //    {
-    //       damageable.TakeDamag(_damage, transform.position);
+   // void OnTriggerEnter(Collider other)
+   // {
+   //    if ((_shootableLayers & (1 << other.gameObject.layer)) != 0 && other.TryGetComponent(out IDamageabe<float> damageable))
+   //    {
+   //       damageable.TakeDamag(_damage, transform.position);
 
-    //       if (other.TryGetComponent(out CharacterController component))
-    //       {
+   //       if (other.TryGetComponent(out CharacterController component))
+   //       {
 
-    //          Vector3 direccion = (other.transform.position - transform.position).normalized;
-    //          direccion.y = 0.1f;
-    //          component.Move(direccion * _fuerzaEscudo);
-    //       }
-    //       OnImpact?.Invoke(transform.position);
-    //    }
-    // }
+   //          Vector3 direccion = (other.transform.position - transform.position).normalized;
+   //          direccion.y = 0.1f;
+   //          component.Move(direccion * _fuerzaEscudo);
+   //       }
+   //       OnImpact?.Invoke(transform.position);
+   //    }
+   // }
 }
 
 

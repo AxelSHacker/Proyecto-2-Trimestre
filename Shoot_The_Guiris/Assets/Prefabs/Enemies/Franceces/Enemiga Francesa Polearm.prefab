@@ -216,6 +216,8 @@ MonoBehaviour:
   _animator: {fileID: 945463109062626167}
   _rB: {fileID: 4064034426831217530}
   _targetTag: Player
+  _rewardPoolID: Reward
+  _rewardChance: 100
   _groundLayer:
     serializedVersion: 2
     m_Bits: 64
@@ -227,6 +229,7 @@ MonoBehaviour:
   _maxhealth: 70
   _currentealth: 0
   _cargadorMax: 0
+  _velocidadAtaque: 20
   OnInizialize:
     m_PersistentCalls:
       m_Calls:
@@ -471,10 +474,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 92.428
       objectReference: {fileID: 0}
-    - target: {fileID: 5079219100466121865, guid: 3094edbe6d4409e4da4e491f23acbb55, type: 3}
-      propertyPath: OnImpact.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_ObjectArgument
-      value: 
-      objectReference: {fileID: 8300000, guid: 60e3667a09e73474b81a79bc38f9bafd, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

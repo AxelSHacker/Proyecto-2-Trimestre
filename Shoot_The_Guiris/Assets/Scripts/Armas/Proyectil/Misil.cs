@@ -53,10 +53,11 @@ public class Misil : PoolEntity
                _damageable.TakeDamag(_damage, transform.position);
 
             }
-            if (impact.TryGetComponent(out EnemigoIngles enemigo))
-            {
-               enemigo.Cegar();
-            }
+
+         }
+         if (other.TryGetComponent(out EnemigoIngles enemigo))
+         {
+            enemigo.Cegar();
          }
          _posicionTarget = transform.position;
          OnImpact?.Invoke();

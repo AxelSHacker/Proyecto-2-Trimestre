@@ -13,31 +13,29 @@ public class EnemigaDualGunShooting : StateMachineBehaviour
    {
       if (enemigoIngles.IsDead) return;
       if (enemigoIngles == null) return;
+
       float distancia = enemigoIngles.RemainingDistanceToTarget;
 
       Vector3 dirrecion = enemigoIngles.Target.position - enemigoIngles.transform.position;
+      
       enemigoIngles.transform.rotation = Quaternion.Slerp(enemigoIngles.transform.rotation,
                                                          Quaternion.LookRotation(dirrecion),
                                                          Time.deltaTime);
-      if (!enemigoIngles.PathPending && enemigoIngles.RemainingDistanceToTarget < enemigoIngles.InRange)
-      {
-         animator.SetBool("EnRango", true);
 
-         if (enemigoIngles.RemainingDistanceToTarget < enemigoIngles.AttacDistance && animator.GetBool("EnRango"))
-         {
-            animator.SetTrigger("Disparo");
-         }
-      }
-      else
+
+      if (enemigoIngles.RemainingDistanceToTarget < enemigoIngles.AttacDistance)
       {
-         animator.SetBool("EnRango", false);
+         animator.SetTrigger("Disparo");
       }
+
+
    }
    // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
-   //override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-   //{
-   //    
-   //}
+   override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+   {
+      animator.ResetTrigger("Disparo");
+   }
+      
 
    // OnStateMove is called right after Animator.OnAnimatorMove()
    //override public void OnStateMove(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -52,11 +50,11 @@ public class EnemigaDualGunShooting : StateMachineBehaviour
    //}
 }
 
-      
 
-            
-            
-         
-            
+
+
+
+
+
 
 

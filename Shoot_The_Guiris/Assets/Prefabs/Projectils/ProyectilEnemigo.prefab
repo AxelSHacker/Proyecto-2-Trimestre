@@ -166,9 +166,9 @@ GameObject:
   - component: {fileID: 7813992977390916444}
   - component: {fileID: 3286766377619316381}
   - component: {fileID: 6206084861948496487}
+  - component: {fileID: 859963373687909501}
   - component: {fileID: -6924533994269417451}
   - component: {fileID: 540820127353183798}
-  - component: {fileID: 859963373687909501}
   m_Layer: 0
   m_Name: ProyectilEnemigo
   m_TagString: Untagged
@@ -241,132 +241,6 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.26
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &-6924533994269417451
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3719411609480955312}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa0bbc8c7608ec84e90a878ed12135a8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Proyectil
-  _poolID: ProyectilEnemigo
-  _renderers:
-  - {fileID: 2453184983566478375}
-  - {fileID: 3496005186387658555}
-  - {fileID: 4568627969503784459}
-  - {fileID: 3822697623100550338}
-  - {fileID: 233989269880980934}
-  - {fileID: 6106007851556103177}
-  - {fileID: 861973881084851323}
-  - {fileID: 4235456234778506779}
-  - {fileID: 4762567053856930290}
-  - {fileID: 4775199851648635782}
-  _isActive: 0
-  _rB: {fileID: 3286766377619316381}
-  _collider: {fileID: 6206084861948496487}
-  _trailParticles: {fileID: 2473697494686930802}
-  _damage: 5
-  _speed: 100
-  _lifetime: 10
-  _shootableLayers:
-    serializedVersion: 2
-    m_Bits: 513
---- !u!114 &540820127353183798
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3719411609480955312}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 147d184a4023d1247a76ca2690ec4991, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ProyectilFX
-  OnInitialize:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2473697494686930802}
-        m_TargetAssemblyTypeName: UnityEngine.ParticleSystem, UnityEngine
-        m_MethodName: Play
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1563899180953501872}
-        m_TargetAssemblyTypeName: UnityEngine.ParticleSystem, UnityEngine
-        m_MethodName: Clear
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 859963373687909501}
-        m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
-        m_MethodName: PlayOneShot
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 8300000, guid: 57dbe22bf3b82b54abcd99c80c8dabc7, type: 3}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  OnImpact:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1563899180953501872}
-        m_TargetAssemblyTypeName: UnityEngine.ParticleSystem, UnityEngine
-        m_MethodName: Play
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 2473697494686930802}
-        m_TargetAssemblyTypeName: UnityEngine.ParticleSystem, UnityEngine
-        m_MethodName: Clear
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 859963373687909501}
-        m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
-        m_MethodName: PlayOneShot
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 8300000, guid: 2c6e0dc9e151f68439c50322b95a9c7b, type: 3}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  _proyectil: {fileID: -6924533994269417451}
-  _meeeWeapons: {fileID: 0}
 --- !u!82 &859963373687909501
 AudioSource:
   m_ObjectHideFlags: 0
@@ -464,6 +338,123 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &-6924533994269417451
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3719411609480955312}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa0bbc8c7608ec84e90a878ed12135a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Proyectil
+  _poolID: ProyectilEnemigo
+  _renderers:
+  - {fileID: 2453184983566478375}
+  _isActive: 0
+  _rB: {fileID: 3286766377619316381}
+  _collider: {fileID: 6206084861948496487}
+  _trailParticles: {fileID: 2473697494686930802}
+  _damage: 5
+  _speed: 100
+  _lifetime: 10
+  _shootableLayers:
+    serializedVersion: 2
+    m_Bits: 2625
+--- !u!114 &540820127353183798
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3719411609480955312}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 147d184a4023d1247a76ca2690ec4991, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProyectilFX
+  OnInitialize:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2473697494686930802}
+        m_TargetAssemblyTypeName: UnityEngine.ParticleSystem, UnityEngine
+        m_MethodName: Play
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1563899180953501872}
+        m_TargetAssemblyTypeName: UnityEngine.ParticleSystem, UnityEngine
+        m_MethodName: Clear
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 859963373687909501}
+        m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
+        m_MethodName: PlayOneShot
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 8300000, guid: 57dbe22bf3b82b54abcd99c80c8dabc7, type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnImpact:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1563899180953501872}
+        m_TargetAssemblyTypeName: UnityEngine.ParticleSystem, UnityEngine
+        m_MethodName: Play
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 2473697494686930802}
+        m_TargetAssemblyTypeName: UnityEngine.ParticleSystem, UnityEngine
+        m_MethodName: Clear
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 859963373687909501}
+        m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
+        m_MethodName: PlayOneShot
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 8300000, guid: 2c6e0dc9e151f68439c50322b95a9c7b, type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  _proyectil: {fileID: -6924533994269417451}
+  _meeeWeapons: {fileID: 0}
 --- !u!1 &3948371134722675002
 GameObject:
   m_ObjectHideFlags: 0
@@ -9696,16 +9687,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8b68076b7fcccab4a80f3baf154a099c, type: 3}
---- !u!199 &233989269880980934 stripped
-ParticleSystemRenderer:
-  m_CorrespondingSourceObject: {fileID: 5602451336973053755, guid: 8b68076b7fcccab4a80f3baf154a099c, type: 3}
-  m_PrefabInstance: {fileID: 5656710035430091517}
-  m_PrefabAsset: {fileID: 0}
---- !u!199 &861973881084851323 stripped
-ParticleSystemRenderer:
-  m_CorrespondingSourceObject: {fileID: 5005455642539368070, guid: 8b68076b7fcccab4a80f3baf154a099c, type: 3}
-  m_PrefabInstance: {fileID: 5656710035430091517}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1097366677416651297 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4736109929565749468, guid: 8b68076b7fcccab4a80f3baf154a099c, type: 3}
@@ -9714,30 +9695,5 @@ Transform:
 --- !u!198 &1563899180953501872 stripped
 ParticleSystem:
   m_CorrespondingSourceObject: {fileID: 6572086433307208269, guid: 8b68076b7fcccab4a80f3baf154a099c, type: 3}
-  m_PrefabInstance: {fileID: 5656710035430091517}
-  m_PrefabAsset: {fileID: 0}
---- !u!199 &3822697623100550338 stripped
-ParticleSystemRenderer:
-  m_CorrespondingSourceObject: {fileID: 8902588362352870975, guid: 8b68076b7fcccab4a80f3baf154a099c, type: 3}
-  m_PrefabInstance: {fileID: 5656710035430091517}
-  m_PrefabAsset: {fileID: 0}
---- !u!199 &4235456234778506779 stripped
-ParticleSystemRenderer:
-  m_CorrespondingSourceObject: {fileID: 8378937004097608934, guid: 8b68076b7fcccab4a80f3baf154a099c, type: 3}
-  m_PrefabInstance: {fileID: 5656710035430091517}
-  m_PrefabAsset: {fileID: 0}
---- !u!199 &4762567053856930290 stripped
-ParticleSystemRenderer:
-  m_CorrespondingSourceObject: {fileID: 907653781262193423, guid: 8b68076b7fcccab4a80f3baf154a099c, type: 3}
-  m_PrefabInstance: {fileID: 5656710035430091517}
-  m_PrefabAsset: {fileID: 0}
---- !u!199 &4775199851648635782 stripped
-ParticleSystemRenderer:
-  m_CorrespondingSourceObject: {fileID: 919931939277863291, guid: 8b68076b7fcccab4a80f3baf154a099c, type: 3}
-  m_PrefabInstance: {fileID: 5656710035430091517}
-  m_PrefabAsset: {fileID: 0}
---- !u!199 &6106007851556103177 stripped
-ParticleSystemRenderer:
-  m_CorrespondingSourceObject: {fileID: 1890471725771902708, guid: 8b68076b7fcccab4a80f3baf154a099c, type: 3}
   m_PrefabInstance: {fileID: 5656710035430091517}
   m_PrefabAsset: {fileID: 0}

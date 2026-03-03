@@ -28,7 +28,7 @@ public class EnemigoDisparo : StateMachineBehaviour
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-       _velocidadAtaque = 1;
+       animator.ResetTrigger("Disparo");
     }
 
     // OnStateMove is called right after Animator.OnAnimatorMove()

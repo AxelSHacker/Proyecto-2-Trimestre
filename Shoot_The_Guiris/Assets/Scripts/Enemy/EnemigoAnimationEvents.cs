@@ -19,5 +19,6 @@ public class EnemigoAnimationEvents : MonoBehaviour
     public void ReturnToPool()
     {
         if (_enemigoIngles != null) _enemigoIngles.ReturnToPool();
+        _enemigoIngles.AnimatorDeactivate();
     }
 }

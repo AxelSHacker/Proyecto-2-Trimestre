@@ -3,14 +3,13 @@ using UnityEngine;
 public class RifleShootingBehaviour : StateMachineBehaviour
 {
     private EnemigoIngles enemigoIngles;
-    float _velocidadAtaque;
+     public float _velocidadAtaque;
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         enemigoIngles = animator.GetComponentInParent<EnemigoIngles>();
-        _velocidadAtaque = Random.Range(1f, 2f);
 
-        animator.SetFloat("ReproduccionVelocidad", _velocidadAtaque);
+        animator.SetFloat("ReproduccionVelocidad", 1f / _velocidadAtaque);
 
         Quaternion rotation = Quaternion.LookRotation(enemigoIngles.transform.forward);
         PoolManager.Instance.Pull("ProyectilEnemigo", enemigoIngles.Posicion.position, rotation);

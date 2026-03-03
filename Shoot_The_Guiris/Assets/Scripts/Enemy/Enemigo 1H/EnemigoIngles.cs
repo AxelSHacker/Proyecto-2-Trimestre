@@ -20,6 +20,10 @@ public class EnemigoIngles : PoolEntity, IDamageabe<float>, PlayerObserver, IObs
    Transform _target;
    [SerializeField] string _targetTag = "Player";
 
+   [Header("Reward")]
+   [SerializeField] string _rewardPoolID;
+   [SerializeField] float _rewardChance = 150f;
+
    [Header("GroundCheck")]
    [SerializeField] LayerMask _groundLayer;
    [SerializeField] Transform _groundCheckPoint;
@@ -27,6 +31,8 @@ public class EnemigoIngles : PoolEntity, IDamageabe<float>, PlayerObserver, IObs
    [SerializeField] bool _grounded;
    bool _volando;
    bool _cegado;
+   [SerializeField] float timetoDeactivate;
+   [SerializeField] float _maxTimeToDeactivate;
 
    [Header("Coroutine")]
    Coroutine _levantarse;
@@ -42,6 +48,7 @@ public class EnemigoIngles : PoolEntity, IDamageabe<float>, PlayerObserver, IObs
    [SerializeField] float _maxhealth;
    [SerializeField] float _currentealth;
    [SerializeField] int _cargadorMax;
+   [SerializeField] float _velocidadAtaque;
    int _cargador;
    #endregion
    [Header("Getters")]
@@ -58,6 +65,7 @@ public class EnemigoIngles : PoolEntity, IDamageabe<float>, PlayerObserver, IObs
    public bool IsDead => _currentealth <= 0;
    public Transform Posicion => _weapon;
    public Transform Posicion2 => _weapon2;
+   public float VelocidadAtaque => _velocidadAtaque;
    #endregion
 
 
@@ -76,13 +84,14 @@ public class EnemigoIngles : PoolEntity, IDamageabe<float>, PlayerObserver, IObs
    {
       CheckForTarget(_targetTag);
       _cargador = _cargadorMax;
-
+      timetoDeactivate = _maxTimeToDeactivate;
       _actualVelocity = _agent.velocity;
 
       _agent.speed = Random.Range(10f, 20f);
    }
    void Update()
    {
+
       GroundCheck();
       if (_volando && _grounded && _rB.linearVelocity.y <= 0.1f)
       {
@@ -90,8 +99,11 @@ public class EnemigoIngles : PoolEntity, IDamageabe<float>, PlayerObserver, IObs
          if (_levantarse != null) StopCoroutine(_levantarse);
          _levantarse = StartCoroutine(RutinaLevantarse());
       }
+      AutomaticDeactivation();
+
       AnimationController();
    }
+
    void OnDrawGizmos()
    {
       //Cambiamos el color del Gizmos
@@ -99,6 +111,10 @@ public class EnemigoIngles : PoolEntity, IDamageabe<float>, PlayerObserver, IObs
       Gizmos.DrawWireSphere(_groundCheckPoint.position, _groundCheckSize);
    }
    #endregion
+
+
+
+
    #region Funciones
    private void GroundCheck()
    {
@@ -113,6 +129,7 @@ public class EnemigoIngles : PoolEntity, IDamageabe<float>, PlayerObserver, IObs
    //Funcuion que se llama desde la municion de viento, para lanzar al enemigo por los aires
    public void ImpactoViento(Vector3 direccion)
    {
+      _animator.SetBool("EnRango", false);
       //Si volamos cancelamos la recuperacion
       if (_levantarse != null) StopCoroutine(_levantarse);
       _animator.SetLayerWeight(1, 0);
@@ -122,6 +139,65 @@ public class EnemigoIngles : PoolEntity, IDamageabe<float>, PlayerObserver, IObs
       _rB.AddForce(direccion, ForceMode.Impulse);
    }
    //Funcion que se llama desde el ataque especial, para lanzar al enemigo por los aires
+   //Funcion que llamamos desde la municion de tinta, para cegar al enemigo
+   public void Cegar()
+   {
+      if (_ceguera != null) StopCoroutine(_ceguera);
+      _ceguera = StartCoroutine(Ceguera());
+   }
+   //Funcion que llamamos desde la municion de caca, para ralentizar al enemigo
+   public void RaletizacionCoroutina()
+   {
+      if (_ralentizacion != null) StopCoroutine(_ralentizacion);
+      _ralentizacion = StartCoroutine(Ralentizacion());
+   }
+   public void DisparoRealizado()
+   {
+      _cargador--;
+      if (_cargador <= 0)
+      {
+         _animator.SetTrigger("Recarga");
+      }
+   }
+   public void RecargaRealizada()
+   {
+      _cargador = _cargadorMax;
+   }
+   private void SpameoReward()
+   {
+      if (Random.Range(0f, 100f) <= _rewardChance)
+      { 
+        Vector3 position = transform.position + Vector3.up * 1f; // Ajusta la altura según sea necesario
+         PoolManager.Instance.Pull(_rewardPoolID, position, Quaternion.identity);
+      }
+   }
+   //Buscamos el objeto mas cercano con el tag indicado
+   public void CheckForTarget(string name)
+   {
+      GameObject[] possibleTarget = GameObject.FindGameObjectsWithTag(_targetTag);
+
+      if (possibleTarget == null || possibleTarget.Length == 0) return;
+      _target = possibleTarget[0].transform;
+      float minDistance = Vector3.Distance(_target.position, transform.position);
+
+      for (int i = 1; i < possibleTarget.Length; i++)
+      {
+         float distance = Vector3.Distance(possibleTarget[i].transform.position, transform.position);
+         if (distance < minDistance)
+         {
+            _target = possibleTarget[i].transform;
+            minDistance = distance;
+         }
+      }
+   }
+   public void SetDestination(Vector3 destinationPoint)
+   {
+      _agent.SetDestination(destinationPoint);
+   }
+   public void SetDestinationToTarget()
+   {
+      SetDestination(_target.position);
+   }
    public IEnumerator ImpactoPatada(Vector3 direccion)
    {
       _agent.enabled = false;
@@ -175,57 +251,31 @@ public class EnemigoIngles : PoolEntity, IDamageabe<float>, PlayerObserver, IObs
       _cegado = false;
       SetDestinationToTarget();
    }
-   //Funcion que llamamos desde la municion de tinta, para cegar al enemigo
-   public void Cegar()
+   private void AutomaticDeactivation()
    {
-      if (_ceguera != null) StopCoroutine(_ceguera);
-      _ceguera = StartCoroutine(Ceguera());
-   }
-   //Funcion que llamamos desde la municion de caca, para ralentizar al enemigo
-   public void RaletizacionCoroutina()
-   {
-      if (_ralentizacion != null) StopCoroutine(_ralentizacion);
-      _ralentizacion = StartCoroutine(Ralentizacion());
-   }
-   public void DisparoRealizado()
-   {
-      _cargador--;
-      if (_cargador <= 0)
+      if (!_grounded && _volando && timetoDeactivate > 0f)
       {
-         _animator.SetTrigger("Recarga");
-      }
-   }
-   public void RecargaRealizada()
-   {
-      _cargador = _cargadorMax;
-   }
-   //Buscamos el objeto mas cercano con el tag indicado
-   public void CheckForTarget(string name)
-   {
-      GameObject[] possibleTarget = GameObject.FindGameObjectsWithTag(_targetTag);
+         timetoDeactivate -= Time.deltaTime;
 
-      if (possibleTarget == null || possibleTarget.Length == 0) return;
-      _target = possibleTarget[0].transform;
-      float minDistance = Vector3.Distance(_target.position, transform.position);
-
-      for (int i = 1; i < possibleTarget.Length; i++)
-      {
-         float distance = Vector3.Distance(possibleTarget[i].transform.position, transform.position);
-         if (distance < minDistance)
+         if (timetoDeactivate <= 0f)
          {
-            _target = possibleTarget[i].transform;
-            minDistance = distance;
+            Death();
          }
+
+      }
+      else
+      {
+         timetoDeactivate = 10f;
       }
    }
-   public void SetDestination(Vector3 destinationPoint)
-   {
-      _agent.SetDestination(destinationPoint);
-   }
-   public void SetDestinationToTarget()
-   {
-      SetDestination(_target.position);
-   }
+
+   #endregion
+
+
+
+
+
+   #region Animaciones Evetns
    private void AnimationController()
    {
       if (_agent.velocity.sqrMagnitude > 0.1f)
@@ -239,7 +289,16 @@ public class EnemigoIngles : PoolEntity, IDamageabe<float>, PlayerObserver, IObs
 
       _animator.SetBool("Grounded", _grounded);
    }
+
+   public void AnimatorDeactivate()
+   {
+      _animator.enabled = false;
+   }
    #endregion
+
+
+
+
    #region PooEntity
    public override void Initialize()
    {
@@ -274,6 +333,11 @@ public class EnemigoIngles : PoolEntity, IDamageabe<float>, PlayerObserver, IObs
       OnDeactivate?.Invoke();
    }
    #endregion
+
+
+
+
+   #region Herencias
    public void TakeDamag(float damage, Vector3 impactPoint = default)
    {
       if (IsDead) return;
@@ -295,6 +359,7 @@ public class EnemigoIngles : PoolEntity, IDamageabe<float>, PlayerObserver, IObs
       _animator.SetInteger("Muerte", tipoMuerte);
       _animator.SetLayerWeight(1, 0);
       OnDeadUE?.Invoke();
+      SpameoReward();
       for (int i = 0; i < _observers.Count; i++)
       {
          _observers[i].OnDead();
@@ -315,8 +380,12 @@ public class EnemigoIngles : PoolEntity, IDamageabe<float>, PlayerObserver, IObs
    }
    public void Revivir()
    {
+      timetoDeactivate = _maxTimeToDeactivate;
       _currentealth = _maxhealth;
       _animator.SetLayerWeight(1, 1);
+      //_animator.SetInteger("Muerte", 0);
+      _animator.enabled = true;
+      _animator.Rebind();
    }
 
    public void OnAtaqueEspecial(float timer, float time)
@@ -328,6 +397,11 @@ public class EnemigoIngles : PoolEntity, IDamageabe<float>, PlayerObserver, IObs
    {
 
    }
+   #endregion
+
+
+
+
 
    #region IObservable implementation
    private List<PlayerObserver> _observers = new List<PlayerObserver>();

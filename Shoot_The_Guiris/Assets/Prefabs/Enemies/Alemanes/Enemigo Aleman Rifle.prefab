@@ -173,6 +173,8 @@ MonoBehaviour:
   _animator: {fileID: 332803154389163838}
   _rB: {fileID: 2962093241291494322}
   _targetTag: Player
+  _rewardPoolID: Reward
+  _rewardChance: 100
   _groundLayer:
     serializedVersion: 2
     m_Bits: 64
@@ -184,6 +186,7 @@ MonoBehaviour:
   _maxhealth: 50
   _currentealth: 0
   _cargadorMax: 30
+  _velocidadAtaque: 20
   OnInizialize:
     m_PersistentCalls:
       m_Calls:

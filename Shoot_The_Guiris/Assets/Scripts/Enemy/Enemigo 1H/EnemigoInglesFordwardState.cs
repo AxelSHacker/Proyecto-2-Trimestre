@@ -1,15 +1,17 @@
 using UnityEngine;
+using UnityEngine.AI;
 
 public class EnemigoInglesFordwardState : StateMachineBehaviour
 {
 
     private EnemigoIngles enemigoIngles;
+    private NavMeshAgent agent;
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         //Recuperamos la refrencia al enemy propiietario de animator
         enemigoIngles = animator.GetComponentInParent<EnemigoIngles>();
-
+        agent = enemigoIngles.GetComponentInParent<NavMeshAgent>();
 
     }
 
@@ -33,11 +35,12 @@ public class EnemigoInglesFordwardState : StateMachineBehaviour
         if (!enemigoIngles.PathPending && enemigoIngles.RemainingDistanceToTarget < enemigoIngles.InRange)
         {
             animator.SetBool("EnRango", true);
-        } 
+            agent.speed = enemigoIngles.VelocidadAtaque;
+        }
         else
         {
             animator.SetBool("EnRango", false);
-        }      
+        }
 
     }
 
