@@ -66,7 +66,9 @@ public class PlayerControler : CustomMonoBehaviour, IDamageabe<float>, IObservab
     [SerializeField] float _ataqueEspecialTimer;
 
     [Header("Money")]
-    [SerializeField] int _money;
+    [SerializeField] int money;
+    public int Money => money;
+    public bool comprar = false;
     [Header("Physics")]
     [SerializeField] CharacterController _cC;
     [SerializeField] LayerMask _groundLayer;
@@ -176,6 +178,17 @@ public class PlayerControler : CustomMonoBehaviour, IDamageabe<float>, IObservab
         else if (context.canceled)
         {
             _disparando = false;
+        }
+    }
+    public void OnInteract(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            comprar = true;
+        }
+        else if (context.canceled)
+        {
+            comprar = false;
         }
     }
     public void OnExit(InputAction.CallbackContext context)
@@ -600,12 +613,18 @@ public class PlayerControler : CustomMonoBehaviour, IDamageabe<float>, IObservab
             _observable[i].OnHealtUpdate(_currentealth, _maxhealth);
         }
     }
+
     public void RecibirDinero(int cantidad)
     {
-        _money += cantidad;
-        _moneyText.text = _money.ToString();
-        Debug.Log("Recibiendo dinero: ");
+        money += cantidad;
+        _moneyText.text = money.ToString();
     }
+    public void QuitarDinero(int cantidad)
+    {
+        money -= cantidad;
+        _moneyText.text = money.ToString();
+    }
+        
     public void RecibirMunicion(int cantidad, string tipoMunicion)
     {
         if (tipoMunicion == "ProyectilCaca")
@@ -620,7 +639,7 @@ public class PlayerControler : CustomMonoBehaviour, IDamageabe<float>, IObservab
             // _maxCapacidadTinta += cantidad;
             // _cargadorTinta = Mathf.Clamp(_cargadorTinta, 0, _maxCapacidadTinta);
         }
-      
+
     }
     #endregion
 

@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3736660208723000542}
   - component: {fileID: 6829061677488614727}
+  - component: {fileID: 7175851492146123076}
   m_Layer: 0
   m_Name: Manzana Farmacia Puerta Jerez
   m_TagString: Untagged
@@ -108,6 +109,26 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 477.69733, y: 162.84865, z: 480.78845}
   m_Center: {x: 203.71603, y: 55.7528, z: 327.78522}
+--- !u!114 &7175851492146123076
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 183498445378688114}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.AI.Navigation::Unity.AI.Navigation.NavMeshModifier
+  m_SerializedVersion: 0
+  m_OverrideArea: 1
+  m_Area: 1
+  m_OverrideGenerateLinks: 0
+  m_GenerateLinks: 0
+  m_IgnoreFromBuild: 0
+  m_ApplyToChildren: 1
+  m_AffectedAgents: ffffffff
 --- !u!1001 &445548446370716042
 PrefabInstance:
   m_ObjectHideFlags: 0

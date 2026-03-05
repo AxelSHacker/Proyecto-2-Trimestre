@@ -38,6 +38,12 @@ public class ProyectilViendo : Proyectil
                 direccion.y = 0.6f;
                 enemigo.ImpactoViento(direccion * _fuerzadelViento);
             }
+            else if (other.TryGetComponent(out WindReact windReact))
+            {
+                Vector3 direccion = transform.forward;
+                direccion.y = 0.6f;
+                windReact.Push(direccion, _fuerzadelViento);
+            }
         }
     }
 }
