@@ -10,6 +10,10 @@ public class BlockingWalls : MonoBehaviour
     [SerializeField] PlayerControler _playerControler;
     bool _jugadorCerca = false;
     float _timer = 1f;
+    void Start()
+    {
+       _playerControler = GetComponent<PlayerControler>();
+    }
     void Update()
     {
         _timer += Time.deltaTime;

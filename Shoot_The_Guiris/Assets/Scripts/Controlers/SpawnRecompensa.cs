@@ -77,19 +77,20 @@ public class SpawnRecompensa : PoolEntity
             _recompensas[i].objeto.gameObject.SetActive(false);
          }
       }
-
    }
+
    private void AplicarRecompensa(GameObject player)
    {
       switch (_tipoRecompensa)
       {
          case TipoRecompensa.Coin:
+         //Logica para ganar dinero
             player.GetComponent<PlayerControler>().RecibirDinero(100);
             break;
          case TipoRecompensa.Ammo:
+            // Lógica para dar munición al jugador
             player.GetComponent<PlayerControler>().RecibirMunicion(10, "ProyectilCaca");
             player.GetComponent<PlayerControler>().RecibirMunicion(5, "Misil");
-            // Lógica para dar munición al jugador
             break;
          case TipoRecompensa.Health:
             player.GetComponent<PlayerControler>().RecibirVida(10);

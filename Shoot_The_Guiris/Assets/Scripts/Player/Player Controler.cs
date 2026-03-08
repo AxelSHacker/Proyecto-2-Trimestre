@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.Animations.Rigging;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class PlayerControler : CustomMonoBehaviour, IDamageabe<float>, IObservable<PlayerObserver>
 {
@@ -13,6 +14,7 @@ public class PlayerControler : CustomMonoBehaviour, IDamageabe<float>, IObservab
     [SerializeField] PlayerInput _playerinput;
     [SerializeField] TextMeshProUGUI _moneyText;
     [SerializeField] TextMeshProUGUI _remainingBulletsText;
+    [SerializeField] TextMeshProUGUI _remainingAmmoText;
 
     [Header("Player Movement")]
     [SerializeField] float _movementSpeed = 8f;
@@ -48,14 +50,16 @@ public class PlayerControler : CustomMonoBehaviour, IDamageabe<float>, IObservab
     [SerializeField] string _bulletType;
     [SerializeField] float _fireRateWind;
     [SerializeField] float _fireRatePoop;
-    [SerializeField] int _cargadorCaca;
-    [SerializeField] int _cargadorMaxCaca;
-    [SerializeField] int _maxCapacidadCaca;
-    [SerializeField] int _cargadorTinta;
-    [SerializeField] int _cargadorMaxTinta;
-    [SerializeField] int _maxCapacidadTinta;
+    int _cargadorCaca = 20;
+    int _cargadorActualCaca;
+    [SerializeField] int _capacidadActualCaca;
+    int _maxCapacidadCaca = 140;
+    int _cargadorTinta = 1;
+    [SerializeField] int _capacidadActualTinta;
+    int _maxCapacidadTinta = 15;
     bool _disparando;
     [SerializeField] float _misiverticalOffset = -5f;
+
     [Header("Dasching")]
     [SerializeField] float _daschTime;
     [SerializeField] float _daschTimer;
@@ -69,6 +73,7 @@ public class PlayerControler : CustomMonoBehaviour, IDamageabe<float>, IObservab
     [SerializeField] int money;
     public int Money => money;
     public bool comprar = false;
+
     [Header("Physics")]
     [SerializeField] CharacterController _cC;
     [SerializeField] LayerMask _groundLayer;
@@ -90,6 +95,9 @@ public class PlayerControler : CustomMonoBehaviour, IDamageabe<float>, IObservab
     [SerializeField] Vector3 _desireVelocity;
     [SerializeField] Vector3 _currentVelocity;
 
+    [Header("Menu de Trucos")]
+    
+
     [Header("Animator")]
     [SerializeField] Animator _animator;
 
@@ -105,8 +113,9 @@ public class PlayerControler : CustomMonoBehaviour, IDamageabe<float>, IObservab
     void Start()
     {
         _remainingBulletsText.text = _shootDelayWind.ToString("F2");
-        _cargadorCaca = _cargadorMaxCaca;
-        _cargadorTinta = _cargadorMaxTinta;
+        _capacidadActualCaca = _maxCapacidadCaca;
+        _cargadorActualCaca = _cargadorCaca;
+        _capacidadActualTinta = _maxCapacidadTinta;
         ArmadeViento();
         _currentealth = _maxhealth;
 
@@ -200,11 +209,11 @@ public class PlayerControler : CustomMonoBehaviour, IDamageabe<float>, IObservab
     }
     public void OnReload(InputAction.CallbackContext context)
     {
-        if (context.performed && _bulletType == "ProyectilCaca" && _cargadorCaca < _cargadorMaxCaca)
+        if (context.performed && _bulletType == "ProyectilCaca" && _cargadorCaca < _capacidadActualCaca)
         {
             _animator.SetTrigger("ReloadRifle");
         }
-        else if (context.performed && _bulletType == "Misil" && _cargadorTinta < _cargadorMaxTinta)
+        else if (context.performed && _bulletType == "Misil" && _cargadorTinta < _capacidadActualTinta)
         {
             _animator.SetTrigger("ReloadBazooca");
         }
@@ -423,22 +432,19 @@ public class PlayerControler : CustomMonoBehaviour, IDamageabe<float>, IObservab
         //Comprobamos queel proyectil de viento esta activo para poder dispararlo y los demas no
         if (_shootPointWind != null && _bulletType == "Wind")
         {
-            _remainingBulletsText.text = _shootDelayWind.ToString("F2");
             if (_shootDelayWind > 0) return;
             DisparodeViento(position, rotation);
         }
         //Comprobamos queel proyectil de caca esta activo para poder dispararlo y los demas no
-        else if (_shootingPointPoop != null && _bulletType == "ProyectilCaca")
+        else if (_shootingPointPoop != null && _bulletType == "ProyectilCaca" && _capacidadActualCaca > 0)
         {
-            _remainingBulletsText.text = _cargadorCaca.ToString();
-            if (_shootDelayPoop > 0 || _cargadorCaca <= 0) return;
+            if (_shootDelayPoop > 0 || _cargadorActualCaca <= 0) return;
             DisparodeCaca(position, rotation);
-            _cargadorCaca--;
+            _cargadorActualCaca--;
         }
         //Comprobamos queel proyectil del pulpo esta activo para poder dispararlo y los demas no
-        else if (_shootingpointPulpo != null && _bulletType == "Misil")
+        else if (_shootingpointPulpo != null && _bulletType == "Misil" && _capacidadActualTinta > 0)
         {
-
             if (_cargadorTinta <= 0) return;
             DisparodeTinta(position, rotation);
             _cargadorTinta--;
@@ -596,11 +602,13 @@ public class PlayerControler : CustomMonoBehaviour, IDamageabe<float>, IObservab
         }
         else if (_bulletType == "ProyectilCaca")
         {
-            _remainingBulletsText.text = _cargadorCaca.ToString();
+            _remainingBulletsText.text = _cargadorActualCaca.ToString();
+            _remainingAmmoText.text = _capacidadActualCaca.ToString();
         }
         else if (_bulletType == "Misil")
         {
             _remainingBulletsText.text = _cargadorTinta.ToString();
+            _remainingAmmoText.text = _capacidadActualTinta.ToString(); ;
         }
     }
     public void RecibirVida(float cantidad)
@@ -624,38 +632,49 @@ public class PlayerControler : CustomMonoBehaviour, IDamageabe<float>, IObservab
         money -= cantidad;
         _moneyText.text = money.ToString();
     }
-        
+
     public void RecibirMunicion(int cantidad, string tipoMunicion)
     {
         if (tipoMunicion == "ProyectilCaca")
         {
-            Debug.Log("Recibiendo municion de caca: " + cantidad);
-            // _maxCapacidadCaca += cantidad;
-            // _cargadorMaxCaca = Mathf.Clamp(_cargadorCaca, 0, _maxCapacidadCaca);
+
+            _capacidadActualCaca += cantidad;
+            _capacidadActualCaca = Mathf.Clamp(_capacidadActualCaca, 0, _maxCapacidadCaca);
         }
         else if (tipoMunicion == "Misil")
         {
-            Debug.Log("Recibiendo municion de misil: " + cantidad);
-            // _maxCapacidadTinta += cantidad;
-            // _cargadorTinta = Mathf.Clamp(_cargadorTinta, 0, _maxCapacidadTinta);
+
+            _capacidadActualTinta += cantidad;
+            _capacidadActualTinta = Mathf.Clamp(_capacidadActualCaca, 0, _maxCapacidadTinta);
         }
 
     }
     #endregion
 
 
+    #region Menu de Trucos
+    public void ControlTiempoJuego(float nuevoValor)
+    {
+        Time.timeScale = nuevoValor;
+        Time.fixedDeltaTime = 0.02f * Time.timeScale;
+    }
+    #endregion
 
 
     #region Animation Events
 
     public void RecargacacaRealizada()
     {
-        _cargadorCaca = _cargadorMaxCaca;
+        _cargadorActualCaca += _cargadorCaca;
+        _capacidadActualCaca -= _cargadorCaca;
     }
+
+
 
     public void RecargaPulpoRealizada()
     {
-        _cargadorTinta = _cargadorMaxTinta;
+        _cargadorTinta++;
+        _capacidadActualTinta--;
     }
     #endregion
 
