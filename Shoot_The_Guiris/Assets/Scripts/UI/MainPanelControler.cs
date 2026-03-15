@@ -13,12 +13,6 @@ public class MainPanelControler : MonoBehaviour
         _settingsPanel.SetActive(false);
     }
 
-
-    public void StartGame()
-    {
-        SceneManager.LoadScene("SampleScene");
-    }
-
     public void ExitGame()
     {
         Application.Quit();

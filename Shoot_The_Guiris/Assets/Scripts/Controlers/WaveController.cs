@@ -4,6 +4,8 @@ using System;
 using TMPro;
 public class WaveController : MonoBehaviour, PlayerObserver
 {
+    public static Action OnEnemyDead;
+    public static Action OnWaveIncrease;
     public Action<int> OnWaveStart;
     public Action<int> OnWaveEnd;
     [SerializeField] string[] _enemyPrefab;
@@ -15,14 +17,16 @@ public class WaveController : MonoBehaviour, PlayerObserver
     [SerializeField] TextMeshProUGUI _remainingEnemyText;
     float _spawnTimer;
     int _currentWave;
+    public bool tutorial;
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (tutorial) return;
         if (_spawnTimer <= _spawnDelay)
         {
             _spawnTimer += Time.deltaTime;
@@ -33,14 +37,14 @@ public class WaveController : MonoBehaviour, PlayerObserver
             GenerateEnemy();
             _spawnTimer = 0f;
         }
-        _remainingEnemyText.text = _remainingEnemies.ToString();
+        _remainingEnemyText.text = "Remainings Enemies = " + _remainingEnemies.ToString();
     }
     public void StartWave()
     {
         _currentWave++;
         _waveEnemies = _currentWave * _waveEnemyNumberMultiplier;
         _remainingEnemies = _waveEnemies;
-
+        OnWaveIncrease?.Invoke();
         OnWaveStart?.Invoke(_currentWave);
     }
     private void GenerateEnemy()
@@ -72,6 +76,7 @@ public class WaveController : MonoBehaviour, PlayerObserver
 
     public void OnDead()
     {
+        OnEnemyDead?.Invoke();
         _remainingEnemies--;
         _remainingEnemyText.text = _remainingEnemies.ToString();
         if (_remainingEnemies <= 0)

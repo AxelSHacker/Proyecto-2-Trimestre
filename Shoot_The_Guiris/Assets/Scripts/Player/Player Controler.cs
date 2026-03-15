@@ -1,6 +1,7 @@
 
 using System.Collections.Generic;
 using TMPro;
+using UnityEditor.Rendering.LookDev;
 using UnityEngine;
 using UnityEngine.Animations.Rigging;
 using UnityEngine.InputSystem;
@@ -18,9 +19,9 @@ public class PlayerControler : CustomMonoBehaviour, IDamageabe<float>, IObservab
 
     [Header("Player Movement")]
     [SerializeField] float _movementSpeed = 8f;
+    [SerializeField] float _normalMoveSpeed;
     [SerializeField] float _rotationSpeed = 14f;
     [SerializeField] float _acceleration = 30f;
-    [SerializeField] float _deceleration = 40f;
     [SerializeField] Transform _camera;
     [SerializeField] Transform _childTransform;
 
@@ -38,11 +39,15 @@ public class PlayerControler : CustomMonoBehaviour, IDamageabe<float>, IObservab
     [SerializeField] TwoBoneIKConstraint _leftConstrain;
     [SerializeField] Transform[] _rightHandPosition;
     [SerializeField] Transform[] _leftHandPosition;
+    Vector3 _ultimaPosicionRaton;
+    bool _movimientoRaton;
+    [SerializeField] float _sensibilidadDeteccion = 0.1f;
 
     [Header("Shooting")]
     [SerializeField] GameObject[] _weaponsObjects;
-    [SerializeField] float _shootDelayWind;
-    [SerializeField] float _shootDelayPoop;
+    float _shootDelayWind;
+    float _shootDelayPoop;
+    float _shootDelayTinta;
     [SerializeField] Vector3 _targetPoint;
     [SerializeField] Transform _shootPointWind;
     [SerializeField] Transform _shootingPointPoop;
@@ -50,6 +55,7 @@ public class PlayerControler : CustomMonoBehaviour, IDamageabe<float>, IObservab
     [SerializeField] string _bulletType;
     [SerializeField] float _fireRateWind;
     [SerializeField] float _fireRatePoop;
+    [SerializeField] float _fireRateTinta;
     int _cargadorCaca = 20;
     int _cargadorActualCaca;
     [SerializeField] int _capacidadActualCaca;
@@ -86,6 +92,12 @@ public class PlayerControler : CustomMonoBehaviour, IDamageabe<float>, IObservab
     //[SerializeField] float _playerBasePitch = 0.4f;
     //[SerializeField] float _playerMaxPitch = 3f;
 
+    [Header("Pause Menu")]
+    [SerializeField] CanvasGroup _menuPausa;
+
+    [Header("Menu de Trucos")]
+    [SerializeField] CanvasGroup _menuTrucos;
+
     [Header("Effects")]
     [SerializeField] ParticleSystem[] _dustParticles;
     [SerializeField] Transform _modelTransform;
@@ -96,13 +108,18 @@ public class PlayerControler : CustomMonoBehaviour, IDamageabe<float>, IObservab
     [SerializeField] Vector3 _currentVelocity;
 
     [Header("Menu de Trucos")]
-    
+    [SerializeField] bool _cargadorInfinito = false;
+    [SerializeField] bool _invencible = false;
+    [SerializeField] Slider _velocidadJuego;
+    [SerializeField] Slider _velocidadPlayer;
 
     [Header("Animator")]
     [SerializeField] Animator _animator;
-
-
     #endregion
+
+
+
+
 
     #region Unity Methods
     public override void EditorInit()
@@ -112,14 +129,17 @@ public class PlayerControler : CustomMonoBehaviour, IDamageabe<float>, IObservab
     }
     void Start()
     {
-        _remainingBulletsText.text = _shootDelayWind.ToString("F2");
+        _moneyText.text = money.ToString() + " €";
+        Time.timeScale = 1f;
         _capacidadActualCaca = _maxCapacidadCaca;
         _cargadorActualCaca = _cargadorCaca;
         _capacidadActualTinta = _maxCapacidadTinta;
         ArmadeViento();
         _currentealth = _maxhealth;
+        _normalMoveSpeed = _movementSpeed;
 
         _mainCamera = Camera.main;
+
         for (int i = 0; i < _observable.Count; i++)
         {
             _observable[i].OnHealtUpdate(_currentealth, _maxhealth);
@@ -159,6 +179,8 @@ public class PlayerControler : CustomMonoBehaviour, IDamageabe<float>, IObservab
 
 
 
+
+
     #region ImputSystem
     public void OnMovement(InputAction.CallbackContext context)
     {
@@ -168,10 +190,21 @@ public class PlayerControler : CustomMonoBehaviour, IDamageabe<float>, IObservab
             _horizontal = input.x;
             _vertical = input.y;
         }
-        if (context.canceled)
+        else if (context.canceled)
         {
             _horizontal = 0f;
             _vertical = 0f;
+        }
+    }
+    public void OnRun(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            _movementSpeed = _movementSpeed * 2;
+        }
+        else if (context.canceled)
+        {
+            _movementSpeed = _normalMoveSpeed;
         }
     }
     public void OnMouse(InputAction.CallbackContext context)
@@ -204,16 +237,29 @@ public class PlayerControler : CustomMonoBehaviour, IDamageabe<float>, IObservab
     {
         if (context.performed)
         {
-            SceneManager.LoadScene("Main Menu");
+            if (_menuPausa.alpha > 0)
+            {
+                _menuPausa.alpha = 0;
+                _menuPausa.interactable = false;
+                _menuPausa.blocksRaycasts = false;
+                Time.timeScale = 1f;
+            }
+            else
+            {
+                _menuPausa.alpha = 1;
+                _menuPausa.interactable = true;
+                _menuPausa.blocksRaycasts = true;
+                Time.timeScale = 0f;
+            }
         }
     }
     public void OnReload(InputAction.CallbackContext context)
     {
-        if (context.performed && _bulletType == "ProyectilCaca" && _cargadorCaca < _capacidadActualCaca)
+        if (context.performed && _bulletType == "ProyectilCaca" && _cargadorActualCaca < _capacidadActualCaca)
         {
             _animator.SetTrigger("ReloadRifle");
         }
-        else if (context.performed && _bulletType == "Misil" && _cargadorTinta < _capacidadActualTinta)
+        else if (context.performed && _bulletType == "Misil" && _cargadorTinta <= _capacidadActualTinta)
         {
             _animator.SetTrigger("ReloadBazooca");
         }
@@ -268,6 +314,29 @@ public class PlayerControler : CustomMonoBehaviour, IDamageabe<float>, IObservab
             ArmaDeTinta();
         }
     }
+    public void CheatMenu(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            if (_menuTrucos.alpha > 0)
+            {
+                _menuTrucos.alpha = 0;
+                _menuTrucos.interactable = false;
+                _menuTrucos.blocksRaycasts = false;
+            }
+            else
+            {
+                _menuTrucos.alpha = 1;
+                _menuTrucos.interactable = true;
+                _menuTrucos.blocksRaycasts = true;
+            }
+        }
+    }
+
+
+
+
+
     #endregion
 
 
@@ -311,19 +380,19 @@ public class PlayerControler : CustomMonoBehaviour, IDamageabe<float>, IObservab
             // 'W/S' mueve en el forward de la cámara, 'A/D' en el right de la cámara
             _direccion = (camForward * _vertical + camRight * _horizontal).normalized;
 
+            _desireVelocity = _direccion * _movementSpeed;
+            _currentVelocity = Vector3.MoveTowards(_currentVelocity, _desireVelocity, _acceleration * Time.deltaTime);
         }
         else
         {
             _direccion = Vector3.zero;
+            _currentVelocity = Vector3.zero;
         }
 
 
         //Calculamos la vlocidad deseada en base a la direccion y la velocidad
-        _desireVelocity = _direccion * _movementSpeed;
 
-        //Aceleracion desaleresacion del personaje
-        float currentAceleration = (_direccion.magnitude > 0) ? _acceleration : _deceleration;
-        _currentVelocity = Vector3.MoveTowards(_currentVelocity, _desireVelocity, currentAceleration * Time.deltaTime);
+        _currentVelocity = _direccion * _movementSpeed;
 
 
         //Aplicamos gravedad
@@ -335,12 +404,6 @@ public class PlayerControler : CustomMonoBehaviour, IDamageabe<float>, IObservab
         //Aplicamos el movimiento
         _cC.Move((_currentVelocity + vectorGravity) * Time.deltaTime);
 
-        //Rotamos si estamos en movimiento
-        // if (_currentVelocity.sqrMagnitude > 0.1f)
-        // {
-        //     Quaternion targetRot = Quaternion.LookRotation(_currentVelocity);
-        //     transform.rotation = Quaternion.Slerp(transform.rotation, targetRot, Time.deltaTime * _rotationSpeed);
-        // }
     }
 
     private void DaschRight()
@@ -354,76 +417,94 @@ public class PlayerControler : CustomMonoBehaviour, IDamageabe<float>, IObservab
     }
     private void Aiming()
     {
-        // Crea un plano matemático invisible orientado hacia arriba, a 0.5 unidades por encima del personaje.
-        Plane playerPlane = new Plane(Vector3.up, transform.position + Vector3.up * 0.5f);
-        // Lanza un rayo desde la cámara que pasa por la posición actual del cursor en la pantalla.
-        Ray ray = _mainCamera.ScreenPointToRay(_posicionDelRaton);
-
-        // Calcula si el rayo del ratón choca con el plano virtual creado antes.
-        if (playerPlane.Raycast(ray, out float hitDist))
+        //Float para calcular si el raton esta en movimiento
+        float distanciaMovimientoRaton = Vector3.Distance(_posicionDelRaton, _ultimaPosicionRaton);
+        //Si el raton se esta moviendo la rotacion de la camara se permite
+        if (distanciaMovimientoRaton > _sensibilidadDeteccion)
         {
-            // Obtiene las coordenadas 3D exactas donde el rayo tocó el plano.
-            Vector3 targetPoint = ray.GetPoint(hitDist);
-            // Guarda ese punto en una variable global.
-            _targetPoint = targetPoint;
-            // Calcula la dirección desde el personaje hacia ese punto del ratón.
-            Vector3 dirToMouse = targetPoint - transform.position;
-            // Ignora la diferencia de altura para que el personaje no se incline.
-            dirToMouse.y = 0;
+            _movimientoRaton = true;
+            _ultimaPosicionRaton = _posicionDelRaton;
+        }
+        else
+        {
+            _movimientoRaton = false;
+        }
 
-            // Si el ratón no está justo encima del personaje (evita errores de rotación).
-            if (dirToMouse.sqrMagnitude > 0.1f)
+        //Comprobamos si el raton se esta moviendo o si la estamos disparando para rotar la camara
+        if (_movimientoRaton || _disparando)
+        {
+            // Crea un plano matemático invisible orientado hacia arriba, a 0.5 unidades por encima del personaje.
+            Plane playerPlane = new Plane(Vector3.up, transform.position + Vector3.up * 0.5f);
+            // Lanza un rayo desde la cámara que pasa por la posición actual del cursor en la pantalla.
+            Ray ray = _mainCamera.ScreenPointToRay(_posicionDelRaton);
+
+            // Calcula si el rayo del ratón choca con el plano virtual creado antes.
+            if (playerPlane.Raycast(ray, out float hitDist))
             {
-                // Crea la rotación necesaria para mirar hacia el ratón.
-                Quaternion targetRot = Quaternion.LookRotation(dirToMouse);
-                // Si está disparando, la rotación es 3 veces más rápida para mayor precisión.
-                float currentRotSpeed = _disparando ? _rotationSpeed * 3 : _rotationSpeed;
+                // Obtiene las coordenadas 3D exactas donde el rayo tocó el plano.
+                Vector3 targetPoint = ray.GetPoint(hitDist);
+                // Guarda ese punto en una variable global.
+                _targetPoint = targetPoint;
+                // Calcula la dirección desde el personaje hacia ese punto del ratón.
+                Vector3 dirToMouse = targetPoint - transform.position;
+                // Ignora la diferencia de altura para que el personaje no se incline.
+                dirToMouse.y = 0;
 
-                // Si está disparando o está quieto:
-                if (_disparando)
+                // Si el ratón no está justo encima del personaje (evita errores de rotación).
+                if (dirToMouse.sqrMagnitude > 0.1f)
                 {
-                    // Gira el cuerpo entero (el objeto principal) hacia el ratón suavemente.
-                    transform.rotation = Quaternion.Slerp(transform.rotation, targetRot, Time.deltaTime * currentRotSpeed);
-                    // Resetea la rotación del "hijo" (el modelo visual) para que mire al frente.
-                    _childTransform.localRotation = Quaternion.Slerp(_childTransform.localRotation,
-                                                                          Quaternion.identity,
-                                                                          Time.deltaTime * currentRotSpeed);
+                    // Crea la rotación necesaria para mirar hacia el ratón.
+                    Quaternion targetRot = Quaternion.LookRotation(dirToMouse);
+                    // Si está disparando, la rotación es 3 veces más rápida para mayor precisión.
+                    float currentRotSpeed = _disparando ? _rotationSpeed * 3 : _rotationSpeed;
+
+                    // Si está disparando o está quieto:
+                    if (_disparando)
+                    {
+                        // Gira el cuerpo entero (el objeto principal) hacia el ratón suavemente.
+                        transform.rotation = Quaternion.Slerp(transform.rotation, targetRot, Time.deltaTime * currentRotSpeed);
+                        // Resetea la rotación del "hijo" (el modelo visual) para que mire al frente.
+                        _childTransform.localRotation = Quaternion.Slerp(_childTransform.localRotation,
+                                                                              Quaternion.identity,
+                                                                              Time.deltaTime * currentRotSpeed);
+                    }
+                    else if (_currentVelocity.sqrMagnitude < 0.1f)
+                    {
+                        // Si se está moviendo, el cuerpo principal y el modelo visual ambos miran hacia el ratón.
+                        transform.rotation = Quaternion.Slerp(transform.rotation, targetRot, Time.deltaTime * currentRotSpeed);
+                        // _childTransform.localRotation = Quaternion.Slerp(_childTransform.localRotation,
+                        //                                                       Quaternion.identity,
+                        //                                                       Time.deltaTime * currentRotSpeed);
+                    }
+                    // Si se está moviendo pero NO disparando:
+                    else
+                    {
+                        // El cuerpo principal sigue mirando al ratón, pero el modelo visual mira hacia la dirección del movimiento.
+                        Quaternion moveRoot = Quaternion.LookRotation(_currentVelocity);
+                        _childTransform.rotation = Quaternion.Slerp(_childTransform.rotation, moveRoot, Time.deltaTime * currentRotSpeed);
+                    }
                 }
-                else if (_currentVelocity.sqrMagnitude < 0.1f)
-                {
-                    // Si se está moviendo, el cuerpo principal y el modelo visual ambos miran hacia el ratón.
-                    transform.rotation = Quaternion.Slerp(transform.rotation, targetRot, Time.deltaTime * currentRotSpeed);
-                    // _childTransform.localRotation = Quaternion.Slerp(_childTransform.localRotation,
-                    //                                                       Quaternion.identity,
-                    //                                                       Time.deltaTime * currentRotSpeed);
-                }
-                // Si se está moviendo pero NO disparando:
-                else
-                {
-                    // El cuerpo principal sigue mirando al ratón, pero el modelo visual mira hacia la dirección del movimiento.
-                    Quaternion moveRoot = Quaternion.LookRotation(_currentVelocity);
-                    _childTransform.rotation = Quaternion.Slerp(_childTransform.rotation, moveRoot, Time.deltaTime * currentRotSpeed);
-                }
+                // Convierte el punto del ratón de coordenadas del mundo a coordenadas locales del personaje.
+                Vector3 locaTarget = transform.InverseTransformPoint(targetPoint);
+                // Limita qué tan a la izquierda o derecha puede ir el punto de mira.
+                float clampedX = Mathf.Clamp(locaTarget.x, -_maxDistanceSide, _maxDistanceSide);
+                // Asegura que el punto de mira esté siempre al menos a 0.5 unidades frente al personaje.
+                float clampedZ = Mathf.Max(locaTarget.z, 0.5f);
+
+                // Reconstruye la posición local limitada.
+                Vector3 locaFinalPos = new Vector3(clampedX, 0.5f, clampedZ);
+                // Convierte esa posición limitada de vuelta a coordenadas del mundo.
+                Vector3 finalPosWorld = transform.TransformPoint(locaFinalPos);
+
+                // Mueve el objeto "_aimingPivot" (donde apunta el arma) a esa posición con un suavizado muy rápido (* 40).
+                _aimingPivot.position = Vector3.Lerp(_aimingPivot.position, finalPosWorld, Time.deltaTime * 40);
+                // Asegura que el pivote siempre mire hacia adelante respecto al personaje.
+                _aimingPivot.forward = transform.forward;
             }
-
-            // Convierte el punto del ratón de coordenadas del mundo a coordenadas locales del personaje.
-            Vector3 locaTarget = transform.InverseTransformPoint(targetPoint);
-            // Limita qué tan a la izquierda o derecha puede ir el punto de mira.
-            float clampedX = Mathf.Clamp(locaTarget.x, -_maxDistanceSide, _maxDistanceSide);
-            // Asegura que el punto de mira esté siempre al menos a 0.5 unidades frente al personaje.
-            float clampedZ = Mathf.Max(locaTarget.z, 0.5f);
-
-            // Reconstruye la posición local limitada.
-            Vector3 locaFinalPos = new Vector3(clampedX, 0.5f, clampedZ);
-            // Convierte esa posición limitada de vuelta a coordenadas del mundo.
-            Vector3 finalPosWorld = transform.TransformPoint(locaFinalPos);
-
-            // Mueve el objeto "_aimingPivot" (donde apunta el arma) a esa posición con un suavizado muy rápido (* 40).
-            _aimingPivot.position = Vector3.Lerp(_aimingPivot.position, finalPosWorld, Time.deltaTime * 40);
-            // Asegura que el pivote siempre mire hacia adelante respecto al personaje.
-            _aimingPivot.forward = transform.forward;
         }
     }
+
+
     private void Shooting()
     {
         //Reiniciamos las posiciones para que no se sumen o de errores
@@ -440,19 +521,18 @@ public class PlayerControler : CustomMonoBehaviour, IDamageabe<float>, IObservab
         {
             if (_shootDelayPoop > 0 || _cargadorActualCaca <= 0) return;
             DisparodeCaca(position, rotation);
+            if (_cargadorInfinito) return;
             _cargadorActualCaca--;
         }
         //Comprobamos queel proyectil del pulpo esta activo para poder dispararlo y los demas no
         else if (_shootingpointPulpo != null && _bulletType == "Misil" && _capacidadActualTinta > 0)
         {
-            if (_cargadorTinta <= 0) return;
+            if (_cargadorTinta <= 0 || _shootDelayTinta > 0) return;
             DisparodeTinta(position, rotation);
+            if (_cargadorInfinito) return;
             _cargadorTinta--;
         }
     }
-
-
-
     private void ParticleFX()
     {
         //Si estamos en el suelo y nos movemos, activamos las partículas de polvo
@@ -482,7 +562,7 @@ public class PlayerControler : CustomMonoBehaviour, IDamageabe<float>, IObservab
 
 
 
-    #region  Funciones funcionales
+    #region Funciones funcionales
     private void DisparodeViento(Vector3 position, Quaternion rotation)
     {
         _animator.SetTrigger("ShootWind");
@@ -503,6 +583,7 @@ public class PlayerControler : CustomMonoBehaviour, IDamageabe<float>, IObservab
     private void DisparodeTinta(Vector3 position, Quaternion rotacion)
     {
         _animator.SetTrigger("ShootTinta");
+        _shootDelayTinta = _fireRateTinta;
         position = _shootingpointPulpo.position;
         rotacion = Quaternion.LookRotation(transform.forward);
         Misil tempMisil = PoolManager.Instance.Pull(_bulletType, position, rotacion) as Misil;
@@ -577,6 +658,10 @@ public class PlayerControler : CustomMonoBehaviour, IDamageabe<float>, IObservab
         {
             _shootDelayPoop -= Time.deltaTime;
         }
+        if (_shootDelayTinta > 0f)
+        {
+            _shootDelayTinta -= Time.deltaTime;
+        }
         if (_ataqueEspecialTimer > 0)
         {
             _ataqueEspecialTimer -= Time.deltaTime;
@@ -598,17 +683,17 @@ public class PlayerControler : CustomMonoBehaviour, IDamageabe<float>, IObservab
     {
         if (_bulletType == "Wind")
         {
-            _remainingBulletsText.text = _shootDelayWind.ToString("F2");
+            _remainingBulletsText.text = _shootDelayWind.ToString("F2") + "Wait";
         }
         else if (_bulletType == "ProyectilCaca")
         {
-            _remainingBulletsText.text = _cargadorActualCaca.ToString();
-            _remainingAmmoText.text = _capacidadActualCaca.ToString();
+            _remainingBulletsText.text = _cargadorActualCaca.ToString() + " Magazine";
+            _remainingAmmoText.text = _capacidadActualCaca.ToString() + " Ammo";
         }
         else if (_bulletType == "Misil")
         {
-            _remainingBulletsText.text = _cargadorTinta.ToString();
-            _remainingAmmoText.text = _capacidadActualTinta.ToString(); ;
+            _remainingBulletsText.text = _cargadorTinta.ToString() + " Magazine";
+            _remainingAmmoText.text = _capacidadActualTinta.ToString() + " Ammo";
         }
     }
     public void RecibirVida(float cantidad)
@@ -621,18 +706,16 @@ public class PlayerControler : CustomMonoBehaviour, IDamageabe<float>, IObservab
             _observable[i].OnHealtUpdate(_currentealth, _maxhealth);
         }
     }
-
     public void RecibirDinero(int cantidad)
     {
         money += cantidad;
-        _moneyText.text = money.ToString();
+        _moneyText.text = money.ToString() + " €";
     }
     public void QuitarDinero(int cantidad)
     {
         money -= cantidad;
         _moneyText.text = money.ToString();
     }
-
     public void RecibirMunicion(int cantidad, string tipoMunicion)
     {
         if (tipoMunicion == "ProyectilCaca")
@@ -649,7 +732,20 @@ public class PlayerControler : CustomMonoBehaviour, IDamageabe<float>, IObservab
         }
 
     }
+    public void ContinueButton()
+    {
+        _menuPausa.alpha = 0;
+        _menuPausa.interactable = false;
+        _menuPausa.blocksRaycasts = false;
+        Time.timeScale = 1f;
+    }
+
+
     #endregion
+
+
+
+
 
 
     #region Menu de Trucos
@@ -657,8 +753,43 @@ public class PlayerControler : CustomMonoBehaviour, IDamageabe<float>, IObservab
     {
         Time.timeScale = nuevoValor;
         Time.fixedDeltaTime = 0.02f * Time.timeScale;
+        _velocidadJuego.value = nuevoValor;
+    }
+    public void CargadorInfinito()
+    {
+        _cargadorInfinito = true;
+    }
+    public void DisparoVientoConstante()
+    {
+        _fireRateWind = 1f;
+    }
+    public void AtaqueEspecialDashDElayReducido()
+    {
+        _daschTime = 1f;
+        _ataqueEspecialTime = 1f;
+    }
+    public void PlayerSpeedModificador(float modificador)
+    {
+        _movementSpeed = modificador;
+        _velocidadPlayer.value = modificador;
+    }
+    public void ReseteoGeneral()
+    {
+        Time.timeScale = 1f;
+        _cargadorInfinito = false;
+        _fireRateWind = 10f;
+        _movementSpeed = 30f;
+        _invencible = false;
+    }
+    public void Invencivilidad()
+    {
+        _invencible = true;
     }
     #endregion
+
+
+
+
 
 
     #region Animation Events
@@ -690,6 +821,8 @@ public class PlayerControler : CustomMonoBehaviour, IDamageabe<float>, IObservab
     public bool IsDead => _currentealth <= 0;
     public void TakeDamag(float damage, Vector3 impactPoint = default(Vector3))
     {
+        if (_invencible) return;
+
         _currentealth -= damage;
         _currentealth = Mathf.Clamp(_currentealth, 0, _maxhealth);
 

@@ -1,18 +1,24 @@
 using System;
+using TMPro;
 using UnityEngine;
 
 public class BlockingWalls : MonoBehaviour
 {
+    public static System.Action<GameObject> OnWallDestroy;
+    public static Action OnWallCounter;
     [SerializeField] int _moneyToUnlock;
     [SerializeField] Vector3 _radio;
     [SerializeField] Vector3 _offset;
     [SerializeField] LayerMask _player;
     [SerializeField] PlayerControler _playerControler;
+    [SerializeField] CanvasGroup _canvasGroup;
+    [SerializeField] TextMeshProUGUI _moneyText;
     bool _jugadorCerca = false;
     float _timer = 1f;
+    float _textTimer = 2f;
     void Start()
     {
-       _playerControler = GetComponent<PlayerControler>();
+        
     }
     void Update()
     {
@@ -23,10 +29,23 @@ public class BlockingWalls : MonoBehaviour
             _timer = 0;
         }
 
-        if (_jugadorCerca && _playerControler.comprar)
+        if (_jugadorCerca)
         {
-            IntentarComprar();
+            _canvasGroup.alpha = 1;
+            _moneyText.text = _moneyToUnlock.ToString() + " €";
+
+            if (_playerControler.comprar) IntentarComprar();
         }
+        else
+        {
+            _textTimer += Time.deltaTime;
+            if (_textTimer >= 2f)
+            {
+                _canvasGroup.alpha = 0;
+                _textTimer = 0;
+            }
+        }
+        
     }
     private void OnDrawGizmos()
     {
@@ -47,6 +66,8 @@ public class BlockingWalls : MonoBehaviour
         if (_playerControler.Money >= _moneyToUnlock)
         {
             _playerControler.QuitarDinero(_moneyToUnlock);
+            OnWallDestroy?.Invoke(gameObject);
+            OnWallCounter?.Invoke();
             Destroy(gameObject);
         }
     }

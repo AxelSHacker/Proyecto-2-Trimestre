@@ -12,6 +12,7 @@ public class Misil : PoolEntity
    [SerializeField] float _damageRadio;
    [SerializeField] float _pathTime = 1f;
    float _pathTimer;
+   EnemigoIngles enemigo;
 
    [SerializeField] LayerMask _disparable;
    [SerializeField] Vector3 _startPosicion;
@@ -44,20 +45,23 @@ public class Misil : PoolEntity
 
       if ((_disparable & (1 << other.gameObject.layer)) != 0)
       {
+
          Collider[] impactos = Physics.OverlapSphere(transform.position, _damageRadio, _disparable);
          foreach (Collider impact in impactos)
          {
+            enemigo = null;
             _damageable = null;
             if (impact.TryGetComponent(out _damageable))
             {
                _damageable.TakeDamag(_damage, transform.position);
 
             }
+            if (impact.TryGetComponent(out enemigo))
+            {
+               enemigo.Cegar();
+            }
 
-         }
-         if (other.TryGetComponent(out EnemigoIngles enemigo))
-         {
-            enemigo.Cegar();
+
          }
          _posicionTarget = transform.position;
          OnImpact?.Invoke();

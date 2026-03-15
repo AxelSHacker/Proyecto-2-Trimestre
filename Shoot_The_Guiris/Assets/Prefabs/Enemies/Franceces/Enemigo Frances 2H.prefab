@@ -122,7 +122,7 @@ NavMeshAgent:
   m_Height: 11
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 4
+  m_ObstacleAvoidanceType: 2
 --- !u!54 &8325799849899235162
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -210,6 +210,7 @@ MonoBehaviour:
   _weapon2: {fileID: 0}
   _animator: {fileID: 2188565964088565604}
   _rB: {fileID: 8325799849899235162}
+  _target: {fileID: 0}
   _targetTag: Player
   _rewardPoolID: Reward
   _rewardChance: 100
@@ -219,6 +220,8 @@ MonoBehaviour:
   _groundCheckPoint: {fileID: 5241117181858592769}
   _groundCheckSize: 1.7
   _grounded: 0
+  timetoDeactivate: 0
+  _maxTimeToDeactivate: 0
   _attackDistance: 20
   _inRange: 20
   _maxhealth: 70

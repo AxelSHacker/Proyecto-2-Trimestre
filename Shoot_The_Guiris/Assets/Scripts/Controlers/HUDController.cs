@@ -49,8 +49,9 @@ public class HUDController : CustomMonoBehaviour, PlayerObserver
          _dash[i].fillAmount = 1f - (timer / time);
       }
    }
-public void ShowWavePanel(int waveNumber)
+   public void ShowWavePanel(int waveNumber)
    {
+      
       _waveText.text = waveNumber.ToString();
       _wavePanel.SetTrigger("Oleada");
    }

@@ -12,15 +12,6 @@ public class Healt : MonoBehaviour
 
     private void Start()
     {
-        if (SceneManager.GetActiveScene().name == "Tutorial Platform")
-        {
-            
-            health = DataManager.Instance.tutorialScore;
-        }
-        else
-        {
-            health = DataManager.Instance.actualGameScore;
-        }
         enemyHealth = maxHealt;
     }
 

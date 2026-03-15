@@ -89,8 +89,8 @@ public class SpawnRecompensa : PoolEntity
             break;
          case TipoRecompensa.Ammo:
             // Lógica para dar munición al jugador
-            player.GetComponent<PlayerControler>().RecibirMunicion(10, "ProyectilCaca");
-            player.GetComponent<PlayerControler>().RecibirMunicion(5, "Misil");
+            player.GetComponent<PlayerControler>().RecibirMunicion(20, "ProyectilCaca");
+            player.GetComponent<PlayerControler>().RecibirMunicion(2, "Misil");
             break;
          case TipoRecompensa.Health:
             player.GetComponent<PlayerControler>().RecibirVida(10);

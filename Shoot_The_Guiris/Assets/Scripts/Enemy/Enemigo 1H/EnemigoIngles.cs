@@ -17,7 +17,7 @@ public class EnemigoIngles : PoolEntity, IDamageabe<float>, PlayerObserver, IObs
    [SerializeField] Rigidbody _rB;
 
    [Header("Configuracion")]
-   Transform _target;
+   [SerializeField] Transform _target;
    [SerializeField] string _targetTag = "Player";
 
    [Header("Reward")]
@@ -29,8 +29,8 @@ public class EnemigoIngles : PoolEntity, IDamageabe<float>, PlayerObserver, IObs
    [SerializeField] Transform _groundCheckPoint;
    [SerializeField] float _groundCheckSize;
    [SerializeField] bool _grounded;
-   bool _volando;
-   bool _cegado;
+   bool _volando = false;
+   bool _cegado = false;
    [SerializeField] float timetoDeactivate;
    [SerializeField] float _maxTimeToDeactivate;
 
@@ -40,7 +40,7 @@ public class EnemigoIngles : PoolEntity, IDamageabe<float>, PlayerObserver, IObs
    Coroutine _ceguera;
 
    [Header("Movimiento")]
-   Vector3 _actualVelocity;
+   float _actualSpeed;
 
    [Header("Attack")]
    [SerializeField] float _attackDistance;
@@ -54,9 +54,9 @@ public class EnemigoIngles : PoolEntity, IDamageabe<float>, PlayerObserver, IObs
    [Header("Getters")]
    #region Getters
    public bool AgentIsActive => _agent.enabled;
-   public bool HasTarget => _target != null && _grounded && _agent.enabled;
+   public bool HasTarget => _target != null && _agent.enabled;
    public float RemainingDistanceToTarget => _agent.enabled ? _agent.remainingDistance : 0f;
-   public bool PathPending => _agent.enabled && _agent.pathPending && _grounded;
+   public bool PathPending => _agent.enabled && _agent.pathPending;
    public float AttacDistance => _attackDistance;
    public float InRange => _inRange;
    public Transform Target => _target;
@@ -66,6 +66,7 @@ public class EnemigoIngles : PoolEntity, IDamageabe<float>, PlayerObserver, IObs
    public Transform Posicion => _weapon;
    public Transform Posicion2 => _weapon2;
    public float VelocidadAtaque => _velocidadAtaque;
+   public bool Ciego => _cegado;
    #endregion
 
 
@@ -85,9 +86,9 @@ public class EnemigoIngles : PoolEntity, IDamageabe<float>, PlayerObserver, IObs
       CheckForTarget(_targetTag);
       _cargador = _cargadorMax;
       timetoDeactivate = _maxTimeToDeactivate;
-      _actualVelocity = _agent.velocity;
 
       _agent.speed = Random.Range(10f, 20f);
+      _actualSpeed = _agent.speed;
    }
    void Update()
    {
@@ -166,8 +167,8 @@ public class EnemigoIngles : PoolEntity, IDamageabe<float>, PlayerObserver, IObs
    private void SpameoReward()
    {
       if (Random.Range(0f, 100f) <= _rewardChance)
-      { 
-        Vector3 position = transform.position + Vector3.up * 1f; // Ajusta la altura según sea necesario
+      {
+         Vector3 position = transform.position + Vector3.up * 3f; // Ajusta la altura según sea necesario
          PoolManager.Instance.Pull(_rewardPoolID, position, Quaternion.identity);
       }
    }
@@ -213,9 +214,9 @@ public class EnemigoIngles : PoolEntity, IDamageabe<float>, PlayerObserver, IObs
    //Coroutina que ralentiza al enemigo cuando es golpeado por la municion de caca
    private IEnumerator Ralentizacion()
    {
-      _agent.velocity = _actualVelocity * 0.5f;
+      _agent.speed = _actualSpeed * 0.5f;
       yield return new WaitForSeconds(5f);
-      _agent.velocity = _actualVelocity;
+      _agent.speed = _actualSpeed;
       _ralentizacion = null;
    }
    //Coroutina que se encarga de levantar al enemigo despues de ser lanzado por los aires
@@ -235,21 +236,19 @@ public class EnemigoIngles : PoolEntity, IDamageabe<float>, PlayerObserver, IObs
    private IEnumerator Ceguera()
    {
       _cegado = true;
-      _agent.velocity = _actualVelocity * 0.3f;
+      _agent.speed = _actualSpeed * 0.3f;
 
       Vector3 puntoAleatorio = transform.position + Random.insideUnitSphere * 5f;
       NavMeshHit hit;
 
-      if (NavMesh.SamplePosition(puntoAleatorio, out hit, 5f,
-            NavMesh.AllAreas))
+      if (NavMesh.SamplePosition(puntoAleatorio, out hit, 5f, NavMesh.AllAreas))
       {
          _agent.SetDestination(hit.position);
       }
       yield return new WaitForSeconds(3f);
 
-      _agent.velocity = _actualVelocity;
+      _agent.speed = _actualSpeed;
       _cegado = false;
-      SetDestinationToTarget();
    }
    private void AutomaticDeactivation()
    {

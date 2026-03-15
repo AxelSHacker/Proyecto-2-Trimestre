@@ -5,13 +5,13 @@ public class EnemigoInglesFordwardState : StateMachineBehaviour
 {
 
     private EnemigoIngles enemigoIngles;
-    private NavMeshAgent agent;
+    int _frameCount;
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         //Recuperamos la refrencia al enemy propiietario de animator
         enemigoIngles = animator.GetComponentInParent<EnemigoIngles>();
-        agent = enemigoIngles.GetComponentInParent<NavMeshAgent>();
+
 
     }
 
@@ -19,23 +19,29 @@ public class EnemigoInglesFordwardState : StateMachineBehaviour
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
 
+        if (enemigoIngles.Ciego) return;
         //Debug.Log(enemigoIngles.HasTarget);
         //Si el navmesh agent esta activo y existe en objeto
         if (enemigoIngles.AgentIsActive && enemigoIngles.HasTarget)
         {
+            // _frameCount++;
+            // if (_frameCount >= 10)
+            // {
+            //     enemigoIngles.SetDestinationToTarget();
+            //     _frameCount = 0;
+            // }
             enemigoIngles.SetDestinationToTarget();
 
-            Vector3 dirrecion = enemigoIngles.Target.position - enemigoIngles.transform.position;
+            // Vector3 dirrecion = enemigoIngles.Target.position - enemigoIngles.transform.position;
 
-            enemigoIngles.transform.rotation = Quaternion.Slerp(enemigoIngles.transform.rotation,
-                                                               Quaternion.LookRotation(dirrecion),
-                                                               Time.deltaTime);
+            // enemigoIngles.transform.rotation = Quaternion.Slerp(enemigoIngles.transform.rotation,
+            //                                                    Quaternion.LookRotation(dirrecion),
+            //                                                    Time.deltaTime * 2);
         }
-
         if (!enemigoIngles.PathPending && enemigoIngles.RemainingDistanceToTarget < enemigoIngles.InRange)
         {
             animator.SetBool("EnRango", true);
-            agent.speed = enemigoIngles.VelocidadAtaque;
+
         }
         else
         {
@@ -45,11 +51,14 @@ public class EnemigoInglesFordwardState : StateMachineBehaviour
     }
 
 
-    // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
-    override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    {
 
-    }
+
+
+    // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
+    // override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    // {
+
+    // }
 
     // OnStateMove is called right after Animator.OnAnimatorMove()
     //override public void OnStateMove(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)

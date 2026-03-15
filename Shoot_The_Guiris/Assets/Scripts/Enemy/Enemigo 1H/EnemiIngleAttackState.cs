@@ -43,7 +43,7 @@ public class EnemiIngleAttackState : StateMachineBehaviour
    {
       _espadaEscudo = -1;
       _velocidadAtaque = 1;
-       animator.SetBool("EnRango", false);
+      
    }
 }
 // OnStateMove is called right after Animator.OnAnimatorMove()

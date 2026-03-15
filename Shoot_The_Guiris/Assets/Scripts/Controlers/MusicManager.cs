@@ -6,6 +6,10 @@ public class MusicManager : MonoBehaviour
     [SerializeField] AudioSource _musicSource;
     [SerializeField] List<AudioClip> _musicClips;
     List<AudioClip> _listaActual = new List<AudioClip>();
+    void Awake()
+    {
+        DontDestroyOnLoad(gameObject);
+    }
     void Start()
     {
         GenerarciondeListadeReproduccion();
