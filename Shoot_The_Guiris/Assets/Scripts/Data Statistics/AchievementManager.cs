@@ -20,7 +20,6 @@ public class AchievementManager : CustomMonoBehaviour
       if (stat == null) return;
       stat.value += amount;
       Achievement[] achievements = DataManager.Instance.GetkAchievementsWithStat(stat.code);
-      Debug.Log(achievements);
       for (int i = 0; i < achievements.Length; i++)
       {
          if (!achievements[i].unlocked && achievements[i].targetAmount <= stat.value)

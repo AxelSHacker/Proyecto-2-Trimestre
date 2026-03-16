@@ -53,7 +53,7 @@ public class DataManager : CustomMonoBehaviour
    }
    public Stat GetStatWithCode(string code)
    {
-      for(int i=0; i < _data.Statistics.Count; i++)
+      for(int i = 0; i < _data.Statistics.Count; i++)
       {
          if (_data.Statistics[i].code == code)
          {
