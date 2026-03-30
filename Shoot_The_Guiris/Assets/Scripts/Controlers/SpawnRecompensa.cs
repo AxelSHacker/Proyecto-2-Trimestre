@@ -1,4 +1,4 @@
-using Unity.Mathematics;
+
 using UnityEngine;
 
 public class SpawnRecompensa : PoolEntity
@@ -75,6 +75,7 @@ public class SpawnRecompensa : PoolEntity
          {
             _recompensas[i].objeto.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
             _recompensas[i].objeto.gameObject.SetActive(false);
+            
          }
       }
    }
@@ -83,9 +84,10 @@ public class SpawnRecompensa : PoolEntity
    {
       switch (_tipoRecompensa)
       {
+      
          case TipoRecompensa.Coin:
          //Logica para ganar dinero
-            player.GetComponent<PlayerControler>().RecibirDinero(100);
+            player.GetComponent<PlayerControler>().RecibirDinero();
             break;
          case TipoRecompensa.Ammo:
             // Lógica para dar munición al jugador

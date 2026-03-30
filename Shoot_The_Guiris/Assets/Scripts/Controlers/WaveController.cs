@@ -1,4 +1,4 @@
-using Unity.VisualScripting;
+
 using UnityEngine;
 using System;
 using TMPro;
@@ -13,6 +13,8 @@ public class WaveController : MonoBehaviour, PlayerObserver
     [SerializeField] float _spawnDelay = 0.5f;
     [SerializeField] int _waveEnemyNumberMultiplier;
     [SerializeField] int _waveEnemies;
+    [SerializeField] int _maxEnemiesOnScreen = 40;
+    int _currentEnemiesAlive;
     [SerializeField] int _remainingEnemies;
     [SerializeField] TextMeshProUGUI _remainingEnemyText;
     float _spawnTimer;
@@ -20,7 +22,7 @@ public class WaveController : MonoBehaviour, PlayerObserver
     public bool tutorial;
     void Start()
     {
-
+        _remainingEnemyText.text = "Remainings Enemies = " + _waveEnemies.ToString();
     }
 
     // Update is called once per frame
@@ -32,15 +34,16 @@ public class WaveController : MonoBehaviour, PlayerObserver
             _spawnTimer += Time.deltaTime;
             return;
         }
-        if (_waveEnemies > 0)
+        if (_waveEnemies > 0 && _currentEnemiesAlive < _maxEnemiesOnScreen)
         {
             GenerateEnemy();
             _spawnTimer = 0f;
         }
-        _remainingEnemyText.text = "Remainings Enemies = " + _remainingEnemies.ToString();
+
     }
     public void StartWave()
     {
+        _remainingEnemyText.text = "Remainings Enemies = " + _waveEnemies.ToString();
         _currentWave++;
         _waveEnemies = _currentWave * _waveEnemyNumberMultiplier;
         _remainingEnemies = _waveEnemies;
@@ -61,6 +64,7 @@ public class WaveController : MonoBehaviour, PlayerObserver
                                                           _spawnPoints[randomSpawnIndex].position,
                                                           Quaternion.identity) as EnemigoIngles;
         enemigo.AddObservable(this);
+        _currentEnemiesAlive++;
         _waveEnemies--;
     }
     #region PlayerObserver implementation
@@ -77,6 +81,7 @@ public class WaveController : MonoBehaviour, PlayerObserver
     public void OnDead()
     {
         OnEnemyDead?.Invoke();
+        _currentEnemiesAlive--;
         _remainingEnemies--;
         _remainingEnemyText.text = _remainingEnemies.ToString();
         if (_remainingEnemies <= 0)

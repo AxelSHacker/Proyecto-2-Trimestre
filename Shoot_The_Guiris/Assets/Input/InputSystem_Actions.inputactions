@@ -106,6 +106,15 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "Arma4",
+                    "type": "Button",
+                    "id": "7c67bbb2-be4c-452a-9fc2-7b2062a7d5b0",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "Exit",
                     "type": "Button",
                     "id": "a2c94486-e1e6-4bfe-a9b3-75d4fc3d38fe",
@@ -127,6 +136,15 @@
                     "name": "Run",
                     "type": "Button",
                     "id": "fd008fb0-4658-4026-881b-22a06b2a14e6",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "CentrarCamera",
+                    "type": "Button",
+                    "id": "67b15a0d-f462-4ac2-b2fe-a719b559d46d",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -538,6 +556,28 @@
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
                     "action": "Run",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "98516bcd-7501-45a1-a802-ac55c6b2234b",
+                    "path": "<Keyboard>/ctrl",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "CentrarCamera",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "85e7e55c-e0f9-4e17-a543-7944800d3cac",
+                    "path": "<Keyboard>/4",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Arma4",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

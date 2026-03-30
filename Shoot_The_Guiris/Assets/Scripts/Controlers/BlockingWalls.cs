@@ -32,7 +32,7 @@ public class BlockingWalls : MonoBehaviour
         if (_jugadorCerca)
         {
             _canvasGroup.alpha = 1;
-            _moneyText.text = _moneyToUnlock.ToString() + " €";
+            _moneyText.text = _moneyToUnlock.ToString() + " € Button[B]";
 
             if (_playerControler.comprar) IntentarComprar();
         }

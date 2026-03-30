@@ -1,6 +1,6 @@
-using System;
+
 using System.Collections.Generic;
-using Unity.VisualScripting;
+
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -11,6 +11,7 @@ public class GameController : CustomMonoBehaviour
    [SerializeField] WaveController _waveController;
    [SerializeField] List<GameObject> _walls;
    [SerializeField] CanvasGroup _menuVictoria;
+   [SerializeField] GameObject _menuTutorial;
 
    [SerializeField] float _timeEntreOleadas = 5f;
    float _siguienteOleadaTimer;
@@ -52,7 +53,7 @@ public class GameController : CustomMonoBehaviour
          _waveController.StartWave();
          _esperandoSiguienteOleada = true;
       }
-      
+
    }
    private void WaveHasEnded(int waveNumber)
    {
@@ -63,7 +64,7 @@ public class GameController : CustomMonoBehaviour
    {
       _hudController.ShowWavePanel(waveNumber);
    }
-   
+
    public void ExitButton()
    {
       SceneManager.LoadScene("Main Menu");
@@ -82,7 +83,15 @@ public class GameController : CustomMonoBehaviour
          _menuVictoria.blocksRaycasts = true;
       }
    }
+   public void ReestartButton()
+   {
+      SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+      _waveController.tutorial = false;
+      _menuTutorial.SetActive(false);
    
+   }
+      
+
 }
 
 

@@ -1,11 +1,10 @@
 using UnityEngine;
-using UnityEngine.AI;
+
 
 public class EnemigoInglesFordwardState : StateMachineBehaviour
 {
 
     private EnemigoIngles enemigoIngles;
-    int _frameCount;
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
@@ -24,31 +23,21 @@ public class EnemigoInglesFordwardState : StateMachineBehaviour
         //Si el navmesh agent esta activo y existe en objeto
         if (enemigoIngles.AgentIsActive && enemigoIngles.HasTarget)
         {
-            // _frameCount++;
-            // if (_frameCount >= 10)
-            // {
-            //     enemigoIngles.SetDestinationToTarget();
-            //     _frameCount = 0;
-            // }
             enemigoIngles.SetDestinationToTarget();
 
-            // Vector3 dirrecion = enemigoIngles.Target.position - enemigoIngles.transform.position;
-
-            // enemigoIngles.transform.rotation = Quaternion.Slerp(enemigoIngles.transform.rotation,
-            //                                                    Quaternion.LookRotation(dirrecion),
-            //                                                    Time.deltaTime * 2);
         }
         if (!enemigoIngles.PathPending && enemigoIngles.RemainingDistanceToTarget < enemigoIngles.InRange)
         {
             animator.SetBool("EnRango", true);
-
         }
         else
         {
             animator.SetBool("EnRango", false);
         }
-
     }
+
+            
+
 
 
 

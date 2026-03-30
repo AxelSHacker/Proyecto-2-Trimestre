@@ -44,6 +44,8 @@ GameObject:
   - component: {fileID: 2962093241291494322}
   - component: {fileID: 4477812625718787632}
   - component: {fileID: 4328905218327402031}
+  - component: {fileID: 9028365761774113211}
+  - component: {fileID: -1548529209861337006}
   m_Layer: 7
   m_Name: Enemigo Aleman Rifle
   m_TagString: Untagged
@@ -79,7 +81,7 @@ NavMeshAgent:
   m_Enabled: 0
   m_AgentTypeID: 0
   m_Radius: 2.5
-  m_Speed: 10
+  m_Speed: 35
   m_Acceleration: 50
   avoidancePriority: 50
   m_AngularSpeed: 50
@@ -172,6 +174,7 @@ MonoBehaviour:
   _weapon2: {fileID: 0}
   _animator: {fileID: 332803154389163838}
   _rB: {fileID: 2962093241291494322}
+  _randoSoundEffects: {fileID: -1548529209861337006}
   _target: {fileID: 0}
   _targetTag: Player
   _rewardPoolID: Reward
@@ -180,16 +183,18 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   _groundCheckPoint: {fileID: 6269972038546240976}
-  _groundCheckSize: 1.7
+  _groundCheckSize: 2
   _grounded: 0
   timetoDeactivate: 0
-  _maxTimeToDeactivate: 0
+  _maxTimeToDeactivate: 10
   _attackDistance: 70
   _inRange: 100
   _maxhealth: 50
   _currentealth: 0
   _cargadorMax: 30
   _velocidadAtaque: 20
+  _timeToDieIfStuck: 10
+  _stuckDistanceThreshold: 0.5
   OnInizialize:
     m_PersistentCalls:
       m_Calls:
@@ -204,18 +209,6 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 1
-        m_CallState: 2
-      - m_Target: {fileID: 2769374205471810842}
-        m_TargetAssemblyTypeName: UnityEngine.AI.NavMeshAgent, UnityEngine
-        m_MethodName: set_isStopped
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 4294636259434309820}
         m_TargetAssemblyTypeName: UnityEngine.ParticleSystem, UnityEngine
@@ -271,18 +264,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 2769374205471810842}
-        m_TargetAssemblyTypeName: UnityEngine.AI.NavMeshAgent, UnityEngine
-        m_MethodName: set_isStopped
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
       - m_Target: {fileID: 4294636259434309820}
         m_TargetAssemblyTypeName: UnityEngine.ParticleSystem, UnityEngine
         m_MethodName: Play
@@ -295,6 +276,120 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+--- !u!82 &9028365761774113211
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4483772055960224654}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: -2256398440406382273, guid: c55136e614119df41a0c1f2fe9791ff1, type: 2}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!114 &-1548529209861337006
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4483772055960224654}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 33f946e492e66544faeb15b19a0cac47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RandoSoundEffecs
+  _effectClips:
+  - {fileID: 8300000, guid: ca8b39adb4966df4d8010c4aa1d318d1, type: 3}
+  - {fileID: 8300000, guid: e9fcfaf51e93dfa4bb0dd7ea2ce429aa, type: 3}
+  - {fileID: 8300000, guid: 98fcd4459c3c1a94e9f85045d1090328, type: 3}
+  _audioSource: {fileID: 9028365761774113211}
 --- !u!1 &5877997792001402981
 GameObject:
   m_ObjectHideFlags: 0

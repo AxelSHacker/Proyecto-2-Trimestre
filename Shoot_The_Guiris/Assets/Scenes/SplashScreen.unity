@@ -149,7 +149,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneAftrSplash: Main Menu
-  splashDuration: 1
+  splashDuration: 4
   fadeImage: {fileID: 1270906621}
   fadeColorGradiaent:
     serializedVersion: 2
@@ -183,7 +183,43 @@ MonoBehaviour:
     m_NumAlphaKeys: 2
   fadeCurve:
     serializedVersion: 2
-    m_Curve: []
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: -3.254399
+      outSlope: -3.254399
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.30952695
+      value: -0.0073242188
+      inSlope: 0.038537223
+      outSlope: 0.038537223
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 1
+      outWeight: 0.22330302
+    - serializedVersion: 3
+      time: 0.8663286
+      value: 0
+      inSlope: 0.0824078
+      outSlope: 0.0824078
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 1
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 7.481032
+      outSlope: 7.481032
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
@@ -516,7 +552,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: b40047e10bbb8c84a857d590aff37a7b, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 0a3942ca8b0f9a24682ac15b7830b294, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

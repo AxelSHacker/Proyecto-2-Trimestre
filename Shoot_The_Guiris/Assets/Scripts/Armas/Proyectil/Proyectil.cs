@@ -44,12 +44,12 @@ public class Proyectil : PoolEntity
       {
          if (other.TryGetComponent(out IDamageabe<float> damageable))
          {
+            damageable.TakeDamag(_damage, transform.position);
             
             if (other.TryGetComponent(out EnemigoIngles enemigo) && PoolID == "ProyectilCaca")
             {
                enemigo.RaletizacionCoroutina();
             }
-            damageable.TakeDamag(_damage, transform.position);
          }
          OnImpact?.Invoke(transform.position);
          ReturnToPool();

@@ -192,6 +192,15 @@ public partial class @NuevoImput: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
+                    ""name"": ""Arma4"",
+                    ""type"": ""Button"",
+                    ""id"": ""7c67bbb2-be4c-452a-9fc2-7b2062a7d5b0"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""Exit"",
                     ""type"": ""Button"",
                     ""id"": ""a2c94486-e1e6-4bfe-a9b3-75d4fc3d38fe"",
@@ -213,6 +222,15 @@ public partial class @NuevoImput: IInputActionCollection2, IDisposable
                     ""name"": ""Run"",
                     ""type"": ""Button"",
                     ""id"": ""fd008fb0-4658-4026-881b-22a06b2a14e6"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""CentrarCamera"",
+                    ""type"": ""Button"",
+                    ""id"": ""67b15a0d-f462-4ac2-b2fe-a719b559d46d"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
@@ -624,6 +642,28 @@ public partial class @NuevoImput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": "";Keyboard&Mouse"",
                     ""action"": ""Run"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""98516bcd-7501-45a1-a802-ac55c6b2234b"",
+                    ""path"": ""<Keyboard>/ctrl"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""CentrarCamera"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""85e7e55c-e0f9-4e17-a543-7944800d3cac"",
+                    ""path"": ""<Keyboard>/4"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Arma4"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1222,9 +1262,11 @@ public partial class @NuevoImput: IInputActionCollection2, IDisposable
         m_Player_Arma1 = m_Player.FindAction("Arma1", throwIfNotFound: true);
         m_Player_Arma2 = m_Player.FindAction("Arma2", throwIfNotFound: true);
         m_Player_Arma3 = m_Player.FindAction("Arma3", throwIfNotFound: true);
+        m_Player_Arma4 = m_Player.FindAction("Arma4", throwIfNotFound: true);
         m_Player_Exit = m_Player.FindAction("Exit", throwIfNotFound: true);
         m_Player_CheatsMenu = m_Player.FindAction("CheatsMenu", throwIfNotFound: true);
         m_Player_Run = m_Player.FindAction("Run", throwIfNotFound: true);
+        m_Player_CentrarCamera = m_Player.FindAction("CentrarCamera", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1329,9 +1371,11 @@ public partial class @NuevoImput: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Arma1;
     private readonly InputAction m_Player_Arma2;
     private readonly InputAction m_Player_Arma3;
+    private readonly InputAction m_Player_Arma4;
     private readonly InputAction m_Player_Exit;
     private readonly InputAction m_Player_CheatsMenu;
     private readonly InputAction m_Player_Run;
+    private readonly InputAction m_Player_CentrarCamera;
     /// <summary>
     /// Provides access to input actions defined in input action map "Player".
     /// </summary>
@@ -1388,6 +1432,10 @@ public partial class @NuevoImput: IInputActionCollection2, IDisposable
         /// </summary>
         public InputAction @Arma3 => m_Wrapper.m_Player_Arma3;
         /// <summary>
+        /// Provides access to the underlying input action "Player/Arma4".
+        /// </summary>
+        public InputAction @Arma4 => m_Wrapper.m_Player_Arma4;
+        /// <summary>
         /// Provides access to the underlying input action "Player/Exit".
         /// </summary>
         public InputAction @Exit => m_Wrapper.m_Player_Exit;
@@ -1399,6 +1447,10 @@ public partial class @NuevoImput: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Player/Run".
         /// </summary>
         public InputAction @Run => m_Wrapper.m_Player_Run;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/CentrarCamera".
+        /// </summary>
+        public InputAction @CentrarCamera => m_Wrapper.m_Player_CentrarCamera;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -1458,6 +1510,9 @@ public partial class @NuevoImput: IInputActionCollection2, IDisposable
             @Arma3.started += instance.OnArma3;
             @Arma3.performed += instance.OnArma3;
             @Arma3.canceled += instance.OnArma3;
+            @Arma4.started += instance.OnArma4;
+            @Arma4.performed += instance.OnArma4;
+            @Arma4.canceled += instance.OnArma4;
             @Exit.started += instance.OnExit;
             @Exit.performed += instance.OnExit;
             @Exit.canceled += instance.OnExit;
@@ -1467,6 +1522,9 @@ public partial class @NuevoImput: IInputActionCollection2, IDisposable
             @Run.started += instance.OnRun;
             @Run.performed += instance.OnRun;
             @Run.canceled += instance.OnRun;
+            @CentrarCamera.started += instance.OnCentrarCamera;
+            @CentrarCamera.performed += instance.OnCentrarCamera;
+            @CentrarCamera.canceled += instance.OnCentrarCamera;
         }
 
         /// <summary>
@@ -1511,6 +1569,9 @@ public partial class @NuevoImput: IInputActionCollection2, IDisposable
             @Arma3.started -= instance.OnArma3;
             @Arma3.performed -= instance.OnArma3;
             @Arma3.canceled -= instance.OnArma3;
+            @Arma4.started -= instance.OnArma4;
+            @Arma4.performed -= instance.OnArma4;
+            @Arma4.canceled -= instance.OnArma4;
             @Exit.started -= instance.OnExit;
             @Exit.performed -= instance.OnExit;
             @Exit.canceled -= instance.OnExit;
@@ -1520,6 +1581,9 @@ public partial class @NuevoImput: IInputActionCollection2, IDisposable
             @Run.started -= instance.OnRun;
             @Run.performed -= instance.OnRun;
             @Run.canceled -= instance.OnRun;
+            @CentrarCamera.started -= instance.OnCentrarCamera;
+            @CentrarCamera.performed -= instance.OnCentrarCamera;
+            @CentrarCamera.canceled -= instance.OnCentrarCamera;
         }
 
         /// <summary>
@@ -1898,6 +1962,13 @@ public partial class @NuevoImput: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnArma3(InputAction.CallbackContext context);
         /// <summary>
+        /// Method invoked when associated input action "Arma4" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnArma4(InputAction.CallbackContext context);
+        /// <summary>
         /// Method invoked when associated input action "Exit" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
@@ -1918,6 +1989,13 @@ public partial class @NuevoImput: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnRun(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "CentrarCamera" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnCentrarCamera(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "UI" which allows adding and removing callbacks.

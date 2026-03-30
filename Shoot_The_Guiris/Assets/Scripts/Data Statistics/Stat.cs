@@ -1,5 +1,4 @@
-using System.Diagnostics;
-using UnityEngine;
+
 [System.Serializable]
 public class Stat
 {

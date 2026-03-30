@@ -1,8 +1,5 @@
-using TMPro;
-using Unity.VisualScripting;
-using UnityEditor;
+
 using UnityEngine;
-using UnityEngine.AI;
 using UnityEngine.Events;
 
 public class Misil : PoolEntity
@@ -12,13 +9,10 @@ public class Misil : PoolEntity
    [SerializeField] float _damageRadio;
    [SerializeField] float _pathTime = 1f;
    float _pathTimer;
-   EnemigoIngles enemigo;
-
    [SerializeField] LayerMask _disparable;
    [SerializeField] Vector3 _startPosicion;
    [SerializeField] Vector3 _posicionTarget;
    Vector3 _posiciondedisparo;
-   IDamageabe<float> _damageable;
    public UnityEvent OnInizialize;
    public UnityEvent OnImpact;
    public UnityEvent OnDeactivate;
@@ -45,31 +39,25 @@ public class Misil : PoolEntity
 
       if ((_disparable & (1 << other.gameObject.layer)) != 0)
       {
-
          Collider[] impactos = Physics.OverlapSphere(transform.position, _damageRadio, _disparable);
+
          foreach (Collider impact in impactos)
          {
-            enemigo = null;
-            _damageable = null;
-            if (impact.TryGetComponent(out _damageable))
+            if (impact.TryGetComponent(out IDamageabe<float> damageable))
             {
-               _damageable.TakeDamag(_damage, transform.position);
-
+               damageable.TakeDamag(_damage, transform.position);
             }
-            if (impact.TryGetComponent(out enemigo))
+            if(impact.TryGetComponent(out EnemigoIngles enemigoIngles))
             {
-               enemigo.Cegar();
+                enemigoIngles.Cegar();
             }
-
-
          }
          _posicionTarget = transform.position;
          OnImpact?.Invoke();
          ReturnToPool();
       }
    }
-
-
+              
 
    public void IniciarMisil(Vector3 startPoint, Vector3 targetPoint, Vector3 shooterpoint)
    {
@@ -93,6 +81,14 @@ public class Misil : PoolEntity
 
    #endregion
 }
+
+
+
+
+
+
+
+
 
 
 

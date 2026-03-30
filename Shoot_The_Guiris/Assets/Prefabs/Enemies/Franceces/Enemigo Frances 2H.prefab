@@ -76,6 +76,8 @@ GameObject:
   - component: {fileID: 8325799849899235162}
   - component: {fileID: 1856309541058156350}
   - component: {fileID: 7613199379866540630}
+  - component: {fileID: 2923833661879635488}
+  - component: {fileID: 3482585533408574354}
   m_Layer: 7
   m_Name: Enemigo Frances 2H
   m_TagString: Untagged
@@ -111,7 +113,7 @@ NavMeshAgent:
   m_Enabled: 0
   m_AgentTypeID: 0
   m_Radius: 2.5
-  m_Speed: 10
+  m_Speed: 35
   m_Acceleration: 50
   avoidancePriority: 50
   m_AngularSpeed: 50
@@ -210,6 +212,7 @@ MonoBehaviour:
   _weapon2: {fileID: 0}
   _animator: {fileID: 2188565964088565604}
   _rB: {fileID: 8325799849899235162}
+  _randoSoundEffects: {fileID: 2923833661879635488}
   _target: {fileID: 0}
   _targetTag: Player
   _rewardPoolID: Reward
@@ -218,16 +221,18 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   _groundCheckPoint: {fileID: 5241117181858592769}
-  _groundCheckSize: 1.7
+  _groundCheckSize: 2
   _grounded: 0
   timetoDeactivate: 0
-  _maxTimeToDeactivate: 0
+  _maxTimeToDeactivate: 10
   _attackDistance: 20
   _inRange: 20
   _maxhealth: 70
   _currentealth: 0
   _cargadorMax: 0
   _velocidadAtaque: 20
+  _timeToDieIfStuck: 10
+  _stuckDistanceThreshold: 0.5
   OnInizialize:
     m_PersistentCalls:
       m_Calls:
@@ -242,18 +247,6 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 1
-        m_CallState: 2
-      - m_Target: {fileID: 1075637460764009268}
-        m_TargetAssemblyTypeName: UnityEngine.AI.NavMeshAgent, UnityEngine
-        m_MethodName: set_isStopped
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 7584827700287477263}
         m_TargetAssemblyTypeName: UnityEngine.ParticleSystem, UnityEngine
@@ -309,18 +302,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1075637460764009268}
-        m_TargetAssemblyTypeName: UnityEngine.AI.NavMeshAgent, UnityEngine
-        m_MethodName: set_isStopped
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
       - m_Target: {fileID: 7584827700287477263}
         m_TargetAssemblyTypeName: UnityEngine.ParticleSystem, UnityEngine
         m_MethodName: Play
@@ -333,6 +314,120 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+--- !u!114 &2923833661879635488
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8375531070269603190}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 33f946e492e66544faeb15b19a0cac47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RandoSoundEffecs
+  _effectClips:
+  - {fileID: 8300000, guid: 68cfee7787116a34cb105aec81ff3687, type: 3}
+  - {fileID: 8300000, guid: a557f86331726124b92f6d4dfd43de00, type: 3}
+  - {fileID: 8300000, guid: 5b5cef6934173bf4e9c52d1fe4e4ddfa, type: 3}
+  _audioSource: {fileID: 3482585533408574354}
+--- !u!82 &3482585533408574354
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8375531070269603190}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: -2256398440406382273, guid: c55136e614119df41a0c1f2fe9791ff1, type: 2}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1001 &2820980244192840030
 PrefabInstance:
   m_ObjectHideFlags: 0

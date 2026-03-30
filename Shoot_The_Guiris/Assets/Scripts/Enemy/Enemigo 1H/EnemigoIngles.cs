@@ -15,6 +15,9 @@ public class EnemigoIngles : PoolEntity, IDamageabe<float>, PlayerObserver, IObs
    [SerializeField] Transform _weapon2;
    [SerializeField] Animator _animator;
    [SerializeField] Rigidbody _rB;
+   [SerializeField] RandoSoundEffecs _randoSoundEffects;
+
+   Collider[] colliderBuffer = new Collider[1];
 
    [Header("Configuracion")]
    [SerializeField] Transform _target;
@@ -49,6 +52,15 @@ public class EnemigoIngles : PoolEntity, IDamageabe<float>, PlayerObserver, IObs
    [SerializeField] float _currentealth;
    [SerializeField] int _cargadorMax;
    [SerializeField] float _velocidadAtaque;
+
+   [Header("Anti-Atasco")]
+   [SerializeField] float _timeToDieIfStuck = 10f; // Tiempo límite
+   [SerializeField] float _stuckDistanceThreshold = 0.1f; // Distancia mínima que debe recorrer
+   float distanceMoved;
+
+   private Vector3 _lastPosition;
+   private float _stuckTimer;
+   float _stuckCheckTimer;
    int _cargador;
    #endregion
    [Header("Getters")]
@@ -80,29 +92,38 @@ public class EnemigoIngles : PoolEntity, IDamageabe<float>, PlayerObserver, IObs
       _agent = GetComponent<NavMeshAgent>();
       _animator = GetComponentInChildren<Animator>();
       _rB = GetComponent<Rigidbody>();
+
    }
    void Start()
    {
       CheckForTarget(_targetTag);
-      _cargador = _cargadorMax;
-      timetoDeactivate = _maxTimeToDeactivate;
-
-      _agent.speed = Random.Range(10f, 20f);
-      _actualSpeed = _agent.speed;
    }
+
+
+
+
    void Update()
    {
-
       GroundCheck();
+
+      _stuckCheckTimer += Time.deltaTime;
+
+      if (_stuckCheckTimer >= 1f)
+      {
+         CheckIfStuck();
+         _stuckCheckTimer = 0f;
+      }
       if (_volando && _grounded && _rB.linearVelocity.y <= 0.1f)
       {
          _volando = false;
          if (_levantarse != null) StopCoroutine(_levantarse);
          _levantarse = StartCoroutine(RutinaLevantarse());
       }
+
       AutomaticDeactivation();
 
       AnimationController();
+
    }
 
    void OnDrawGizmos()
@@ -120,7 +141,7 @@ public class EnemigoIngles : PoolEntity, IDamageabe<float>, PlayerObserver, IObs
    private void GroundCheck()
    {
       //Solo vamos a comprobar si es mayor que 0, asi que no necesitamos mas capacida de buffer
-      Collider[] colliderBuffer = new Collider[1];
+
       //Comprobamos si hay contacto con el suelo, lo hacemos mediant un OvrlapboxnonAlloc,
       //para no consumir mas memoria de la necesaria ya que esta funcion la vamos a hacer de manera continua
       Physics.OverlapSphereNonAlloc(_groundCheckPoint.position, _groundCheckSize, colliderBuffer, _groundLayer);
@@ -143,6 +164,7 @@ public class EnemigoIngles : PoolEntity, IDamageabe<float>, PlayerObserver, IObs
    //Funcion que llamamos desde la municion de tinta, para cegar al enemigo
    public void Cegar()
    {
+      if (_volando || !_grounded) return;
       if (_ceguera != null) StopCoroutine(_ceguera);
       _ceguera = StartCoroutine(Ceguera());
    }
@@ -215,7 +237,7 @@ public class EnemigoIngles : PoolEntity, IDamageabe<float>, PlayerObserver, IObs
    private IEnumerator Ralentizacion()
    {
       _agent.speed = _actualSpeed * 0.5f;
-      yield return new WaitForSeconds(5f);
+      yield return new WaitForSeconds(1f);
       _agent.speed = _actualSpeed;
       _ralentizacion = null;
    }
@@ -236,22 +258,42 @@ public class EnemigoIngles : PoolEntity, IDamageabe<float>, PlayerObserver, IObs
    private IEnumerator Ceguera()
    {
       _cegado = true;
-      _agent.speed = _actualSpeed * 0.3f;
+      _agent.speed = _actualSpeed * 0.5f;
+      // 1. Calculamos un punto cercano relativo a donde está AHORA
+      Vector3 desplazamiento = Random.insideUnitSphere * 10f;
+      desplazamiento.y = 0;
+      Vector3 pAleatorio = transform.position + desplazamiento;
 
-      Vector3 puntoAleatorio = transform.position + Random.insideUnitSphere * 5f;
       NavMeshHit hit;
-
-      if (NavMesh.SamplePosition(puntoAleatorio, out hit, 5f, NavMesh.AllAreas))
+      // Buscamos un punto válido en el NavMesh
+      if (NavMesh.SamplePosition(pAleatorio, out hit, 10f, NavMesh.AllAreas))
       {
          _agent.SetDestination(hit.position);
+         Debug.Log("Cegado: Caminando a nuevo punto aleatorio");
       }
-      yield return new WaitForSeconds(3f);
+      yield return new WaitForSeconds(2f);
 
       _agent.speed = _actualSpeed;
       _cegado = false;
    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
    private void AutomaticDeactivation()
    {
+      if (IsDead) return;
       if (!_grounded && _volando && timetoDeactivate > 0f)
       {
          timetoDeactivate -= Time.deltaTime;
@@ -267,6 +309,82 @@ public class EnemigoIngles : PoolEntity, IDamageabe<float>, PlayerObserver, IObs
          timetoDeactivate = 10f;
       }
    }
+   void CheckIfStuck()
+   {
+      if (IsDead) return;
+      distanceMoved = Vector3.Distance(transform.position, _lastPosition);
+      // Calculamos cuánto se ha movido desde el último chequeo
+      if (distanceMoved <= _stuckDistanceThreshold)
+      {
+         // Si no se ha movido lo suficiente, sube el contador
+         _stuckTimer += Time.deltaTime;
+         // Si llega a 10 segundos... ¡pum!
+
+      }
+      else
+      {
+         // Si se ha movido, reseteamos el contador y actualizamos la última posición
+         _stuckTimer = 0f;
+         _lastPosition = transform.position;
+
+      }
+      if (_stuckTimer >= _timeToDieIfStuck)
+      {
+         Death();
+      }
+   }
+
+
+
+   public void Revivir()
+   {
+      timetoDeactivate = _maxTimeToDeactivate;
+
+      _currentealth = _maxhealth;
+
+      _animator.SetLayerWeight(1, 1);
+
+      _agent.speed = Random.Range(30f, 35f);
+
+      _actualSpeed = _agent.speed;
+
+      _cargador = _cargadorMax;
+
+      _lastPosition = transform.position;
+
+      _cegado = false;
+
+      _animator.Rebind();
+
+   }
+
+
+
+
+
+   private void Death()
+   {
+      _agent.isStopped = true;
+
+      int tipoMuerte = Random.Range(1, 4);
+
+      _animator.SetInteger("Muerte", tipoMuerte);
+
+      _animator.SetLayerWeight(1, 0);
+
+      _volando = false;
+
+      SpameoReward();
+
+      for (int i = 0; i < _observers.Count; i++)
+      {
+         _observers[i].OnDead();
+      }
+      _observers.Clear();
+   }
+
+
+
 
    #endregion
 
@@ -301,32 +419,29 @@ public class EnemigoIngles : PoolEntity, IDamageabe<float>, PlayerObserver, IObs
    #region PooEntity
    public override void Initialize()
    {
-      _agent.enabled = false;
       base.Initialize();
+
+      _animator.enabled = true;
+
       _agent.enabled = true;
 
-      if (_agent.isOnNavMesh)
-      {
-         _agent.Warp(transform.position);
-      }
+      _agent.Warp(transform.position);
 
-      Revivir();
+      _agent.isStopped = false;
+
+      _agent.ResetPath();
 
       OnInizialize?.Invoke();
    }
 
+
+
    public override void Deactivate()
    {
-      if (_agent.isOnNavMesh && _agent.enabled)
-      {
-         _agent.isStopped = true;
-         _agent.ResetPath();
-      }
-
       base.Deactivate();
 
       StopAllCoroutines();
-
+      _animator.enabled = false;
       _levantarse = null;
       _ralentizacion = null;
       OnDeactivate?.Invoke();
@@ -342,51 +457,30 @@ public class EnemigoIngles : PoolEntity, IDamageabe<float>, PlayerObserver, IObs
       if (IsDead) return;
       _currentealth -= damage;
       _currentealth = Mathf.Clamp(_currentealth, 0, _maxhealth);
+
+
       for (int i = 0; i < _observers.Count; i++)
       {
          _observers[i].OnHealtUpdate(_currentealth, _maxhealth);
          _observers[i].OnHit();
       }
-      if (_currentealth == 0)
+      _randoSoundEffects.PlayRandomSoundEffect();
+      if (_currentealth <= 0)
       {
          Death();
       }
    }
-   private void Death()
-   {
-      int tipoMuerte = Random.Range(1, 4);
-      _animator.SetInteger("Muerte", tipoMuerte);
-      _animator.SetLayerWeight(1, 0);
-      OnDeadUE?.Invoke();
-      SpameoReward();
-      for (int i = 0; i < _observers.Count; i++)
-      {
-         _observers[i].OnDead();
-      }
-      _observers.Clear();
-   }
-
-
    public void OnHealtUpdate(float currentealt, float maxealt)
    {
+
    }
    public void OnHit()
    {
    }
    public void OnDead()
    {
-      _animator.Play("Idle");
-   }
-   public void Revivir()
-   {
-      timetoDeactivate = _maxTimeToDeactivate;
-      _currentealth = _maxhealth;
-      _animator.SetLayerWeight(1, 1);
-      //_animator.SetInteger("Muerte", 0);
-      _animator.enabled = true;
-      _animator.Rebind();
-   }
 
+   }
    public void OnAtaqueEspecial(float timer, float time)
    {
 
@@ -397,7 +491,6 @@ public class EnemigoIngles : PoolEntity, IDamageabe<float>, PlayerObserver, IObs
 
    }
    #endregion
-
 
 
 
