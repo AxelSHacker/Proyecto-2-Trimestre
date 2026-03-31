@@ -14,6 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Armas_SO
   nombre: BazoocaTinta
   animatorID: 2
+  shootTrigger: ShootTinta
+  recargarTrigger: ReloadBazooca
+  fireRate: 1
   bulletPoolID: Misil
-  moidelIndex: 2
-  posiciodelasManos: 2
+  esMisil: 1
+  usarEnfriamiento: 0
+  modelIndex: 2
+  nombreShootPoint: SalidaBala
+  capacidadCargador: 1
+  municionTotal: 20

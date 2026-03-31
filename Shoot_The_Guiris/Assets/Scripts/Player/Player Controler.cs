@@ -22,6 +22,7 @@ public class PlayerControler : CustomMonoBehaviour, IDamageabe<float>, IObservab
     [SerializeField] Armas_SO _armaViento;
     [SerializeField] Armas_SO _armaCaca;
     [SerializeField] Armas_SO _armaTinta;
+    Armas_SO _armaEquipada;
 
     [Header("Player Movement")]
     [SerializeField] float _movementSpeed = 8f;
@@ -39,35 +40,39 @@ public class PlayerControler : CustomMonoBehaviour, IDamageabe<float>, IObservab
     [SerializeField] Transform _aimReference;
     //Referncia a la camara principal
     [SerializeField] Camera _mainCamera;
-    [SerializeField] TwoBoneIKConstraint _rightConstrain;
-    [SerializeField] TwoBoneIKConstraint _leftConstrain;
-    [SerializeField] Transform[] _rightHandPosition;
-    [SerializeField] Transform[] _leftHandPosition;
     Vector2 _actualMouseP;
     Vector2 _lastMouseP;
 
     [Header("Shooting")]
     [SerializeField] GameObject[] _weaponsObjects;
-    float _shootDelayWind;
-    float _shootDelayPoop;
-    float _shootDelayTinta;
+    // float _shootDelayWind;
+    // float _shootDelayPoop;
+    // float _shootDelayTinta;
+    float _nextShootTime;
     [SerializeField] Vector3 _targetPoint;
-    [SerializeField] Transform _shootPointWind;
-    [SerializeField] Transform _shootingPointPoop;
-    [SerializeField] Transform _shootingpointPulpo;
-    [SerializeField] string _bulletType;
-    [SerializeField] float _fireRateWind;
-    [SerializeField] float _fireRatePoop;
-    [SerializeField] float _fireRateTinta;
-    int _cargadorCaca = 20;
-    int _cargadorActualCaca;
-    [SerializeField] int _capacidadActualCaca;
-    int _maxCapacidadCaca = 200;
-    int _cargadorTinta = 1;
-    [SerializeField] int _capacidadActualTinta;
-    int _maxCapacidadTinta = 15;
+    Transform _puntodeDisparo;
+    // [SerializeField] Transform _shootPointWind;
+    // [SerializeField] Transform _shootingPointPoop;
+    // [SerializeField] Transform _shootingpointPulpo;
+    // [SerializeField] string _bulletType;
+    // [SerializeField] float _fireRateWind;
+    // [SerializeField] float _fireRatePoop;
+    // [SerializeField] float _fireRateTinta;
+    private int _balasEnCargador;
+    private int _balasEnReserva;
+    Dictionary<Armas_SO, int> _municionenCargador = new Dictionary<Armas_SO, int>();
+    Dictionary<Armas_SO, int> _municionenReserva = new Dictionary<Armas_SO, int>();
+    Dictionary<Armas_SO, float> _tiempodeEspera = new Dictionary<Armas_SO, float>();
+    // int _cargadorCaca = 20;
+    // int _cargadorActualCaca;
+    // [SerializeField] int _capacidadActualCaca;
+    // int _maxCapacidadCaca = 200;
+    // int _cargadorTinta = 1;
+    // [SerializeField] int _capacidadActualTinta;
+    // int _maxCapacidadTinta = 15;
     bool _disparando;
     [SerializeField] float _misiverticalOffset = -5f;
+    float _multiplicadorCadencia = 1f;
 
     [Header("Dasching")]
     [SerializeField] float _daschTime;
@@ -135,9 +140,9 @@ public class PlayerControler : CustomMonoBehaviour, IDamageabe<float>, IObservab
     void Start()
     {
         Time.timeScale = 1f;
-        _capacidadActualCaca = _maxCapacidadCaca;
-        _cargadorActualCaca = _cargadorCaca;
-        _capacidadActualTinta = _maxCapacidadTinta;
+        // _capacidadActualCaca = _maxCapacidadCaca;
+        // _cargadorActualCaca = _cargadorCaca;
+        // _capacidadActualTinta = _maxCapacidadTinta;
         UpdateArma(_armaViento);
         _currentealth = _maxhealth;
         _normalMoveSpeed = _movementSpeed;
@@ -158,6 +163,14 @@ public class PlayerControler : CustomMonoBehaviour, IDamageabe<float>, IObservab
         Movement();
 
         UpdateAnimator();
+        //Se comprobar si el arma equipada tiene enfriamiento, y si es asi, activamos el textmeshpro para mostrar el tiempo restante
+        if (_armaEquipada != null && _armaEquipada.usarEnfriamiento)
+        {
+            if (Time.time < _tiempodeEspera[_armaEquipada])
+            {
+                _tiempodeEspera[_armaEquipada] -= Time.deltaTime;
+            }
+        }
 
         UpdateAmmoText();
 
@@ -169,7 +182,8 @@ public class PlayerControler : CustomMonoBehaviour, IDamageabe<float>, IObservab
 
         if (_disparando)
         {
-            Shooting();
+            //Shooting();
+            Disparar();
         }
     }
     void OnDrawGizmos()
@@ -261,14 +275,21 @@ public class PlayerControler : CustomMonoBehaviour, IDamageabe<float>, IObservab
     }
     public void OnReload(InputAction.CallbackContext context)
     {
-        if (context.performed && _bulletType == "ProyectilCaca" && _cargadorActualCaca < _cargadorCaca)
+        if (context.performed)
         {
-            _animator.SetTrigger("ReloadRifle");
+            //Recopilamos informacion para actuvar o no la recarga
+            int balasActuales = _municionenCargador[_armaEquipada];
+            int capacidadMaxima = _armaEquipada.capacidadCargador;
+            int reservaDisponible = _municionenReserva[_armaEquipada];
+
+            //Si el cargador no esta lleno y tenemos municion en reserva, activamos la animacion de recarga
+            if (balasActuales < capacidadMaxima && reservaDisponible > 0)
+            {
+                _animator.SetTrigger(_armaEquipada.recargarTrigger);
+            }
+            
         }
-        else if (context.performed && _bulletType == "Misil" && _cargadorTinta <= 0)
-        {
-            _animator.SetTrigger("ReloadBazooca");
-        }
+
     }
     public void OnSpecialAttack(InputAction.CallbackContext context)
     {
@@ -320,7 +341,7 @@ public class PlayerControler : CustomMonoBehaviour, IDamageabe<float>, IObservab
         if (context.performed)
         {
             Debug.Log("Arma 4 activada, pero no implementada");
-           _animator.SetInteger("WeapoNummer", 3);
+            _animator.SetInteger("WeapoNummer", 3);
         }
     }
     public void CheatMenu(InputAction.CallbackContext context)
@@ -470,113 +491,185 @@ public class PlayerControler : CustomMonoBehaviour, IDamageabe<float>, IObservab
             }
         }
     }
-    private void Shooting()
-    {
-        //Reiniciamos las posiciones para que no se sumen o de errores
-        Vector3 position = Vector3.zero;
-        Quaternion rotation = Quaternion.Euler(Vector3.zero);
-        //Comprobamos queel proyectil de viento esta activo para poder dispararlo y los demas no
-        if (_shootPointWind != null && _bulletType == "Wind")
-        {
-            if (_shootDelayWind > 0) return;
-            DisparodeViento(position, rotation);
-        }
-        //Comprobamos queel proyectil de caca esta activo para poder dispararlo y los demas no
-        else if (_shootingPointPoop != null && _bulletType == "ProyectilCaca" && _capacidadActualCaca > 0)
-        {
-            if (_shootDelayPoop > 0 || _cargadorActualCaca <= 0) return;
-            DisparodeCaca(position, rotation);
-            if (_cargadorInfinito) return;
-            _cargadorActualCaca--;
-        }
-        //Comprobamos queel proyectil del pulpo esta activo para poder dispararlo y los demas no
-        else if (_shootingpointPulpo != null && _bulletType == "Misil" && _capacidadActualTinta > 0)
-        {
-            if (_cargadorTinta <= 0 || _shootDelayTinta > 0) return;
-            DisparodeTinta(position, rotation);
-            if (_cargadorInfinito) return;
-            _cargadorTinta--;
-        }
-    }
-    private void ParticleFX()
-    {
-        //Si estamos en el suelo y nos movemos, activamos las partículas de polvo
-        if (_grounded && _currentVelocity.magnitude > 0.1f)
-        {
-            foreach (ParticleSystem ps in _dustParticles)
-            {
-                if (!ps.isPlaying)
-                    ps.Play();
-            }
-        }
-        else
-        {
-            foreach (ParticleSystem ps in _dustParticles)
-            {
-                ps.Stop();
-            }
-        }
-    }
+    // private void Shooting()
+    // {
+    //     //Reiniciamos las posiciones para que no se sumen o de errores
+    //     Vector3 position = Vector3.zero;
+    //     Quaternion rotation = Quaternion.Euler(Vector3.zero);
+    //     //Comprobamos queel proyectil de viento esta activo para poder dispararlo y los demas no
+    //     if (_shootPointWind != null && _bulletType == "Wind")
+    //     {
+    //         if (_shootDelayWind > 0) return;
+    //         DisparodeViento(position, rotation);
+    //     }
+    //     //Comprobamos queel proyectil de caca esta activo para poder dispararlo y los demas no
+    //     else if (_shootingPointPoop != null && _bulletType == "ProyectilCaca" && _capacidadActualCaca > 0)
+    //     {
+    //         if (_shootDelayPoop > 0 || _cargadorActualCaca <= 0) return;
+    //         DisparodeCaca(position, rotation);
+    //         if (_cargadorInfinito) return;
+    //         _cargadorActualCaca--;
+    //     }
+    //     //Comprobamos queel proyectil del pulpo esta activo para poder dispararlo y los demas no
+    //     else if (_shootingpointPulpo != null && _bulletType == "Misil" && _capacidadActualTinta > 0)
+    //     {
+    //         if (_cargadorTinta <= 0 || _shootDelayTinta > 0) return;
+    //         DisparodeTinta(position, rotation);
+    //         if (_cargadorInfinito) return;
+    //         _cargadorTinta--;
+    //     }
+    // }
+    // private void ParticleFX()
+    // {
+    //     //Si estamos en el suelo y nos movemos, activamos las partículas de polvo
+    //     if (_grounded && _currentVelocity.magnitude > 0.1f)
+    //     {
+    //         foreach (ParticleSystem ps in _dustParticles)
+    //         {
+    //             if (!ps.isPlaying)
+    //                 ps.Play();
+    //         }
+    //     }
+    //     else
+    //     {
+    //         foreach (ParticleSystem ps in _dustParticles)
+    //         {
+    //             ps.Stop();
+    //         }
+    //     }
+    // }
     private void UpdateAnimator()
     {
         _animator.SetFloat("Velocity", _currentVelocity.magnitude, 0.001f, Time.deltaTime);
     }
     private void UpdateArma(Armas_SO armas)
     {
+
+        //Actiuvams el modelo visual del arma
         for (int i = 0; i < _weaponsObjects.Length; i++)
         {
-            _weaponsObjects[i].SetActive(i == armas.moidelIndex);
+            bool activar = (i == armas.modelIndex);
+            _weaponsObjects[i].SetActive(activar);
+            //Buscamos el punto de disparo dentro del modelo del arma
+            if (activar)
+            {
+                //Buscamos el punto del arma segun el nombre que hayamos puesto en el Scriptable Object
+                _puntodeDisparo = _weaponsObjects[i].transform.Find(armas.nombreShootPoint);
+                //Si por casualidad no pilla ninguno , el primer hijo es el elegido
+                if (_puntodeDisparo == null) _puntodeDisparo = _weaponsObjects[i].transform.GetChild(0);
+            }
+        }
+        //Asignamos el ID del arma al animator para que cambie a la animacion correspondiente
+        _animator.SetInteger("WeapoNummer", armas.animatorID);
+        //Reseteamos el tiempo de espera del arma equipada, para que al cambiar de arma no haya que esperar a que se recargue o algo similar
+        if (!_tiempodeEspera.ContainsKey(armas))
+        {
+            _tiempodeEspera[armas] = 0f;
+        }
+        //Si es la primera vez que equipamos el arma, inicializamos las balas en cargador y reserva con los valores del Scriptable Object
+        if (!_municionenCargador.ContainsKey(armas))
+        {
+            _municionenCargador[armas] = armas.capacidadCargador;
+            _municionenReserva[armas] = armas.municionTotal;
+        }
+        //Asignamos el arma equipada a la que hemos elegido
+        _armaEquipada = armas;
+        UpdateAmmoText();
+    }
+    private void Disparar()
+    {
+        if (_armaEquipada == null || Time.time < _tiempodeEspera[_armaEquipada]) return;
+        //Si no usa enfriamiento pasamos de recargar
+        if (!_armaEquipada.usarEnfriamiento)
+        {
+            //Controlamos la cadencia de disparo
+            if (_municionenCargador[_armaEquipada] <= 0)
+            {
+                _animator.SetTrigger(_armaEquipada.recargarTrigger);
+                return;
+            }
         }
 
-        _animator.SetInteger("WeapoNummer", armas.animatorID);
+        //Usamos el canion que buscamos con anterioridad
+        Vector3 pos = _puntodeDisparo.position;
+        Quaternion rot = Quaternion.LookRotation(_puntodeDisparo.forward);
 
-        var derecha = _rightConstrain.data;
-        var izquierda = _leftConstrain.data;
+        //Ajustamos la velocidad de la animacion segun la cadencia de disparo del arma equipada y el multiplicador de cadencia
+        float velocidadAnimacion = 1f / (_armaEquipada.fireRate * _multiplicadorCadencia);
+        _animator.SetFloat("Velocidad de disparo", velocidadAnimacion);
+        //Ajustamos el trigger del animator para que dispare la animacion correspondiente al arma
+        _animator.SetTrigger(_armaEquipada.shootTrigger);
 
-        derecha.target = _rightHandPosition[armas.posiciodelasManos];
-        izquierda.target = _leftHandPosition[armas.posiciodelasManos];
+        if (_armaEquipada.esMisil)
+        {
+            //Disparamos el proyectil correspondiente al arma equipada, usando el sistema de pooling
+            Misil tempMisil = PoolManager.Instance.Pull(_armaEquipada.bulletPoolID, pos, rot) as Misil;
+            Vector3 puntodeImpacto = _aimingPivot.position;
+            puntodeImpacto.y += _misiverticalOffset;
+            tempMisil.IniciarMisil(pos, puntodeImpacto, transform.position);
+        }
+        else
+        {
+            //Disparamos el proyectil correspondiente al arma equipada, usando el sistema de pooling
+            PoolManager.Instance.Pull(_armaEquipada.bulletPoolID, pos, rot);
+        }
 
-        _rightConstrain.data = derecha;
-        _leftConstrain.data = izquierda;
-
-        _bulletType = armas.bulletPoolID;
+        //Actualizamos el tiempo del siguiente disparo segun la cadencia de disparo del arma equipada y el multiplicador de cadencia
+        float collDown = _armaEquipada.fireRate * _multiplicadorCadencia;
+        _tiempodeEspera[_armaEquipada] = Time.time + collDown;
+        //Si el cargador infinito no esta activado y el arma no usa enfriamiento, restamos una bala al cargador
+        if (!_cargadorInfinito && !_armaEquipada.usarEnfriamiento)
+        {
+            _municionenCargador[_armaEquipada]--;
+        }
+        UpdateAmmoText();
     }
+
+
+
+
+
+
+
+
+
     #endregion
 
 
 
 
-
-    #region Funciones funcionales
-    private void DisparodeViento(Vector3 position, Quaternion rotation)
-    {
-        _animator.SetTrigger("ShootWind");
-        _shootDelayWind = _fireRateWind;
-        position = _shootPointWind.position;
-        rotation = Quaternion.LookRotation(transform.forward);
-        PoolManager.Instance.Pull(_bulletType, position, rotation);
-    }
-    private void DisparodeCaca(Vector3 position, Quaternion rotation)
-    {
-        _animator.SetTrigger("ShootPoop");
-        _shootDelayPoop = _fireRatePoop;
-        _animator.SetFloat("Velocidad de disparo", 1f / _fireRatePoop);
-        position = _shootingPointPoop.position;
-        rotation = Quaternion.LookRotation(transform.forward);
-        PoolManager.Instance.Pull(_bulletType, position, rotation);
-    }
-    private void DisparodeTinta(Vector3 position, Quaternion rotacion)
-    {
-        _animator.SetTrigger("ShootTinta");
-        _shootDelayTinta = _fireRateTinta;
-        position = _shootingpointPulpo.position;
-        rotacion = Quaternion.LookRotation(transform.forward);
-        Misil tempMisil = PoolManager.Instance.Pull(_bulletType, position, rotacion) as Misil;
-        Vector3 puntodeImpacto = _aimingPivot.position;
-        puntodeImpacto.y += _misiverticalOffset;
-        tempMisil.IniciarMisil(position, puntodeImpacto, transform.position);
-    }
     ///<summary>
+    #region Funciones funcionales
+    //Estas funciones se encargan de disparar cada tipo de proyectil, ahora mismo estan un poco repetitivas, pero las dejo asi por si quiero hacer algo especifico para cada una, como efectos o sonidos diferentes
+    // private void DisparodeViento(Vector3 position, Quaternion rotation)
+    // {
+    //     _animator.SetTrigger("ShootWind");
+    //     _shootDelayWind = _fireRateWind;
+    //     position = _shootPointWind.position;
+    //     rotation = Quaternion.LookRotation(transform.forward);
+    //     PoolManager.Instance.Pull(_bulletType, position, rotation);
+    // }
+    // private void DisparodeCaca(Vector3 position, Quaternion rotation)
+    // {
+    //     _animator.SetTrigger("ShootPoop");
+    //     _shootDelayPoop = _fireRatePoop;
+    //     _animator.SetFloat("Velocidad de disparo", 1f / _fireRatePoop);
+    //     position = _shootingPointPoop.position;
+    //     rotation = Quaternion.LookRotation(transform.forward);
+    //     PoolManager.Instance.Pull(_bulletType, position, rotation);
+    // }
+    // private void DisparodeTinta(Vector3 position, Quaternion rotacion)
+    // {
+    //     _animator.SetTrigger("ShootTinta");
+    //     _shootDelayTinta = _fireRateTinta;
+    //     position = _shootingpointPulpo.position;
+    //     rotacion = Quaternion.LookRotation(transform.forward);
+    //     Misil tempMisil = PoolManager.Instance.Pull(_bulletType, position, rotacion) as Misil;
+    //     Vector3 puntodeImpacto = _aimingPivot.position;
+    //     puntodeImpacto.y += _misiverticalOffset;
+    //     tempMisil.IniciarMisil(position, puntodeImpacto, transform.position);
+    // }
+
     //Antiguas Funciones para cambiar de arma, ahora se hace mediante el Scriptable Object y la funcion UpdateArma, pero las dejo comentadas por si acaso
     // 
     // private void ArmadeViento()
@@ -637,22 +730,22 @@ public class PlayerControler : CustomMonoBehaviour, IDamageabe<float>, IObservab
     //     _bulletType = "Misil";
     // }
     /// </summary>
-   
-    
+
+
     private void Contadores()
     {
-        if (_shootDelayWind > 0)
-        {
-            _shootDelayWind -= Time.deltaTime;
-        }
-        if (_shootDelayPoop > 0f)
-        {
-            _shootDelayPoop -= Time.deltaTime;
-        }
-        if (_shootDelayTinta > 0f)
-        {
-            _shootDelayTinta -= Time.deltaTime;
-        }
+        // if (_shootDelayWind > 0)
+        // {
+        //     _shootDelayWind -= Time.deltaTime;
+        // }
+        // if (_shootDelayPoop > 0f)
+        // {
+        //     _shootDelayPoop -= Time.deltaTime;
+        // }
+        // if (_shootDelayTinta > 0f)
+        // {
+        //     _shootDelayTinta -= Time.deltaTime;
+        // }
         if (_ataqueEspecialTimer > 0)
         {
             _ataqueEspecialTimer -= Time.deltaTime;
@@ -672,19 +765,23 @@ public class PlayerControler : CustomMonoBehaviour, IDamageabe<float>, IObservab
     }
     private void UpdateAmmoText()
     {
-        if (_bulletType == "Wind")
+        if (_armaEquipada == null) return;
+
+        if (_armaEquipada.usarEnfriamiento)
         {
-            _remainingBulletsText.text = _shootDelayWind.ToString("F2") + "Wait";
+            //Actualizamos el texto de la UI para mostrar el tiempo restante para el siguiente disparo
+            float tiempoRestante = _tiempodeEspera[_armaEquipada] - Time.time;
+            _remainingBulletsText.text = tiempoRestante > 0 ? tiempoRestante.ToString("F1") + "s Espera" : "Listo";
+            _remainingAmmoText.text = "";
         }
-        else if (_bulletType == "ProyectilCaca")
+        else
         {
-            _remainingBulletsText.text = _cargadorActualCaca.ToString() + " Magazine";
-            _remainingAmmoText.text = _capacidadActualCaca.ToString() + " Ammo";
-        }
-        else if (_bulletType == "Misil")
-        {
-            _remainingBulletsText.text = _cargadorTinta.ToString() + " Magazine";
-            _remainingAmmoText.text = _capacidadActualTinta.ToString() + " Ammo";
+            //Obtenemos los datos del Diccionario
+            int balasEnCargador = _municionenCargador[_armaEquipada];
+            int balasEnReserva = _municionenReserva[_armaEquipada];
+            //Actualizamos el texto de la UI
+            _remainingBulletsText.text = balasEnCargador.ToString();
+            _remainingAmmoText.text = balasEnReserva.ToString();
         }
     }
     public void RecibirVida(float cantidad)
@@ -707,21 +804,17 @@ public class PlayerControler : CustomMonoBehaviour, IDamageabe<float>, IObservab
         money -= cantidad;
         _moneyText.text = money.ToString();
     }
-    public void RecibirMunicion(int cantidad, string tipoMunicion)
+    public void RecibirMunicion(int cantidad)
     {
-        if (tipoMunicion == "ProyectilCaca")
+        List<Armas_SO> armas = new List<Armas_SO>(_municionenReserva.Keys);
+        //Recorremos todas las armas en el diccionario y les añadimos la cantidad de municion recibida
+        foreach (Armas_SO arma in armas)
         {
+            _municionenReserva[arma] += cantidad;
 
-            _capacidadActualCaca += cantidad;
-            _capacidadActualCaca = Mathf.Clamp(_capacidadActualCaca, 0, _maxCapacidadCaca);
+            _municionenReserva[arma] = Mathf.Clamp(_municionenReserva[arma], 0, arma.municionTotal);
         }
-        else if (tipoMunicion == "Misil")
-        {
-
-            _capacidadActualTinta += cantidad;
-            _capacidadActualTinta = Mathf.Clamp(_capacidadActualCaca, 0, _maxCapacidadTinta);
-        }
-
+        UpdateAmmoText();
     }
     public void ContinueButton()
     {
@@ -756,7 +849,7 @@ public class PlayerControler : CustomMonoBehaviour, IDamageabe<float>, IObservab
     }
     public void DisparoVientoConstante()
     {
-        _fireRateWind = 1f;
+        _multiplicadorCadencia = (_multiplicadorCadencia == 1f) ? 0.5f : 1f;
     }
     public void AtaqueEspecialDashDElayReducido()
     {
@@ -776,9 +869,9 @@ public class PlayerControler : CustomMonoBehaviour, IDamageabe<float>, IObservab
     {
         Time.timeScale = 1f;
         _cargadorInfinito = false;
-        _fireRateWind = 10f;
         _movementSpeed = 30f;
         _invencible = false;
+        _multiplicadorCadencia = 1f;
     }
     #endregion
 
@@ -788,22 +881,45 @@ public class PlayerControler : CustomMonoBehaviour, IDamageabe<float>, IObservab
 
 
     #region Animation Events
-
-    public void RecargacacaRealizada()
+    public void EvetoDisparo()
     {
-        int _balasFaltantes = _cargadorCaca - _cargadorActualCaca;
-        int _balasaRecargar = Mathf.Min(_balasFaltantes, _maxCapacidadCaca);
+        if (_armaEquipada == null) return;
+        //Obtenemos los datos del Scriptable Object
+        int maxEnCargador = _armaEquipada.capacidadCargador;
 
-        _cargadorActualCaca += _balasaRecargar;
-        _capacidadActualCaca -= _balasaRecargar;
+        //Obtenemos cuantas balas quedan en el cargador del arma equipada
+        int balasEnCargador = _municionenCargador[_armaEquipada];
+        int balasEnReserva = _municionenReserva[_armaEquipada];
+
+        //Logica del calculo
+        int balasFaltantes = maxEnCargador - balasEnCargador;
+        int balasARecargar = Mathf.Min(balasFaltantes, balasEnReserva);
+
+        //Actualizamos las balas en cargador y reserva
+        _municionenCargador[_armaEquipada] += balasARecargar;
+        _municionenReserva[_armaEquipada] -= balasARecargar;
+
+        //Reseteamos los triggers de recarga para evitar que se queden pillados
         _animator.ResetTrigger("ReloadRifle");
-    }
-    public void RecargaPulpoRealizada()
-    {
-        _cargadorTinta++;
-        _capacidadActualTinta--;
         _animator.ResetTrigger("ReloadBazooca");
+
+        UpdateAmmoText();
     }
+    // public void RecargacacaRealizada()
+    // {
+    //     int _balasFaltantes = _cargadorCaca - _cargadorActualCaca;
+    //     int _balasaRecargar = Mathf.Min(_balasFaltantes, _maxCapacidadCaca);
+
+    //     _cargadorActualCaca += _balasaRecargar;
+    //     _capacidadActualCaca -= _balasaRecargar;
+    //     _animator.ResetTrigger("ReloadRifle");
+    // }
+    // public void RecargaPulpoRealizada()
+    // {
+    //     _cargadorTinta++;
+    //     _capacidadActualTinta--;
+    //     _animator.ResetTrigger("ReloadBazooca");
+    // }
     #endregion
 
 

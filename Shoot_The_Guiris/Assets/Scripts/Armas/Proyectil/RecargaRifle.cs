@@ -21,7 +21,7 @@ public class RecargaRifle : StateMachineBehaviour
    // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
    override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
    {
-      if (playerControler != null) playerControler.RecargacacaRealizada();
+      if (playerControler != null) playerControler.EvetoDisparo();
    }
       
 

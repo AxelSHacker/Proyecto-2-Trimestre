@@ -1,4 +1,5 @@
 
+using System;
 using UnityEngine;
 
 public class SpawnRecompensa : PoolEntity
@@ -24,6 +25,7 @@ public class SpawnRecompensa : PoolEntity
    [SerializeField] LayerMask _recogibleLayers;
    private Collider[] colliders = new Collider[3];
 
+   [SerializeField] int _cantidadMunicionARecargar = 20;
 
    public override void EditorInit()
    {
@@ -49,8 +51,8 @@ public class SpawnRecompensa : PoolEntity
    {
       Vector3 centro = transform.TransformPoint(_offset);
 
-      int cantidad = Physics.OverlapBoxNonAlloc(centro, _tamanioCaja / 2, colliders ,transform.rotation, _recogibleLayers);
-      
+      int cantidad = Physics.OverlapBoxNonAlloc(centro, _tamanioCaja / 2, colliders, transform.rotation, _recogibleLayers);
+
       if (cantidad > 0)
       {
          AplicarRecompensa(colliders[0].gameObject);
@@ -75,7 +77,7 @@ public class SpawnRecompensa : PoolEntity
          {
             _recompensas[i].objeto.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
             _recompensas[i].objeto.gameObject.SetActive(false);
-            
+
          }
       }
    }
@@ -84,15 +86,14 @@ public class SpawnRecompensa : PoolEntity
    {
       switch (_tipoRecompensa)
       {
-      
+
          case TipoRecompensa.Coin:
-         //Logica para ganar dinero
+            //Logica para ganar dinero
             player.GetComponent<PlayerControler>().RecibirDinero();
             break;
          case TipoRecompensa.Ammo:
             // Lógica para dar munición al jugador
-            player.GetComponent<PlayerControler>().RecibirMunicion(20, "ProyectilCaca");
-            player.GetComponent<PlayerControler>().RecibirMunicion(2, "Misil");
+            player.GetComponent<PlayerControler>().RecibirMunicion(_cantidadMunicionARecargar);
             break;
          case TipoRecompensa.Health:
             player.GetComponent<PlayerControler>().RecibirVida(10);

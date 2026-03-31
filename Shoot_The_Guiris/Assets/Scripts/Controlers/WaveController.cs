@@ -22,7 +22,7 @@ public class WaveController : MonoBehaviour, PlayerObserver
     public bool tutorial;
     void Start()
     {
-        _remainingEnemyText.text = "Remainings Enemies = " + _waveEnemies.ToString();
+        
     }
 
     // Update is called once per frame
@@ -38,6 +38,7 @@ public class WaveController : MonoBehaviour, PlayerObserver
         {
             GenerateEnemy();
             _spawnTimer = 0f;
+            _remainingEnemyText.text = "Remainings Enemies = " + _waveEnemies.ToString();
         }
 
     }
