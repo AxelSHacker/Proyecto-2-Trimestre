@@ -39,7 +39,7 @@ public class BlockingWalls : MonoBehaviour
         else
         {
             _textTimer += Time.deltaTime;
-            if (_textTimer >= 2f)
+            if (_textTimer >= 1.5f)
             {
                 _canvasGroup.alpha = 0;
                 _textTimer = 0;
@@ -58,9 +58,19 @@ public class BlockingWalls : MonoBehaviour
         }
     private void CheckBox()
     {
-        _jugadorCerca = Physics.CheckBox(transform.position, _radio, transform.rotation, _player);
-
+        //Solo vamos a comprobar si es mayor que 0, asi que no necesitamos mas capacida de buffer
+        Collider[] colliderBuffer = new Collider[1];
+        //Comprobamos si hay contacto con el suelo, lo hacemos mediant un OvrlapboxnonAlloc,
+        //para no consumir mas memoria de la necesaria ya que esta funcion la vamos a hacer de manera continua
+        Physics.OverlapBoxNonAlloc(transform.position,
+                                    _radio / 2f,
+                                    colliderBuffer,
+                                    transform.rotation,
+                                    _player);
+        //Actualitzamos el estado de _grounded
+        _jugadorCerca = colliderBuffer[0] != null;
     }
+
     private void IntentarComprar()
     {
         if (_playerControler.Money >= _moneyToUnlock)

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Animations.Rigging;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
@@ -22,6 +21,7 @@ public class PlayerControler : CustomMonoBehaviour, IDamageabe<float>, IObservab
     [SerializeField] Armas_SO _armaViento;
     [SerializeField] Armas_SO _armaCaca;
     [SerializeField] Armas_SO _armaTinta;
+    [SerializeField] Armas_SO _armaPescado;
     Armas_SO _armaEquipada;
 
     [Header("Player Movement")]
@@ -275,7 +275,7 @@ public class PlayerControler : CustomMonoBehaviour, IDamageabe<float>, IObservab
     }
     public void OnReload(InputAction.CallbackContext context)
     {
-        if (context.performed)
+        if (context.started)
         {
             //Recopilamos informacion para actuvar o no la recarga
             int balasActuales = _municionenCargador[_armaEquipada];
@@ -340,8 +340,7 @@ public class PlayerControler : CustomMonoBehaviour, IDamageabe<float>, IObservab
     {
         if (context.performed)
         {
-            Debug.Log("Arma 4 activada, pero no implementada");
-            _animator.SetInteger("WeapoNummer", 3);
+            UpdateArma(_armaPescado);
         }
     }
     public void CheatMenu(InputAction.CallbackContext context)
@@ -559,8 +558,6 @@ public class PlayerControler : CustomMonoBehaviour, IDamageabe<float>, IObservab
                 if (_puntodeDisparo == null) _puntodeDisparo = _weaponsObjects[i].transform.GetChild(0);
             }
         }
-        //Asignamos el ID del arma al animator para que cambie a la animacion correspondiente
-        _animator.SetInteger("WeapoNummer", armas.animatorID);
         //Reseteamos el tiempo de espera del arma equipada, para que al cambiar de arma no haya que esperar a que se recargue o algo similar
         if (!_tiempodeEspera.ContainsKey(armas))
         {
@@ -572,8 +569,15 @@ public class PlayerControler : CustomMonoBehaviour, IDamageabe<float>, IObservab
             _municionenCargador[armas] = armas.capacidadCargador;
             _municionenReserva[armas] = armas.municionTotal;
         }
+
         //Asignamos el arma equipada a la que hemos elegido
         _armaEquipada = armas;
+
+        //Aplicamos el controlador de animación override si está disponible
+        if(_armaEquipada.overrideController != null)
+        {
+            _animator.runtimeAnimatorController = _armaEquipada.overrideController;
+        }
         UpdateAmmoText();
     }
     private void Disparar()
@@ -592,10 +596,10 @@ public class PlayerControler : CustomMonoBehaviour, IDamageabe<float>, IObservab
 
         //Usamos el canion que buscamos con anterioridad
         Vector3 pos = _puntodeDisparo.position;
-        Quaternion rot = Quaternion.LookRotation(_puntodeDisparo.forward);
+        Quaternion rot = Quaternion.LookRotation(transform.forward);
 
         //Ajustamos la velocidad de la animacion segun la cadencia de disparo del arma equipada y el multiplicador de cadencia
-        float velocidadAnimacion = 1f / (_armaEquipada.fireRate * _multiplicadorCadencia);
+        float velocidadAnimacion = 1f / (_armaEquipada.multiplicadorAnimacion);
         _animator.SetFloat("Velocidad de disparo", velocidadAnimacion);
         //Ajustamos el trigger del animator para que dispare la animacion correspondiente al arma
         _animator.SetTrigger(_armaEquipada.shootTrigger);
@@ -881,7 +885,7 @@ public class PlayerControler : CustomMonoBehaviour, IDamageabe<float>, IObservab
 
 
     #region Animation Events
-    public void EvetoDisparo()
+    public void EvetoRecarga()
     {
         if (_armaEquipada == null) return;
         //Obtenemos los datos del Scriptable Object
@@ -900,8 +904,8 @@ public class PlayerControler : CustomMonoBehaviour, IDamageabe<float>, IObservab
         _municionenReserva[_armaEquipada] -= balasARecargar;
 
         //Reseteamos los triggers de recarga para evitar que se queden pillados
-        _animator.ResetTrigger("ReloadRifle");
-        _animator.ResetTrigger("ReloadBazooca");
+        _animator.ResetTrigger("Recarga");
+        
 
         UpdateAmmoText();
     }

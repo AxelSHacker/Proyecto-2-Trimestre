@@ -41,6 +41,7 @@ public class EnemigoIngles : PoolEntity, IDamageabe<float>, PlayerObserver, IObs
    Coroutine _levantarse;
    Coroutine _ralentizacion;
    Coroutine _ceguera;
+   Coroutine _ataqueSalto;
 
    [Header("Movimiento")]
    float _actualSpeed;
@@ -105,25 +106,10 @@ public class EnemigoIngles : PoolEntity, IDamageabe<float>, PlayerObserver, IObs
    void Update()
    {
       GroundCheck();
-
-      _stuckCheckTimer += Time.deltaTime;
-
-      if (_stuckCheckTimer >= 1f)
-      {
-         CheckIfStuck();
-         _stuckCheckTimer = 0f;
-      }
-      if (_volando && _grounded && _rB.linearVelocity.y <= 0.1f)
-      {
-         _volando = false;
-         if (_levantarse != null) StopCoroutine(_levantarse);
-         _levantarse = StartCoroutine(RutinaLevantarse());
-      }
-
+   
       AutomaticDeactivation();
 
       AnimationController();
-
    }
 
    void OnDrawGizmos()
@@ -131,6 +117,20 @@ public class EnemigoIngles : PoolEntity, IDamageabe<float>, PlayerObserver, IObs
       //Cambiamos el color del Gizmos
       Gizmos.color = Color.red;
       Gizmos.DrawWireSphere(_groundCheckPoint.position, _groundCheckSize);
+   }
+   void OnCollisionEnter(Collision collision)
+   {
+      if (_volando)
+      {
+         if (((1 << collision.gameObject.layer) & _groundLayer) != 0)
+         {
+            _volando = false;
+            _rB.linearVelocity = Vector3.zero;
+
+            if (_levantarse != null) StopCoroutine(_levantarse);
+            _levantarse = StartCoroutine(RutinaLevantarse());
+         }
+      }
    }
    #endregion
 
@@ -173,6 +173,11 @@ public class EnemigoIngles : PoolEntity, IDamageabe<float>, PlayerObserver, IObs
    {
       if (_ralentizacion != null) StopCoroutine(_ralentizacion);
       _ralentizacion = StartCoroutine(Ralentizacion());
+   }
+   public void AtaqueSaltoCoroutina()
+   {
+      if (_ataqueSalto != null) StopCoroutine(_ataqueSalto);
+      _ataqueSalto = StartCoroutine(AtaqueSalto());
    }
    public void DisparoRealizado()
    {
@@ -221,6 +226,77 @@ public class EnemigoIngles : PoolEntity, IDamageabe<float>, PlayerObserver, IObs
    {
       SetDestination(_target.position);
    }
+   private void AutomaticDeactivation()
+   {
+      if (IsDead) return;
+      bool agentError = _agent.enabled && !_agent.isOnNavMesh;
+
+      if ((_volando || agentError) && !_grounded)
+      {
+         timetoDeactivate -= Time.deltaTime;
+
+         if (timetoDeactivate <= 0f)
+         {
+            Death();
+         }
+
+      }
+      else if (_grounded && agentError)
+      {
+         Death();
+      }
+      else
+      {
+         timetoDeactivate += _maxTimeToDeactivate;
+      }
+   }
+
+   public void Revivir()
+   {
+      timetoDeactivate = _maxTimeToDeactivate;
+
+      _currentealth = _maxhealth;
+
+      _animator.SetLayerWeight(1, 1);
+
+      _agent.speed = Random.Range(30f, 35f);
+
+      _actualSpeed = _agent.speed;
+
+      _cargador = _cargadorMax;
+
+      _lastPosition = transform.position;
+
+      _cegado = false;
+
+      _animator.Rebind();
+
+   }
+   private void Death()
+   {
+      _agent.isStopped = true;
+
+      int tipoMuerte = Random.Range(1, 4);
+
+      _animator.SetInteger("Muerte", tipoMuerte);
+
+      _animator.SetLayerWeight(1, 0);
+
+      _volando = false;
+
+      SpameoReward();
+
+      for (int i = 0; i < _observers.Count; i++)
+      {
+         _observers[i].OnDead();
+      }
+      _observers.Clear();
+   }
+   #endregion
+
+
+
+   #region Coroutines
    public IEnumerator ImpactoPatada(Vector3 direccion)
    {
       _agent.enabled = false;
@@ -245,13 +321,23 @@ public class EnemigoIngles : PoolEntity, IDamageabe<float>, PlayerObserver, IObs
    private IEnumerator RutinaLevantarse()
    {
       yield return new WaitForSeconds(Random.Range(2f, 5f));
-      //Lo rotamos a posicion normal
-      transform.rotation = Quaternion.Euler(0, transform.rotation.eulerAngles.y, 0);
-      //Volvemos a estado grounded
-      _animator.SetLayerWeight(1, 1);
-      _rB.isKinematic = true;
-      _agent.enabled = true;
-      _agent.Warp(transform.position);
+      NavMeshHit hit;
+      if (NavMesh.SamplePosition(transform.position, out hit, 1.0f, NavMesh.AllAreas))
+      {
+         //Lo rotamos a posicion normal
+         transform.rotation = Quaternion.Euler(0, transform.rotation.eulerAngles.y, 0);
+         //Volvemos a estado grounded
+         _animator.SetLayerWeight(1, 1);
+         //Devolvemos los componentes a su estado de persecucion
+         _rB.isKinematic = true;
+         _agent.enabled = true;
+         _agent.Warp(hit.position);
+      }
+      else
+      {
+         Death();
+      }
+
       _levantarse = null;
    }
    //Coroutine de ceguera, el enemigo se mueve de manera erratica durante 3 segundos, y luego vuelve a la normalidad
@@ -276,119 +362,51 @@ public class EnemigoIngles : PoolEntity, IDamageabe<float>, PlayerObserver, IObs
       _agent.speed = _actualSpeed;
       _cegado = false;
    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-   private void AutomaticDeactivation()
+   //Coroutina que se encarga de realizar el ataque con salto del Boos
+   private IEnumerator AtaqueSalto()
    {
-      if (IsDead) return;
-      if (!_grounded && _volando && timetoDeactivate > 0f)
-      {
-         timetoDeactivate -= Time.deltaTime;
+      float tiempoSalto = 1.10f;
+      float timer = 0f;
+      float alturaMaxima = 20f;
 
-         if (timetoDeactivate <= 0f)
-         {
-            Death();
-         }
+      _agent.enabled = false;
+      if (_animator.layerCount > 1) _animator.SetLayerWeight(1, 0f);
 
-      }
-      else
+      Vector3 posInicio = transform.position;
+      Vector3 posicionCaida = _target.position - new Vector3(1f, 0f, 1f);
+      Vector3 posFinal = posicionCaida;
+
+      while (timer < tiempoSalto)
       {
-         timetoDeactivate = 10f;
+         timer += Time.deltaTime;
+         float t = timer / tiempoSalto; // 0 a 1 lineal
+
+         //CALCULO DEL AVANCE HORIZONTAL (Suave)
+         float tSuave = t * t * (3f - 2f * t);
+         Vector3 posHorizontalActual = Vector3.Lerp(posInicio, posFinal, tSuave);
+
+         // CALCULO DEL ARCO (Parábola pura)
+         // Esta fórmula asegura que en t=0 es 0, en t=0.5 es alturaMaxima, y en t=1 es 0
+         float arcoY = 4f * alturaMaxima * t * (1f - t);
+
+
+         //La Y es la interpolación del suelo + el arco
+         float yFinal = Mathf.Lerp(posInicio.y, posFinal.y, tSuave) + arcoY;
+
+         // 4. APLICAR DIRECTO AL TRANSFORM
+         transform.position = new Vector3(posHorizontalActual.x, yFinal, posHorizontalActual.z);
+         Debug.DrawLine(transform.position, transform.position + Vector3.up * 2f, Color.green, 0.1f);
+         yield return null;
       }
+
+      // Finalización limpia
+      transform.position = posFinal;
+      _agent.enabled = true;
+      _agent.Warp(transform.position);
+      if (_animator.layerCount > 1) _animator.SetLayerWeight(1, 1f);
+      _ataqueSalto = null;
    }
-   void CheckIfStuck()
-   {
-      if (IsDead) return;
-      distanceMoved = Vector3.Distance(transform.position, _lastPosition);
-      // Calculamos cuánto se ha movido desde el último chequeo
-      if (distanceMoved <= _stuckDistanceThreshold)
-      {
-         // Si no se ha movido lo suficiente, sube el contador
-         _stuckTimer += Time.deltaTime;
-         // Si llega a 10 segundos... ¡pum!
-
-      }
-      else
-      {
-         // Si se ha movido, reseteamos el contador y actualizamos la última posición
-         _stuckTimer = 0f;
-         _lastPosition = transform.position;
-
-      }
-      if (_stuckTimer >= _timeToDieIfStuck)
-      {
-         Death();
-      }
-   }
-
-
-
-   public void Revivir()
-   {
-      timetoDeactivate = _maxTimeToDeactivate;
-
-      _currentealth = _maxhealth;
-
-      _animator.SetLayerWeight(1, 1);
-
-      _agent.speed = Random.Range(30f, 35f);
-
-      _actualSpeed = _agent.speed;
-
-      _cargador = _cargadorMax;
-
-      _lastPosition = transform.position;
-
-      _cegado = false;
-
-      _animator.Rebind();
-
-   }
-
-
-
-
-
-   private void Death()
-   {
-      _agent.isStopped = true;
-
-      int tipoMuerte = Random.Range(1, 4);
-
-      _animator.SetInteger("Muerte", tipoMuerte);
-
-      _animator.SetLayerWeight(1, 0);
-
-      _volando = false;
-
-      SpameoReward();
-
-      for (int i = 0; i < _observers.Count; i++)
-      {
-         _observers[i].OnDead();
-      }
-      _observers.Clear();
-   }
-
-
-
-
    #endregion
-
-
 
 
 
@@ -512,6 +530,31 @@ public class EnemigoIngles : PoolEntity, IDamageabe<float>, PlayerObserver, IObs
    }
    #endregion
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

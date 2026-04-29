@@ -167,7 +167,7 @@ GameObject:
   - component: {fileID: 6206084861948496487}
   - component: {fileID: -6924533994269417451}
   - component: {fileID: 540820127353183798}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: ProyectilBase
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -263,9 +263,11 @@ MonoBehaviour:
   _damage: 10
   _speed: 50
   _lifetime: 5
+  _lifeTimerTmp: 0
   _shootableLayers:
     serializedVersion: 2
     m_Bits: 65
+  esHincarProyectil: 0
 --- !u!114 &540820127353183798
 MonoBehaviour:
   m_ObjectHideFlags: 0

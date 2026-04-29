@@ -13,13 +13,13 @@ MonoBehaviour:
   m_Name: Tinta_SO
   m_EditorClassIdentifier: Assembly-CSharp::Armas_SO
   nombre: BazoocaTinta
-  animatorID: 2
-  shootTrigger: ShootTinta
-  recargarTrigger: ReloadBazooca
+  shootTrigger: Disparo
+  recargarTrigger: Recarga
   fireRate: 1
   bulletPoolID: Misil
   esMisil: 1
   usarEnfriamiento: 0
+  overrideController: {fileID: 22100000, guid: e9787c8b2ff35bc4d9d17a7980608aff, type: 2}
   modelIndex: 2
   nombreShootPoint: SalidaBala
   capacidadCargador: 1

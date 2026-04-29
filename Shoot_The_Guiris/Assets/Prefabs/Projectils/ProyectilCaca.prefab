@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 2245317788384264014}
   - component: {fileID: 1159673703817825477}
   - component: {fileID: 8481811923140244897}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: ProyectilCaca
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -205,9 +205,11 @@ MonoBehaviour:
   _damage: 10
   _speed: 100
   _lifetime: 10
+  _lifeTimerTmp: 0
   _shootableLayers:
     serializedVersion: 2
     m_Bits: 2241
+  esHincarProyectil: 0
 --- !u!114 &8481811923140244897
 MonoBehaviour:
   m_ObjectHideFlags: 0

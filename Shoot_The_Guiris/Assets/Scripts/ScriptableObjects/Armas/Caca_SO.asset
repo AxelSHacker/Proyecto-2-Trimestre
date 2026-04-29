@@ -13,14 +13,15 @@ MonoBehaviour:
   m_Name: Caca_SO
   m_EditorClassIdentifier: Assembly-CSharp::Armas_SO
   nombre: MetralletaGaviota
-  animatorID: 1
-  shootTrigger: ShootPoop
-  recargarTrigger: ReloadRifle
+  shootTrigger: Disparo
+  recargarTrigger: Recarga
   fireRate: 0.2
   bulletPoolID: ProyectilCaca
   esMisil: 0
   usarEnfriamiento: 0
+  overrideController: {fileID: 22100000, guid: db46800c892b7184d9c484f9d13f4342, type: 2}
   modelIndex: 1
+  multiplicadorAnimacion: 0.2
   nombreShootPoint: SalidaBala
   capacidadCargador: 20
   municionTotal: 200

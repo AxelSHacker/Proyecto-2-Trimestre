@@ -228,7 +228,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemigoAnimationEvents
   _armaScript: {fileID: 7955208460310776895}
+  _armaScriptLeft: {fileID: 0}
   _enemigoIngles: {fileID: 4007921015721158156}
+  _playerControler: {fileID: 0}
 --- !u!114 &2203305836263301564
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -242,7 +244,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemigoAnimationEvents
   _armaScript: {fileID: 8256531183315669734}
+  _armaScriptLeft: {fileID: 0}
   _enemigoIngles: {fileID: 4007921015721158156}
+  _playerControler: {fileID: 0}
 --- !u!1 &1694894778862587992
 GameObject:
   m_ObjectHideFlags: 0
@@ -1498,7 +1502,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   _groundCheckPoint: {fileID: 2027450871414110173}
-  _groundCheckSize: 2
+  _groundCheckSize: 0.5
   _grounded: 0
   timetoDeactivate: 0
   _maxTimeToDeactivate: 10

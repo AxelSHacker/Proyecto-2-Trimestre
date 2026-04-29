@@ -27,14 +27,14 @@ public class ProyectilFX : CustomMonoBehaviour
    {
       if (_proyectil != null)
       {
-         _proyectil.OnInitialize += OnInitialize.Invoke;
-         _proyectil.OnImpact += OnImpact.Invoke;
+         _proyectil.OnInitialize -= OnInitialize.Invoke;
+         _proyectil.OnImpact -= OnImpact.Invoke;
       }
 
       else if (_meeeWeapons != null)
       {
-         _meeeWeapons.OnInitialize += OnInitialize.Invoke;
-         _meeeWeapons.OnImpact += OnImpact.Invoke;
+         _meeeWeapons.OnInitialize -= OnInitialize.Invoke;
+         _meeeWeapons.OnImpact -= OnImpact.Invoke;
       }
    }
 }

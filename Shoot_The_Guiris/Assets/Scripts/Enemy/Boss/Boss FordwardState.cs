@@ -1,0 +1,71 @@
+using UnityEngine;
+
+
+public class BossFordwardState : StateMachineBehaviour
+{
+
+    private EnemigoIngles enemigoIngles;
+    bool _ataqueSalto = true;
+    // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
+    override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    {
+        //Recuperamos la refrencia al enemy propiietario de animator
+        enemigoIngles = animator.GetComponentInParent<EnemigoIngles>();
+    }
+    // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
+    override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    {
+
+        if (enemigoIngles.Ciego) return;
+        //Debug.Log(enemigoIngles.HasTarget);
+        //Si el navmesh agent esta activo y existe en objeto
+        if (enemigoIngles.AgentIsActive && enemigoIngles.HasTarget)
+        {
+            enemigoIngles.SetDestinationToTarget();
+        }
+
+        if (!enemigoIngles.PathPending && enemigoIngles.RemainingDistanceToTarget < enemigoIngles.InRange)
+        {
+            if (_ataqueSalto)
+            {
+                animator.SetTrigger("AtaqueSalto");
+                _ataqueSalto = false;
+            }
+
+            animator.SetBool("EnRango", true);
+        }
+        else
+        {
+            animator.SetBool("EnRango", false);
+            _ataqueSalto = true;
+        }
+    }
+    // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
+    override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    {
+        animator.ResetTrigger("AtaqueSalto");
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+    // OnStateMove is called right after Animator.OnAnimatorMove()
+    //override public void OnStateMove(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    //{
+    //    // Implement code that processes and affects root motion
+    //}
+
+    // OnStateIK is called right after Animator.OnAnimatorIK()
+    //override public void OnStateIK(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    //{
+    //    // Implement code that sets up animation IK (inverse kinematics)
+    //}
+}

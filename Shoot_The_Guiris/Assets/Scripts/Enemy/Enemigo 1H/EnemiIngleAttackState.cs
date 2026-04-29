@@ -4,8 +4,8 @@ using UnityEngine;
 public class EnemiIngleAttackState : StateMachineBehaviour
 {
    private EnemigoIngles enemigoIngles;
-   int _espadaEscudo;
-   float _velocidadAtaque;
+   int _espadaEscudo = -1;
+   float _velocidadAtaque = 1;
 
    // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
    override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -24,9 +24,8 @@ public class EnemiIngleAttackState : StateMachineBehaviour
       float distancia = enemigoIngles.RemainingDistanceToTarget;
 
       Vector3 dirrecion = enemigoIngles.Target.position - enemigoIngles.transform.position;
-      enemigoIngles.transform.rotation = Quaternion.Slerp(enemigoIngles.transform.rotation,
-                                                         Quaternion.LookRotation(dirrecion),
-                                                         Time.deltaTime);
+      enemigoIngles.transform.rotation = Quaternion.LookRotation(dirrecion);
+                                                         
 
       if (distancia < enemigoIngles.AttacDistance)
       {
@@ -43,8 +42,8 @@ public class EnemiIngleAttackState : StateMachineBehaviour
    {
       _espadaEscudo = -1;
       _velocidadAtaque = 1;
-      
    }
+      
 }
 // OnStateMove is called right after Animator.OnAnimatorMove()
 //override public void OnStateMove(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)

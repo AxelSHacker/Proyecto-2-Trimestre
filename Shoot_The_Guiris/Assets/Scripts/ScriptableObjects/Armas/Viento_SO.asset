@@ -13,13 +13,13 @@ MonoBehaviour:
   m_Name: Viento_SO
   m_EditorClassIdentifier: Assembly-CSharp::Armas_SO
   nombre: PistolaViento
-  animatorID: 0
-  shootTrigger: ShootWind
-  recargarTrigger: 
+  shootTrigger: Disparo
+  recargarTrigger: Recarga
   fireRate: 10
   bulletPoolID: Wind
   esMisil: 0
   usarEnfriamiento: 1
+  overrideController: {fileID: 22100000, guid: 0ecab26240474ba4ca4da1dc0c452ce3, type: 2}
   modelIndex: 0
   nombreShootPoint: SalidaBala
   capacidadCargador: 1

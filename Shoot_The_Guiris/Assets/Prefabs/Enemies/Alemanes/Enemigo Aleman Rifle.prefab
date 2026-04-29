@@ -183,7 +183,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   _groundCheckPoint: {fileID: 6269972038546240976}
-  _groundCheckSize: 2
+  _groundCheckSize: 0.5
   _grounded: 0
   timetoDeactivate: 0
   _maxTimeToDeactivate: 10
@@ -522,7 +522,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemigoAnimationEvents
   _armaScript: {fileID: 0}
+  _armaScriptLeft: {fileID: 0}
   _enemigoIngles: {fileID: 4328905218327402031}
+  _playerControler: {fileID: 0}
 --- !u!1001 &575860819554151812
 PrefabInstance:
   m_ObjectHideFlags: 0

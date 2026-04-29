@@ -79,7 +79,7 @@ GameObject:
   - component: {fileID: 4860119802092546794}
   - component: {fileID: 8095723203923929271}
   - component: {fileID: -5122498780952377265}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: ProyectilWind
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -175,9 +175,11 @@ MonoBehaviour:
   _damage: 10
   _speed: 5
   _lifetime: 5
+  _lifeTimerTmp: 0
   _shootableLayers:
     serializedVersion: 2
     m_Bits: 128
+  esHincarProyectil: 0
   _particulasViento: {fileID: 4860119802092546794}
   _fuerzadelViento: 10
 --- !u!199 &8280088178255710551

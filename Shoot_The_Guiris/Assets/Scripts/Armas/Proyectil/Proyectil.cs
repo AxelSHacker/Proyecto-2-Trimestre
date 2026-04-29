@@ -15,8 +15,9 @@ public class Proyectil : PoolEntity
    [SerializeField] float _damage;
    [SerializeField] float _speed;
    public float _lifetime;
-   float _lifeTimerTmp;
+   public float _lifeTimerTmp;
    public LayerMask _shootableLayers;
+   public bool esHincarProyectil = false;
    public override void EditorInit()
    {
       base.EditorInit();
@@ -52,6 +53,7 @@ public class Proyectil : PoolEntity
             }
          }
          OnImpact?.Invoke(transform.position);
+         if (esHincarProyectil) return;
          ReturnToPool();
       }
    }
@@ -71,6 +73,7 @@ public class Proyectil : PoolEntity
       _trailParticles.Play();
       _rB.linearVelocity = transform.forward * _speed;
       _lifeTimerTmp = Time.time + _lifetime;
+      
       OnInitialize?.Invoke();
    }
 
@@ -79,6 +82,7 @@ public class Proyectil : PoolEntity
       base.Deactivate();
       _collider.enabled = false;
       _rB.isKinematic = true;
+      esHincarProyectil = false;
       _trailParticles.Stop();
    }
 
