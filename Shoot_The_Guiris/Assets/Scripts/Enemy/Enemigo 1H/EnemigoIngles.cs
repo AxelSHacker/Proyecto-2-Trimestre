@@ -250,7 +250,6 @@ public class EnemigoIngles : PoolEntity, IDamageabe<float>, PlayerObserver, IObs
          timetoDeactivate += _maxTimeToDeactivate;
       }
    }
-
    public void Revivir()
    {
       timetoDeactivate = _maxTimeToDeactivate;
@@ -355,7 +354,6 @@ public class EnemigoIngles : PoolEntity, IDamageabe<float>, PlayerObserver, IObs
       if (NavMesh.SamplePosition(pAleatorio, out hit, 10f, NavMesh.AllAreas))
       {
          _agent.SetDestination(hit.position);
-         Debug.Log("Cegado: Caminando a nuevo punto aleatorio");
       }
       yield return new WaitForSeconds(2f);
 
@@ -424,7 +422,6 @@ public class EnemigoIngles : PoolEntity, IDamageabe<float>, PlayerObserver, IObs
 
       _animator.SetBool("Grounded", _grounded);
    }
-
    public void AnimatorDeactivate()
    {
       _animator.enabled = false;
@@ -451,9 +448,6 @@ public class EnemigoIngles : PoolEntity, IDamageabe<float>, PlayerObserver, IObs
 
       OnInizialize?.Invoke();
    }
-
-
-
    public override void Deactivate()
    {
       base.Deactivate();
@@ -503,7 +497,6 @@ public class EnemigoIngles : PoolEntity, IDamageabe<float>, PlayerObserver, IObs
    {
 
    }
-
    public void OnDasch(float timer, float time)
    {
 
@@ -521,7 +514,6 @@ public class EnemigoIngles : PoolEntity, IDamageabe<float>, PlayerObserver, IObs
 
       _observers.Add(observable);
    }
-
    public void RemoveObservable(PlayerObserver observable)
    {
       if (_observers == null) _observers = new List<PlayerObserver>();

@@ -10,21 +10,16 @@ public class EnemigoInglesFordwardState : StateMachineBehaviour
     {
         //Recuperamos la refrencia al enemy propiietario de animator
         enemigoIngles = animator.GetComponentInParent<EnemigoIngles>();
-
-
     }
-
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
 
         if (enemigoIngles.Ciego) return;
-        //Debug.Log(enemigoIngles.HasTarget);
         //Si el navmesh agent esta activo y existe en objeto
         if (enemigoIngles.AgentIsActive && enemigoIngles.HasTarget)
         {
             enemigoIngles.SetDestinationToTarget();
-
         }
         if (!enemigoIngles.PathPending && enemigoIngles.RemainingDistanceToTarget < enemigoIngles.InRange)
         {
@@ -35,14 +30,6 @@ public class EnemigoInglesFordwardState : StateMachineBehaviour
             animator.SetBool("EnRango", false);
         }
     }
-
-            
-
-
-
-
-
-
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
     // override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     // {
