@@ -5,7 +5,7 @@ OcclusionCullingSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_OcclusionBakeSettings:
-    smallestOccluder: 3
+    smallestOccluder: 55
     smallestHole: 0.2
     backfaceThreshold: 100
   m_SceneGUID: 99c9720ab356a0642a771bea13969a05
@@ -27407,7 +27407,7 @@ MonoBehaviour:
     prefab: {fileID: 627603590183169733, guid: ae9a3d2719138824ca37b1304f559581, type: 3}
     prewarm: 2
   - id: Enemiga Inglesa 1H
-    prefab: {fileID: 4007921015721158156, guid: c8fb64b9cbaae374f8bd82f2c6e21c49, type: 3}
+    prefab: {fileID: 6384276101568705083, guid: b539ff7aae5cd1c4da71b773288b21cb, type: 3}
     prewarm: 2
   - id: Enemigo Ingles 1H
     prefab: {fileID: 5817245095702743142, guid: b99b78f4c72295141ab93078d5c2ac22, type: 3}
@@ -30912,7 +30912,7 @@ MonoBehaviour:
   _maxEnemiesOnScreen: 40
   _remainingEnemies: 0
   _remainingEnemyText: {fileID: 684284197}
-  tutorial: 0
+  tutorial: 1
 --- !u!4 &811606709
 Transform:
   m_ObjectHideFlags: 0
@@ -36025,15 +36025,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1530776081248515307, guid: 526d10e620e47bb4b806daffe2d0558f, type: 3}
-      propertyPath: m_WarningMessage
-      value: "\nBinding warning: Some generic clip(s) animate transforms that are
-        already bound by a Humanoid avatar. These transforms can only be changed
-        by Humanoid clips.\n\tTransform 'B-neck'\n\tTransform 'B-spine'\n\tTransform
-        'B-head'\n\tTransform 'B-hips'\n\tTransform 'B-hand.L'\n\tTransform 'B-neck'\n\tTransform
-        'B-spine'\n\tTransform 'B-head'\n\tTransform 'B-hips'\n\tTransform 'B-hand.L'\n\tand
-        more ..."
-      objectReference: {fileID: 0}
     - target: {fileID: 1532724249974122124, guid: 526d10e620e47bb4b806daffe2d0558f, type: 3}
       propertyPath: m_LocalPosition.x
       value: 511
@@ -82863,10 +82854,6 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 1749317910597570002, guid: 18a9099ddddea6943959c916701e498b, type: 3}
-      propertyPath: m_Layer
-      value: 6
-      objectReference: {fileID: 0}
     - target: {fileID: 1912182923097255978, guid: 18a9099ddddea6943959c916701e498b, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -86357,16 +86344,8 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8806292680539290741, guid: e675bf959e3f728449543e26c2b417d5, type: 3}
-      propertyPath: m_Size.x
-      value: 122.258484
-      objectReference: {fileID: 0}
-    - target: {fileID: 8806292680539290741, guid: e675bf959e3f728449543e26c2b417d5, type: 3}
       propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8806292680539290741, guid: e675bf959e3f728449543e26c2b417d5, type: 3}
-      propertyPath: m_Center.x
-      value: -36.44644
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:

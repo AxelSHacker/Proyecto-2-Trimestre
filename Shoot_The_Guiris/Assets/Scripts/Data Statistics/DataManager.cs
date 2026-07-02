@@ -11,6 +11,7 @@ public class DataManager : CustomMonoBehaviour
    [SerializeField] Data _data;
    string _fileName = "data.dat";
    string _dataPath;
+   public bool tutorial = true;
    public override void EditorInit()
    {
 

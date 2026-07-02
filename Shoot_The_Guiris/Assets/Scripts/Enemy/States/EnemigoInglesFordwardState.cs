@@ -1,16 +1,16 @@
 using UnityEngine;
 
 
-public class BossFordwardState : StateMachineBehaviour
+public class EnemigoInglesFordwardState : StateMachineBehaviour
 {
 
     private EnemigoIngles enemigoIngles;
-    bool _ataqueSalto = true;
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         //Recuperamos la refrencia al enemy propiietario de animator
         enemigoIngles = animator.GetComponentInParent<EnemigoIngles>();
+        //enemigoIngles.Agent.speed = enemigoIngles.VelocidadBusqueda;
     }
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -20,39 +20,21 @@ public class BossFordwardState : StateMachineBehaviour
         {
             enemigoIngles.SetDestinationToTarget();
         }
-
         if (!enemigoIngles.PathPending && enemigoIngles.RemainingDistanceToTarget < enemigoIngles.InRange)
         {
-            if (_ataqueSalto)
-            {
-                animator.SetTrigger("AtaqueSalto");
-                _ataqueSalto = false;
-            }
-
             animator.SetBool("EnRango", true);
+            //enemigoIngles.Agent.speed = enemigoIngles.VelocidadEnRango;
         }
         else
         {
             animator.SetBool("EnRango", false);
-            _ataqueSalto = true;
         }
     }
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
-    override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    {
-        animator.ResetTrigger("AtaqueSalto");
-    }
+    // override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    // {
 
-
-
-
-
-
-
-
-
-
-
+    // }
 
     // OnStateMove is called right after Animator.OnAnimatorMove()
     //override public void OnStateMove(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)

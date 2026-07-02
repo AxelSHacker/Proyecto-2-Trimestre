@@ -1,39 +1,27 @@
 using UnityEngine;
 
-
-public class EnemigoInglesFordwardState : StateMachineBehaviour
+public class EnemigoVueloStat : StateMachineBehaviour
 {
-
-    private EnemigoIngles enemigoIngles;
+    private EnemigoIngles _enemigo;
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        //Recuperamos la refrencia al enemy propiietario de animator
-        enemigoIngles = animator.GetComponentInParent<EnemigoIngles>();
+        //Recuperamos la refrencia al enemy propiietario de animator 
+        _enemigo = animator.GetComponentInParent<EnemigoIngles>();
+        animator.SetLayerWeight(1, 0f);
+        _enemigo._volando = true;
+        
     }
+
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-
-        if (enemigoIngles.Ciego) return;
-        //Si el navmesh agent esta activo y existe en objeto
-        if (enemigoIngles.AgentIsActive && enemigoIngles.HasTarget)
-        {
-            enemigoIngles.SetDestinationToTarget();
-        }
-        if (!enemigoIngles.PathPending && enemigoIngles.RemainingDistanceToTarget < enemigoIngles.InRange)
-        {
-            animator.SetBool("EnRango", true);
-        }
-        else
-        {
-            animator.SetBool("EnRango", false);
-        }
+       _enemigo.AutomaticDeactivation();
     }
+
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
     // override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     // {
-
     // }
 
     // OnStateMove is called right after Animator.OnAnimatorMove()

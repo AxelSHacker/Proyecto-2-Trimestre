@@ -50,6 +50,7 @@ public class PlayerControler : CustomMonoBehaviour, IDamageabe<float>, IObservab
     // float _shootDelayTinta;
     float _nextShootTime;
     [SerializeField] Vector3 _targetPoint;
+    [SerializeField] Vector3 _sameTargetPoint;
     Transform _puntodeDisparo;
     // [SerializeField] Transform _shootPointWind;
     // [SerializeField] Transform _shootingPointPoop;
@@ -146,6 +147,7 @@ public class PlayerControler : CustomMonoBehaviour, IDamageabe<float>, IObservab
         UpdateArma(_armaViento);
         _currentealth = _maxhealth;
         _normalMoveSpeed = _movementSpeed;
+        _sameTargetPoint = _targetPoint;
 
         _mainCamera = Camera.main;
         _animator.SetBool("Muerto", false);
@@ -178,8 +180,6 @@ public class PlayerControler : CustomMonoBehaviour, IDamageabe<float>, IObservab
     }
     void FixedUpdate()
     {
-        Aiming();
-
         if (_disparando)
         {
             //Shooting();
@@ -230,6 +230,7 @@ public class PlayerControler : CustomMonoBehaviour, IDamageabe<float>, IObservab
     public void OnMouse(InputAction.CallbackContext context)
     {
         _posicionDelRaton = context.ReadValue<Vector2>();
+        Aiming();
     }
     public void OnAttack(InputAction.CallbackContext context)
     {
@@ -287,7 +288,7 @@ public class PlayerControler : CustomMonoBehaviour, IDamageabe<float>, IObservab
             {
                 _animator.SetTrigger(_armaEquipada.recargarTrigger);
             }
-            
+
         }
 
     }
@@ -438,42 +439,52 @@ public class PlayerControler : CustomMonoBehaviour, IDamageabe<float>, IObservab
     {
         if (IsDead) return;
 
-        // 1. OBTENER EL PUNTO DEL MUNDO (Para la mira visual)
+        // 1. OBTENER EL PUNTO DEL MUNDO
         Plane playerPlane = new Plane(Vector3.up, new Vector3(0, transform.position.y, 0));
         Ray ray = _mainCamera.ScreenPointToRay(_posicionDelRaton);
 
         if (playerPlane.Raycast(ray, out float hitDist))
         {
             _targetPoint = ray.GetPoint(hitDist);
+
         }
 
-        // 2. ROTACIÓN DEL CUERPO (Lógica de "Espaldas")
-        // Calculamos la dirección hacia el punto
+        // 2. ROTACIÓN DEL CUERPO (Lógica anti-trompo)
         Vector3 dirToMouse = _targetPoint - transform.position;
         dirToMouse.y = 0;
 
-        if (dirToMouse.sqrMagnitude > 0.1f)
+        // Calculamos el ángulo en grados que le falta al personaje para mirar al ratón
+        float anguloRestante = Vector3.Angle(transform.forward, dirToMouse.normalized);
+
+        // SI EL ÁNGULO ES MUY PEQUEÑO (Menor a 1 grado), LO CLAVAMOS EN LA POSICIÓN
+        if (anguloRestante < 1.0f)
         {
-            Quaternion targetRot = Quaternion.LookRotation(dirToMouse);
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRot, Time.deltaTime);
+            if (dirToMouse.sqrMagnitude > 0.01f)
+            {
+                transform.rotation = Quaternion.LookRotation(dirToMouse);
+            }
         }
-        // Convierte el punto del ratón de coordenadas del mundo a coordenadas locales del personaje.
+        // SI ESTÁ LEJOS, ROTAMOS FLUIDAMENTE (Usando fixedDeltaTime para evitar pasarse de frenada)
+        else
+        {
+            if (dirToMouse.sqrMagnitude > 0.01f)
+            {
+                Quaternion targetRot = Quaternion.LookRotation(dirToMouse);
+                // ¡CLAVE!: Usamos Time.fixedDeltaTime porque estamos dentro de FixedUpdate
+                transform.rotation = Quaternion.Slerp(transform.rotation, targetRot, Time.fixedDeltaTime * 20f);
+            }
+        }
+
+        // 3. LIMPIADOR DE MIRA Y PIVOTE (Se mantiene igual)
         Vector3 locaTarget = transform.InverseTransformPoint(_targetPoint);
-        // Limita qué tan a la izquierda o derecha puede ir el punto de mira.
         float clampedX = Mathf.Clamp(locaTarget.x, -_maxDistanceSide, _maxDistanceSide);
-        // Asegura que el punto de mira esté siempre al menos a 0.5 unidades frente al personaje.
         float clampedZ = Mathf.Max(locaTarget.z, 0.5f);
 
-        // Convierte esa posición limitada de vuelta a coordenadas del mundo.
         Vector3 finalPosWorld = transform.TransformPoint(new Vector3(clampedX, 0.5f, clampedZ));
 
-        // Mueve el objeto "_aimingPivot" (donde apunta el arma) a esa posición con un suavizado muy rápido (* 40).
-        _aimingPivot.position = Vector3.Lerp(_aimingPivot.position, finalPosWorld, Time.deltaTime * 20);
-        // Asegura que el pivote siempre mire hacia adelante respecto al personaje.
+        // Como el pivote visual de la mira no afecta a las físicas del Rigidbody, aquí sí puedes usar fixedDeltaTime
+        _aimingPivot.position = Vector3.Lerp(_aimingPivot.position, finalPosWorld, Time.fixedDeltaTime * 40f);
         _aimingPivot.forward = transform.forward;
-
-
-
     }
     private void Death()
     {
@@ -574,7 +585,7 @@ public class PlayerControler : CustomMonoBehaviour, IDamageabe<float>, IObservab
         _armaEquipada = armas;
 
         //Aplicamos el controlador de animación override si está disponible
-        if(_armaEquipada.overrideController != null)
+        if (_armaEquipada.overrideController != null)
         {
             _animator.runtimeAnimatorController = _armaEquipada.overrideController;
         }
@@ -628,15 +639,6 @@ public class PlayerControler : CustomMonoBehaviour, IDamageabe<float>, IObservab
         }
         UpdateAmmoText();
     }
-
-
-
-
-
-
-
-
-
     #endregion
 
 
@@ -905,7 +907,7 @@ public class PlayerControler : CustomMonoBehaviour, IDamageabe<float>, IObservab
 
         //Reseteamos los triggers de recarga para evitar que se queden pillados
         _animator.ResetTrigger("Recarga");
-        
+
 
         UpdateAmmoText();
     }

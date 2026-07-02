@@ -35,13 +35,13 @@ public class ProyectilViendo : Proyectil
             if (other.TryGetComponent(out EnemigoIngles enemigo))
             {
                 Vector3 direccion = transform.forward;
-                direccion.y = 0.6f;
+                direccion.y = 0.7f;
                 enemigo.ImpactoViento(direccion * _fuerzadelViento);
             }
             else if (other.TryGetComponent(out WindReact windReact))
             {
                 Vector3 direccion = transform.forward;
-                direccion.y = 0.6f;
+                direccion.y = 0.7f;
                 windReact.Push(direccion, _fuerzadelViento);
             }
         }

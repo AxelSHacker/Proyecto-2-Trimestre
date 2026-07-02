@@ -1504,16 +1504,14 @@ MonoBehaviour:
   _groundCheckPoint: {fileID: 2027450871414110173}
   _groundCheckSize: 0.5
   _grounded: 0
-  timetoDeactivate: 0
+  _timetoDeactivate: 0
   _maxTimeToDeactivate: 10
   _attackDistance: 8
-  _inRange: 15
+  _inRange: 20
   _maxhealth: 100
   _currentealth: 0
   _cargadorMax: 0
   _velocidadAtaque: 20
-  _timeToDieIfStuck: 10
-  _stuckDistanceThreshold: 0.5
   OnInizialize:
     m_PersistentCalls:
       m_Calls:

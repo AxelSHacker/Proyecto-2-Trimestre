@@ -3,6 +3,7 @@ using UnityEngine;
 using System;
 using TMPro;
 using System.Collections.Generic;
+using System.Collections;
 public class WaveController : MonoBehaviour, PlayerObserver
 {
     public static Action OnEnemyDead;
@@ -22,12 +23,13 @@ public class WaveController : MonoBehaviour, PlayerObserver
     int _currentEnemiesAlive;
     [SerializeField] int _remainingEnemies;
     [SerializeField] TextMeshProUGUI _remainingEnemyText;
+    Coroutine _actualizarDonutsCoroutine;
     float _spawnTimer;
     int _currentWave;
     public bool tutorial;
     void Start()
     {
-
+        tutorial = DataManager.Instance.tutorial;
     }
 
     // Update is called once per frame
@@ -43,16 +45,26 @@ public class WaveController : MonoBehaviour, PlayerObserver
         {
             GenerateEnemy();
             _spawnTimer = 0f;
-            _remainingEnemyText.text = "Remainings Enemies = " + _waveEnemies.ToString();
+        }
+        else if (_actualizarDonutsCoroutine != null)
+        {
+            StopCoroutine(_actualizarDonutsCoroutine);
+            _actualizarDonutsCoroutine = null;
         }
 
     }
     public void StartWave()
     {
-        _remainingEnemyText.text = "Remainings Enemies = " + _waveEnemies.ToString();
+        if (_actualizarDonutsCoroutine != null)
+        {
+            StopCoroutine(_actualizarDonutsCoroutine);
+        }
+        _actualizarDonutsCoroutine = StartCoroutine(ActualizarDonuts());
+
         _currentWave++;
         _waveEnemies = _currentWave * _waveEnemyNumberMultiplier;
         _remainingEnemies = _waveEnemies;
+        _remainingEnemyText.text = "Remainings Enemies = " + _waveEnemies.ToString();
         OnWaveIncrease?.Invoke();
         OnWaveStart?.Invoke(_currentWave);
     }
@@ -63,8 +75,6 @@ public class WaveController : MonoBehaviour, PlayerObserver
             Debug.LogError("Spawn points or enemy prefab not set in WaveController.");
             return;
         }
-
-        SpawnPointCloseEnougt();
 
         Transform puntoElegido = null;
 
@@ -87,7 +97,15 @@ public class WaveController : MonoBehaviour, PlayerObserver
         _currentEnemiesAlive++;
         _waveEnemies--;
     }
+    IEnumerator ActualizarDonuts()
+    {
+        while (true)
+        {
+            SpawnPointCloseEnougt();
 
+            yield return new WaitForSeconds(1f);
+        }
+    }
     private void SpawnPointCloseEnougt()
     {
         // 1. Vaciamos la lista del "donut" para empezar el cálculo limpio en este fotograma
@@ -131,39 +149,34 @@ public class WaveController : MonoBehaviour, PlayerObserver
         }
     }
 
-#region PlayerObserver implementation
-public void OnHealtUpdate(float currentealt, float maxealt)
-{
-
-}
-
-public void OnHit()
-{
-
-}
-
-public void OnDead()
-{
-    OnEnemyDead?.Invoke();
-    _currentEnemiesAlive--;
-    _remainingEnemies--;
-    _remainingEnemyText.text = _remainingEnemies.ToString();
-    if (_remainingEnemies <= 0)
+    #region PlayerObserver implementation
+    public void OnHealtUpdate(float currentealt, float maxealt)
     {
-        //StartWave();
-        OnWaveEnd?.Invoke(_currentWave);
+
     }
-}
+    public void OnHit()
+    {
 
+    }
+    public void OnDead()
+    {
+        OnEnemyDead?.Invoke();
+        _currentEnemiesAlive--;
+        _remainingEnemies--;
+        _remainingEnemyText.text = "Remainings Enemies = " + _remainingEnemies.ToString();
+        if (_remainingEnemies <= 0)
+        {
+            //StartWave();
+            OnWaveEnd?.Invoke(_currentWave);
+        }
+    }
+    public void OnAtaqueEspecial(float timer, float time)
+    {
 
-public void OnAtaqueEspecial(float timer, float time)
-{
+    }
+    public void OnDasch(float timer, float time)
+    {
 
-}
-
-public void OnDasch(float timer, float time)
-{
-
-}
+    }
     #endregion
 }

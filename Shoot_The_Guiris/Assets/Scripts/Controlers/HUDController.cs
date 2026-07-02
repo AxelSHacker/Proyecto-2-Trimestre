@@ -37,7 +37,6 @@ public class HUDController : CustomMonoBehaviour, PlayerObserver
    {
       _barradeVida.fillAmount = Mathf.Clamp01((float)vidaActual / vidaMaxima);
    }
-
    private void UpdateAtaqueEspecial(float timer, float time)
    {
       _ataqueEspecial.fillAmount = 1f - (timer / time);
@@ -51,7 +50,6 @@ public class HUDController : CustomMonoBehaviour, PlayerObserver
    }
    public void ShowWavePanel(int waveNumber)
    {
-      
       _waveText.text = waveNumber.ToString();
       _wavePanel.SetTrigger("Oleada");
    }
@@ -64,6 +62,10 @@ public class HUDController : CustomMonoBehaviour, PlayerObserver
       _coroutinaDanio = StartCoroutine(FlashDanioCoroutine());
    }
    #endregion
+
+
+
+
 
    #region Coroutine
    private IEnumerator FlashDanioCoroutine()
@@ -80,6 +82,9 @@ public class HUDController : CustomMonoBehaviour, PlayerObserver
       _canvasGroupdeDanio.alpha = 0f;
    }
    #endregion
+
+
+
    #region  IdamagableObserver
    public void OnHealtUpdate(float currentealt, float maxHealt)
    {
@@ -94,12 +99,10 @@ public class HUDController : CustomMonoBehaviour, PlayerObserver
    {
 
    }
-
    public void OnAtaqueEspecial(float timer, float time)
    {
       UpdateAtaqueEspecial(timer, time);
    }
-
    public void OnDasch(float timer, float time)
    {
       UpdateDash(timer, time);

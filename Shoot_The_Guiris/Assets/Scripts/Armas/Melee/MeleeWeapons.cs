@@ -63,8 +63,8 @@ public class MeleeWeapons : CustomMonoBehaviour
             if (other.TryGetComponent(out EnemigoIngles enemigo))
             {
                Vector3 direccion = transform.forward;
-               direccion.y = 0.3f;
-               enemigo.StartCoroutine(enemigo.ImpactoPatada(direccion * _fuerzaPatada)); // Puedes ajustar la fuerza según tus necesidades
+               direccion.y = 0.5f;
+               enemigo.ImpactoPatada(direccion * _fuerzaPatada); // Puedes ajustar la fuerza según tus necesidades
 
             }
             _impactado.Add(other.gameObject);

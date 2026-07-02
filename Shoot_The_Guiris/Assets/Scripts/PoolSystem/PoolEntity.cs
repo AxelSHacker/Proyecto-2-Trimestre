@@ -18,6 +18,7 @@ public class PoolEntity : CustomMonoBehaviour
    public override void EditorInit()
    {
       _renderers = GetComponentsInChildren<Renderer>();
+      
    }
 
    public virtual void Initialize()
