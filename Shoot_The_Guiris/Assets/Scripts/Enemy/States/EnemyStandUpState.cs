@@ -10,7 +10,9 @@ public class EnemyStandUpState : StateMachineBehaviour
         {
             _enemigo = animator.GetComponentInParent<EnemigoIngles>();
         }
+        _enemigo.Levantarse();
         _enemigo._volando = false;
+        _enemigo.Agent.isStopped = true;
 
     }
 
@@ -24,7 +26,8 @@ public class EnemyStandUpState : StateMachineBehaviour
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        _enemigo.Levantarse();
+        _enemigo.Agent.isStopped = false;
+        
     }
 
     // OnStateMove is called right after Animator.OnAnimatorMove()

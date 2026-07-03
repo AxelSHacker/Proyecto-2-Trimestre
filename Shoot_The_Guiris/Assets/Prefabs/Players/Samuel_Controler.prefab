@@ -1918,7 +1918,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 141.89998, z: 0}
-  m_LocalScale: {x: 35, y: 35, z: 0}
+  m_LocalScale: {x: 20, y: 20, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1532724249974122124}
@@ -2295,6 +2295,7 @@ MonoBehaviour:
   - {fileID: 4953373229246157079}
   - {fileID: 2000446045813600862}
   _targetPoint: {x: 0, y: 0, z: 0}
+  _sameTargetPoint: {x: 0, y: 0, z: 0}
   _misiverticalOffset: -10
   _daschTime: 5
   _daschTimer: 0
@@ -2325,7 +2326,7 @@ MonoBehaviour:
   _velocidadJuego: {fileID: 0}
   _velocidadPlayer: {fileID: 0}
   _animator: {fileID: 1530776081248515307}
-  _maxhealth: 100
+  _maxhealth: 200
   _currentealth: 0
 --- !u!82 &5883434829964919300
 AudioSource:
@@ -2729,6 +2730,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 7c67bbb2-be4c-452a-9fc2-7b2062a7d5b0
     m_ActionName: 'Player/Arma4[/Keyboard/4]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: TutorialController, Assembly-CSharp
+        m_MethodName: OnSkipText
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 7cb1d8a3-d655-4664-a3b4-e6402de50f37
+    m_ActionName: 'Player/Skip[/Keyboard/space]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player

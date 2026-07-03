@@ -221,9 +221,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   _groundCheckPoint: {fileID: 5241117181858592769}
-  _groundCheckSize: 0.5
+  _groundCheckSize: 1
   _grounded: 0
-  timetoDeactivate: 0
+  _timetoDeactivate: 0
   _maxTimeToDeactivate: 10
   _attackDistance: 20
   _inRange: 20
@@ -231,8 +231,6 @@ MonoBehaviour:
   _currentealth: 0
   _cargadorMax: 0
   _velocidadAtaque: 20
-  _timeToDieIfStuck: 10
-  _stuckDistanceThreshold: 0.5
   OnInizialize:
     m_PersistentCalls:
       m_Calls:

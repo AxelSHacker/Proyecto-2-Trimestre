@@ -131,6 +131,7 @@ public class EnemigoIngles : PoolEntity, IDamageabe<float>, PlayerObserver, IObs
    }
    public void ImpactoPatada(Vector3 direccion)
    {
+      _agent.enabled = false;
       _rB.isKinematic = false;
       //Si volamos cancelamos la recuperacion
       _rB.AddForce(direccion, ForceMode.Impulse);
@@ -241,6 +242,8 @@ public class EnemigoIngles : PoolEntity, IDamageabe<float>, PlayerObserver, IObs
    public void Revivir()
    {
       _timetoDeactivate = _maxTimeToDeactivate;
+
+      _agent.isStopped = false;
 
       _currentealth = _maxhealth;
 
