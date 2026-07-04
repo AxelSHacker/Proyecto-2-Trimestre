@@ -11,6 +11,7 @@ public class WaveController : MonoBehaviour, PlayerObserver
     public Action<int> OnWaveStart;
     public Action<int> OnWaveEnd;
     [SerializeField] string[] _enemyPrefab;
+    [SerializeField] string _enemyBossPrefabs;
     [SerializeField] Transform[] _spawnPoints;
     List<Transform> _spawnPoinCloseEnougt = new List<Transform>();
     [SerializeField] Transform _playerTransform;
@@ -22,6 +23,7 @@ public class WaveController : MonoBehaviour, PlayerObserver
     [SerializeField] int _maxEnemiesOnScreen = 40;
     int _currentEnemiesAlive;
     [SerializeField] int _remainingEnemies;
+    [SerializeField] int _remainingBosses;
     [SerializeField] TextMeshProUGUI _remainingEnemyText;
     Coroutine _actualizarDonutsCoroutine;
     float _spawnTimer;
@@ -31,7 +33,14 @@ public class WaveController : MonoBehaviour, PlayerObserver
     {
         tutorial = DataManager.Instance.tutorial;
     }
-
+    void OnEnable()
+    {
+        BlockingWalls.OnWallDestroy += PuertaDestruida;
+    }
+    void OnDisable()
+    {
+        BlockingWalls.OnWallDestroy -= PuertaDestruida;
+    }
     // Update is called once per frame
     void Update()
     {
@@ -88,11 +97,22 @@ public class WaveController : MonoBehaviour, PlayerObserver
             int randomSpawnIndex = UnityEngine.Random.Range(0, _spawnPoints.Length);
             puntoElegido = _spawnPoints[randomSpawnIndex];
         }
-        int randomPoolIndex = UnityEngine.Random.Range(0, _enemyPrefab.Length);
-
-        EnemigoIngles enemigo = PoolManager.Instance.Pull(_enemyPrefab[randomPoolIndex],
+        if (_remainingBosses > 0)
+        {
+            EnemigoIngles boss = PoolManager.Instance.Pull(_enemyBossPrefabs,
                                                           puntoElegido.position,
                                                           Quaternion.identity) as EnemigoIngles;
+
+            boss.AddObservable(this);
+            _currentEnemiesAlive++;
+            _waveEnemies--;
+            _remainingBosses--;
+        }
+
+        int randomPoolIndex = UnityEngine.Random.Range(0, _enemyPrefab.Length);
+        EnemigoIngles enemigo = PoolManager.Instance.Pull(_enemyPrefab[randomPoolIndex],
+                                                                  puntoElegido.position,
+                                                                  Quaternion.identity) as EnemigoIngles;
         enemigo.AddObservable(this);
         _currentEnemiesAlive++;
         _waveEnemies--;
@@ -148,7 +168,12 @@ public class WaveController : MonoBehaviour, PlayerObserver
             }
         }
     }
-
+    private void PuertaDestruida(GameObject wall)
+    {
+        if (_remainingBosses >= 15) return;
+        else
+        _remainingBosses++;
+    }
     #region PlayerObserver implementation
     public void OnHealtUpdate(float currentealt, float maxealt)
     {

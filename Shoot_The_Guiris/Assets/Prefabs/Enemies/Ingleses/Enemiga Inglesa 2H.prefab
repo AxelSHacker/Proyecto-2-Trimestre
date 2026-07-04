@@ -1458,7 +1458,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 1
   m_Interpolate: 0
-  m_Constraints: 16
+  m_Constraints: 80
   m_CollisionDetection: 0
 --- !u!114 &4007921015721158156
 MonoBehaviour:
@@ -1502,7 +1502,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   _groundCheckPoint: {fileID: 2027450871414110173}
-  _groundCheckSize: 1
+  _groundCheckSize: 0.5
   _grounded: 0
   _timetoDeactivate: 0
   _maxTimeToDeactivate: 10

@@ -133,13 +133,13 @@ public class EnemigoIngles : PoolEntity, IDamageabe<float>, PlayerObserver, IObs
    {
       _agent.enabled = false;
       _rB.isKinematic = false;
-      //Si volamos cancelamos la recuperacion
       _rB.AddForce(direccion, ForceMode.Impulse);
    }
    public void Levantarse()
    {
       NavMeshHit hit;
-      if (NavMesh.SamplePosition(transform.position, out hit, 1.0f, NavMesh.AllAreas))
+
+      if (NavMesh.SamplePosition(transform.position, out hit, 2.0f, NavMesh.AllAreas))
       {
          //Lo rotamos a posicion normal
          transform.rotation = Quaternion.Euler(0, transform.rotation.eulerAngles.y, 0);

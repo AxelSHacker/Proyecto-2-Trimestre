@@ -11,9 +11,10 @@ public class BlockingWalls : MonoBehaviour
     [SerializeField] PlayerControler _playerControler;
     [SerializeField] CanvasGroup _canvasGroup;
     [SerializeField] TextMeshProUGUI _moneyText;
-  void OnDisable()
+    void OnDisable()
     {
-        _canvasGroup.alpha = 0;
+        if (_canvasGroup != null)
+            _canvasGroup.alpha = 0;
     }
     void OnTriggerEnter(Collider other)
     {

@@ -20687,7 +20687,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 1
   m_Interpolate: 0
-  m_Constraints: 16
+  m_Constraints: 80
   m_CollisionDetection: 0
 --- !u!114 &7060446383560746652
 MonoBehaviour:
@@ -20732,7 +20732,7 @@ MonoBehaviour:
   _groundCheckPoint: {fileID: 5831188102158760731}
   _groundCheckSize: 0.5
   _grounded: 0
-  timetoDeactivate: 0
+  _timetoDeactivate: 0
   _maxTimeToDeactivate: 10
   _attackDistance: 4
   _inRange: 50
@@ -20740,8 +20740,6 @@ MonoBehaviour:
   _currentealth: 100
   _cargadorMax: 0
   _velocidadAtaque: 20
-  _timeToDieIfStuck: 10
-  _stuckDistanceThreshold: 0.5
   OnInizialize:
     m_PersistentCalls:
       m_Calls:

@@ -150,7 +150,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 1
   m_Interpolate: 0
-  m_Constraints: 16
+  m_Constraints: 80
   m_CollisionDetection: 0
 --- !u!136 &7657128750796563172
 CapsuleCollider:
@@ -226,7 +226,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   _groundCheckPoint: {fileID: 4278893824890645152}
-  _groundCheckSize: 1
+  _groundCheckSize: 0.5
   _grounded: 0
   _timetoDeactivate: 0
   _maxTimeToDeactivate: 10
