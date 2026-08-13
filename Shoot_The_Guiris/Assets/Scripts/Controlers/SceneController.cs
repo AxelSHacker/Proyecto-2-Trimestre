@@ -7,4 +7,9 @@ public class SceneController : MonoBehaviour
     {
         SceneManager.LoadScene(name);
     }
+    public void LoadTutorial(string name)
+    {
+        DataManager.Instance.tutorial = true;
+        SceneManager.LoadScene(name);
+    }
 }

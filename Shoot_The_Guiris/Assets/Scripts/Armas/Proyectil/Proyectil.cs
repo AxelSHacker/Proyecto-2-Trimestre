@@ -10,6 +10,7 @@ public class Proyectil : PoolEntity
    public Rigidbody _rB;
    public Collider _collider;
    [SerializeField] ParticleSystem _trailParticles;
+   IDamageabe<float> iDamageable;
 
    [Header("Proyectil")]
    [SerializeField] float _damage;
@@ -34,7 +35,6 @@ public class Proyectil : PoolEntity
       {
          ReturnToPool();
       }
-      
    }
 
    void OnTriggerEnter(Collider other)
@@ -43,11 +43,17 @@ public class Proyectil : PoolEntity
 
       if ((_shootableLayers & (1 << other.gameObject.layer)) != 0)
       {
-         if (other.TryGetComponent(out IDamageabe<float> damageable))
+         if (gameObject.TryGetComponent(out HincarProyectil hincarProyectil))
          {
-            damageable.TakeDamag(_damage, transform.position);
-            
-            if (other.TryGetComponent(out EnemigoIngles enemigo) && PoolID == "ProyectilCaca")
+            Vector3 puntoImpacto = other.ClosestPoint(transform.position);
+            hincarProyectil.Hincar(puntoImpacto, other.transform);
+         }
+         if (TryGetComponentInParent(other))
+         {
+            iDamageable.TakeDamag(_damage, transform.position);
+
+            EnemigoIngles enemigo = other.GetComponentInParent<EnemigoIngles>();
+            if (enemigo != null && PoolID == "ProyectilCaca")
             {
                enemigo.RaletizacionCoroutina();
             }
@@ -58,8 +64,16 @@ public class Proyectil : PoolEntity
       }
    }
    #endregion
-               
 
+
+   #region Funciones
+   private bool TryGetComponentInParent(Collider collider)
+   {
+      iDamageable = collider.GetComponentInParent<IDamageabe<float>>();
+      return iDamageable != null;
+   }
+
+   #endregion
 
 
 
@@ -73,7 +87,7 @@ public class Proyectil : PoolEntity
       _trailParticles.Play();
       _rB.linearVelocity = transform.forward * _speed;
       _lifeTimerTmp = Time.time + _lifetime;
-      
+
       OnInitialize?.Invoke();
    }
 
