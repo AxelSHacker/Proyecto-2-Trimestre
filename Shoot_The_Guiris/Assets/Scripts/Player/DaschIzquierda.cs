@@ -5,6 +5,7 @@ public class DaschIzquierda : StateMachineBehaviour
     public Vector3 direccionDasch;
     public float _daschForce = 1f;
     private CharacterController _cC;
+    PlayerControler playerControler;
     Vector3 inicioDasch;
     Vector3 destinoDasch;
 
@@ -12,10 +13,11 @@ public class DaschIzquierda : StateMachineBehaviour
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         _cC = animator.GetComponentInParent<CharacterController>();
+        playerControler = animator.GetComponentInParent<PlayerControler>();
 
         inicioDasch = animator.transform.position;
         Vector3 dirMundoDasch = animator.transform.TransformDirection(direccionDasch);
-        destinoDasch = animator.transform.position + (dirMundoDasch * _daschForce);
+        destinoDasch = animator.transform.position + (dirMundoDasch * playerControler.DashForce);
 
     }
 

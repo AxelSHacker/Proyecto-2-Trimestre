@@ -19,7 +19,7 @@ public class HincarProyectil : MonoBehaviour
         transform.position = posicion + (transform.forward * 0.5f);
 
         //Emparentar asegurando el mantenga su posicion en el mundo
-        gameObject.transform.SetParent(impactado, true);
+        gameObject.transform.SetParent(impactado);
 
         _proyectil._lifeTimerTmp = Time.time + _hincarDuration;
     }

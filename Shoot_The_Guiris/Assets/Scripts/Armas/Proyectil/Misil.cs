@@ -12,6 +12,8 @@ public class Misil : PoolEntity
    [SerializeField] LayerMask _disparable;
    [SerializeField] Vector3 _startPosicion;
    [SerializeField] Vector3 _posicionTarget;
+   IDamageabe<float> iDamageable;
+
    Vector3 _posiciondedisparo;
    public UnityEvent OnInizialize;
    public UnityEvent OnImpact;
@@ -43,13 +45,14 @@ public class Misil : PoolEntity
 
          foreach (Collider impact in impactos)
          {
-            if (impact.TryGetComponent(out IDamageabe<float> damageable))
+            if (TryGetComponentInParent(impact))
             {
-               damageable.TakeDamag(_damage, transform.position);
-            }
-            if(impact.TryGetComponent(out EnemigoIngles enemigoIngles))
-            {
-                enemigoIngles.Cegar();
+               iDamageable.TakeDamag(_damage, transform.position);
+               EnemigoIngles enemigo = other.GetComponentInParent<EnemigoIngles>();
+               if (enemigo != null)
+               {
+                  enemigo.Cegar();
+               }
             }
          }
          _posicionTarget = transform.position;
@@ -57,8 +60,15 @@ public class Misil : PoolEntity
          ReturnToPool();
       }
    }
-              
 
+   #region Funciones
+   private bool TryGetComponentInParent(Collider collider)
+   {
+      iDamageable = collider.GetComponentInParent<IDamageabe<float>>();
+      return iDamageable != null;
+   }
+
+   #endregion
    public void IniciarMisil(Vector3 startPoint, Vector3 targetPoint, Vector3 shooterpoint)
    {
       _startPosicion = startPoint;

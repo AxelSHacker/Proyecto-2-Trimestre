@@ -2299,7 +2299,7 @@ MonoBehaviour:
   _misiverticalOffset: -10
   _daschTime: 5
   _daschTimer: 0
-  _daschForce: 20
+  _daschForce: 50
   _ataqueEspecialTime: 10
   _ataqueEspecialTimer: 0
   money: 2500
@@ -2340,7 +2340,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: -2256398440406382273, guid: c55136e614119df41a0c1f2fe9791ff1, type: 2}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -4663,7 +4663,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7681880331469147054, guid: 5e99b2ab79f2c57439f1f86632b13d0b, type: 3}
       propertyPath: orthographic size
-      value: 620
+      value: 350
       objectReference: {fileID: 0}
     - target: {fileID: 7681880331469147054, guid: 5e99b2ab79f2c57439f1f86632b13d0b, type: 3}
       propertyPath: m_CullingMask.m_Bits

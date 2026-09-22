@@ -45,7 +45,7 @@ public class GameController : CustomMonoBehaviour
    }
    void Update()
    {
-      if (_waveController.tutorial) return;
+      if (DataManager.Instance.tutorial) return;
       if (_esperandoSiguienteOleada) return;
 
       if (Time.time >= _siguienteOleadaTimer)
@@ -86,7 +86,7 @@ public class GameController : CustomMonoBehaviour
    public void ReestartButton()
    {
       SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-      _waveController.tutorial = false;
+      DataManager.Instance.tutorial = false;
       _menuTutorial.SetActive(false);
    
    }

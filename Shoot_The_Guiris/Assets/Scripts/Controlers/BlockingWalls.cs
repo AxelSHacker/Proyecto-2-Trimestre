@@ -30,7 +30,7 @@ public class BlockingWalls : MonoBehaviour
     {
         if (other.TryGetComponent(out PlayerControler playerControler))
         {
-            if (playerControler.comprar) { IntentarComprar(); Debug.Log("Comprando"); }
+            if (playerControler.comprar) { IntentarComprar();}
         }
     }
     void OnTriggerExit(Collider other)
@@ -44,7 +44,6 @@ public class BlockingWalls : MonoBehaviour
     {
         if (_playerControler.Money >= _moneyToUnlock)
         {
-            Debug.Log("Comprado");
             _playerControler.QuitarDinero(_moneyToUnlock);
             OnWallDestroy?.Invoke(gameObject);
             OnWallCounter?.Invoke();

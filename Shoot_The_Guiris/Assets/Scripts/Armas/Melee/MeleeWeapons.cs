@@ -13,6 +13,7 @@ public class MeleeWeapons : CustomMonoBehaviour
    [SerializeField] Vector3 _offset = new Vector3(0f, 0f, 1f);
    private bool _atacando;
    List<GameObject> _impactado = new List<GameObject>();
+   IDamageabe<float> iDamageable;
 
    public override void EditorInit()
    {
@@ -55,19 +56,23 @@ public class MeleeWeapons : CustomMonoBehaviour
       {
          if (_impactado.Contains(other.gameObject)) continue;
 
-         if ((_shootableLayers & (1 << other.gameObject.layer)) != 0 && other.TryGetComponent(out IDamageabe<float> damageable))
+         if ((_shootableLayers & (1 << other.gameObject.layer)) != 0)
          {
-            damageable.TakeDamag(_damage, transform.position);
-            OnImpact?.Invoke(transform.position);
-
-            if (other.TryGetComponent(out EnemigoIngles enemigo))
+            if (TryGetComponentInParent(other))
             {
-               Vector3 direccion = transform.forward;
-               direccion.y = 0.5f;
-               enemigo.ImpactoPatada(direccion * _fuerzaPatada); // Puedes ajustar la fuerza según tus necesidades
+               iDamageable.TakeDamag(_damage, transform.position);
+               OnImpact?.Invoke(transform.position);
+               EnemigoIngles enemigo = other.GetComponentInParent<EnemigoIngles>();
+               
+               if (enemigo != null)
+               {
+                  Vector3 direccion = transform.forward;
+                  direccion.y = 0.5f;
+                  enemigo.ImpactoPatada(direccion * _fuerzaPatada); // Puedes ajustar la fuerza según tus necesidades
+               }
+               _impactado.Add(other.gameObject);
 
             }
-            _impactado.Add(other.gameObject);
          }
       }
    }
@@ -76,7 +81,11 @@ public class MeleeWeapons : CustomMonoBehaviour
       _atacando = false;
       _impactado.Clear();
    }
-
+   private bool TryGetComponentInParent(Collider collider)
+   {
+      iDamageable = collider.GetComponentInParent<IDamageabe<float>>();
+      return iDamageable != null;
+   }
    // void OnTriggerEnter(Collider other)
    // {
    //    if ((_shootableLayers & (1 << other.gameObject.layer)) != 0 && other.TryGetComponent(out IDamageabe<float> damageable))

@@ -126,6 +126,8 @@ public class PlayerControler : CustomMonoBehaviour, IDamageabe<float>, IObservab
 
     [Header("Animator")]
     [SerializeField] Animator _animator;
+
+    public float DashForce => _daschForce;
     #endregion
 
 
@@ -148,6 +150,7 @@ public class PlayerControler : CustomMonoBehaviour, IDamageabe<float>, IObservab
         _currentealth = _maxhealth;
         _normalMoveSpeed = _movementSpeed;
         _sameTargetPoint = _targetPoint;
+        _moneyText.text = money.ToString() + " €";
 
         _mainCamera = Camera.main;
         _animator.SetBool("Muerto", false);
@@ -644,7 +647,6 @@ public class PlayerControler : CustomMonoBehaviour, IDamageabe<float>, IObservab
 
 
 
-    ///<summary>
     #region Funciones funcionales
     //Estas funciones se encargan de disparar cada tipo de proyectil, ahora mismo estan un poco repetitivas, pero las dejo asi por si quiero hacer algo especifico para cada una, como efectos o sonidos diferentes
     // private void DisparodeViento(Vector3 position, Quaternion rotation)

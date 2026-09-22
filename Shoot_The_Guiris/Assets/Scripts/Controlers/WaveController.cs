@@ -28,11 +28,6 @@ public class WaveController : MonoBehaviour, PlayerObserver
     Coroutine _actualizarDonutsCoroutine;
     float _spawnTimer;
     int _currentWave;
-    public bool tutorial;
-    void Start()
-    {
-        tutorial = DataManager.Instance.tutorial;
-    }
     void OnEnable()
     {
         BlockingWalls.OnWallDestroy += PuertaDestruida;
@@ -44,7 +39,7 @@ public class WaveController : MonoBehaviour, PlayerObserver
     // Update is called once per frame
     void Update()
     {
-        if (tutorial) return;
+        if (DataManager.Instance.tutorial) return;
         if (_spawnTimer <= _spawnDelay)
         {
             _spawnTimer += Time.deltaTime;
